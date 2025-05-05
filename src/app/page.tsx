@@ -3,7 +3,15 @@ import { Heading, VStack, Text } from "@chakra-ui/react";
 export default function Home() {
     return (
         <>
-            <VStack align="center" pt="10%" pl="30%" pr="30%">
+            <VStack
+                minH="100vh"
+                align="center"
+                pt="10%"
+                pl="30%"
+                pr="30%"
+                pb="10%"
+                bg={{ base: "gray.100", _dark: "gray.900" }}
+            >
                 <Heading fontSize="5xl">🌿 EcoDrive</Heading>
                 <Text fontWeight="bold" mt="10px">
                     Armazene com consciência. Use com liberdade.

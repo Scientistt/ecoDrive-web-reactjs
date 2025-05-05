@@ -1,1 +1,1 @@
-export { ColorModeButton } from "./ColorModeButton/index";
+export { ColorModeButton } from "./ColorModeButton";
