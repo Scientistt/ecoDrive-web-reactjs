@@ -1,0 +1,36 @@
+{
+  "name": "eco-drive",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "lint": "next lint",
+    "start": "next start -p 4000",
+    "lint:fix": "next lint --fix",
+    "prettier": "prettier --write */**/*.{js,jsx,json,ts,tsx,scss,css,md}",
+    "prepare": "husky install",
+    "husky": "husky install",
+    "husky:pre-commit": "husky add .husky/pre-commit \"npm run pre-commit\"",
+    "pre-commit": "yarn tsc --pretty --noEmit && yarn eslint . --fix --max-warnings=0",
+    "lint-staged": "yarn tsc --pretty --noEmit && yarn eslint . --fix --max-warnings=0"
+  },
+  "dependencies": {
+    "next": "15.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
