@@ -1,1 +1,2 @@
-export { default as countryImages } from "./country";
+export * from "./country";
+export * from "./aws";

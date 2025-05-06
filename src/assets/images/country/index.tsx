@@ -1,29 +1,31 @@
-import australia from "assets/images/country/australia.png";
-import bahrain from "assets/images/country/bahrain.png";
-import brazil from "assets/images/country/brazil.png";
-import canada from "assets/images/country/canada.png";
-import china from "assets/images/country/china.png";
-import emirates from "assets/images/country/emirates.png";
-import england from "assets/images/country/england.png";
-import france from "assets/images/country/france.png";
-import germany from "assets/images/country/germany.png";
-import hong_kong from "assets/images/country/hong_kong.png";
-import india from "assets/images/country/india.png";
-import indonesia from "assets/images/country/indonesia.png";
-import ireland from "assets/images/country/ireland.png";
-import italy from "assets/images/country/italy.png";
-import japan from "assets/images/country/japan.png";
-import singapore from "assets/images/country/singapore.png";
-import south_africa from "assets/images/country/south_africa.png";
-import south_korea from "assets/images/country/south_korea.png";
-import spain from "assets/images/country/spain.png";
-import sweden from "assets/images/country/sweden.png";
-import switzerland from "assets/images/country/switzerland.png";
-import united_states from "assets/images/country/us.png";
+import type { StaticImageData } from "next/image";
 
-import blank from "assets/images/country/blank.png";
+import australia from "assets/images/country/flag/australia.png";
+import bahrain from "assets/images/country/flag/bahrain.png";
+import brazil from "assets/images/country/flag/brazil.png";
+import canada from "assets/images/country/flag/canada.png";
+import china from "assets/images/country/flag/china.png";
+import emirates from "assets/images/country/flag/emirates.png";
+import england from "assets/images/country/flag/england.png";
+import france from "assets/images/country/flag/france.png";
+import germany from "assets/images/country/flag/germany.png";
+import hong_kong from "assets/images/country/flag/hong_kong.png";
+import india from "assets/images/country/flag/india.png";
+import indonesia from "assets/images/country/flag/indonesia.png";
+import ireland from "assets/images/country/flag/ireland.png";
+import italy from "assets/images/country/flag/italy.png";
+import japan from "assets/images/country/flag/japan.png";
+import singapore from "assets/images/country/flag/singapore.png";
+import south_africa from "assets/images/country/flag/south_africa.png";
+import south_korea from "assets/images/country/flag/south_korea.png";
+import spain from "assets/images/country/flag/spain.png";
+import sweden from "assets/images/country/flag/sweden.png";
+import switzerland from "assets/images/country/flag/switzerland.png";
+import united_states from "assets/images/country/flag/us.png";
 
-const countryImages = {
+import blank from "assets/images/country/flag/blank.png";
+
+export const countryFlags: Record<string, StaticImageData> = {
     australia: australia,
     bahrain: bahrain,
     brazil: brazil,
@@ -49,5 +51,3 @@ const countryImages = {
 
     blank: blank
 };
-
-export default countryImages;

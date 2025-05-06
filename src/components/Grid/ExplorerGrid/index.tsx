@@ -4,7 +4,7 @@ import { ExplorerGridProps } from "types";
 
 const ExplorerGrid = (props: ExplorerGridProps) => {
     const elementWidth = props.eWidth || "100px";
-    const isLoading: boolean = props.loading;
+    const isLoading: boolean = props.isLoading;
     const hasLoadingFailed = !!props.loadingFailed;
     return isLoading ? (
         <Box>Carregando.....</Box>

@@ -4,7 +4,8 @@ import { memo, useState, useEffect } from "react";
 import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
 import { BucketCardProps, Bucket } from "types";
 import { getBucket } from "endpoints";
-import { DateBadge, AWSRegionBadge } from "components";
+import { DateBadge, AWSRegionBadge, TagsBadge } from "components";
+import { bucketIcons } from "assets";
 
 const BucketCard = (props: BucketCardProps) => {
     const bucketName = props.bucketName || "meu-bucket";
@@ -12,8 +13,10 @@ const BucketCard = (props: BucketCardProps) => {
         name: "my-bucket",
         description: "my description",
         tag_name: "Meu Bucket",
-        created_at: new Date("1857-04-18"),
-        region: "us-east-1"
+        created_at: undefined,
+        region: "us-east-1",
+        tags: [],
+        icon: bucketIcons.default
     });
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadindFailed, setIsLoadindFailed] = useState(false);
@@ -26,23 +29,22 @@ const BucketCard = (props: BucketCardProps) => {
             if (bucketName !== null) {
                 const bucketInfos = await getBucket(bucketName);
 
-                let bucketTagsName = null;
-                let bucketDescription = null;
-                // const bucketIcon = null;
+                let bucketTagsName = bucketInfos.name;
+                let bucketDescription = ``;
+                let bucketIcon = bucketIcons.default;
                 for (const i in bucketInfos.tags) {
-                    if (bucketInfos.tags[i].Key === "name") bucketTagsName = bucketInfos.tags[i].Value;
-                    if (bucketInfos.tags[i].Key === "description") bucketDescription = bucketInfos.tags[i].Value;
-                    // if (bucketInfos.tags[i].Key === "icon") bucketIcon = bucketInfos.tags[i].Value;
+                    if (bucketInfos.tags[i].key === "name") bucketTagsName = bucketInfos.tags[i].value;
+                    if (bucketInfos.tags[i].key === "description") bucketDescription = bucketInfos.tags[i].value;
+                    if (bucketInfos.tags[i].key === "icon")
+                        bucketIcon = bucketIcons[bucketInfos.tags[i].value] || bucketIcons.default;
                 }
 
-                // setBucketInfo(null);
                 setBucket({
                     ...bucketInfos,
                     tag_name: bucketTagsName,
-                    description: bucketDescription
-                    // icon: bucketIcon
+                    description: bucketDescription,
+                    icon: bucketIcon
                 });
-                console.log("Setou o bucket: ", bucket);
             } else {
             }
         } catch {
@@ -57,7 +59,6 @@ const BucketCard = (props: BucketCardProps) => {
 
     return (
         <Card.Root
-            key={props.key}
             p="10px"
             minW="400px"
             width="100%"
@@ -71,7 +72,7 @@ const BucketCard = (props: BucketCardProps) => {
                         w="90%"
                         h="90%"
                         // src={getBucketIcon(bucketInfo?.icon).src}
-                        src={"https://cdn-icons-png.flaticon.com/512/190/190544.png"}
+                        src={!isLoading && !isLoadindFailed ? bucket.icon.src : bucketIcons.default.src}
                         alt="Caffe Latte"
                     />
                 </VStack>
@@ -124,8 +125,13 @@ const BucketCard = (props: BucketCardProps) => {
             </HStack>
             <Spacer />
             <HStack w="100%" pt="10px" align="left" alignItems="left" textAlign="left" justify="left">
-                <DateBadge date={!isLoading && !isLoadindFailed ? bucket.created_at : undefined} />
+                <DateBadge
+                    startText={"Criado em "}
+                    date={!isLoading && !isLoadindFailed ? bucket.created_at : undefined}
+                    endText={"."}
+                />
                 <AWSRegionBadge region={!isLoading && !isLoadindFailed ? bucket.region : undefined} />
+                <TagsBadge tags={!isLoading && !isLoadindFailed ? bucket.tags : []} />
                 {/* <AWSRegionBadge region={bucketInfo ? bucketInfo.region : "..."} /> */}
             </HStack>
         </Card.Root>
