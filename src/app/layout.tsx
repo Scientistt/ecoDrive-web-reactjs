@@ -14,7 +14,7 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
     const { children } = props;
 
     return (
-        <html suppressHydrationWarning>
+        <html suppressHydrationWarning={true}>
             <body>
                 {/* <ChakraProvider value={defaultSystem}>
                     <ColorModeProvider {...props} />

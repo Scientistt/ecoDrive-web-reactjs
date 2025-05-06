@@ -45,10 +45,14 @@ npm  run  dev
 No arquivo `.env`:
 
 ```bash
-ECODRIVE_API_URL=...
+NEXT_PUBLIC_API_HOST=...
+NEXT_PUBLIC_API_CALL_TIMEOUT=...
 ```
 
-💡 Altere os valores conforme sua conta AWS e preferências de bucket.
+## 🧩 Repositório da API (Backend)
+Este repositório contém apenas o frontend do EcoDrive.
+Para que tudo funcione corretamente, é necessário rodar também a API do EcoDrive, que é responsável pela integração com os buckets:
+👉[github.com/Scientistt/ecoDrive-api-nodejs](https://github.com/Scientistt/ecoDrive-api-nodejs)
 
 ## 📝 Licença
 

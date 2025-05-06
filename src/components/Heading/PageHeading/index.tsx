@@ -1,23 +1,25 @@
 import { memo } from "react";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Text, Flex } from "@chakra-ui/react";
 
-import type { CustomHeadingProps } from "types";
+import type { PageHeadingProps } from "types";
 
-// import { ColorModeButton } from "components/ui/color-mode";
-
-// interface CustomHeadingProps extends HeadingProps {
-//     header: string;
-// }
-
-const PageHeading = (props: CustomHeadingProps) => {
+const PageHeading = (props: PageHeadingProps) => {
     //   const { Brand, moduleName } = useDashboardManager()
     // const moduleName = "Meu Módulo";
 
     return (
         <>
-            <Heading fontSize="" color="light" w="100%" bg="cyan" {...props}>
-                {props.header}
-            </Heading>
+            <Flex
+                w="100%"
+                direction="column"
+                pt="10px"
+                pb="20px"
+                gap={1}
+                align={{ base: "flex-start", sm: "center", md: "flex-start" }}
+            >
+                <Heading>{props.header}</Heading>
+                <Text>{props.description}</Text>
+            </Flex>
         </>
     );
 };
