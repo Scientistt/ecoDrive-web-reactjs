@@ -6,5 +6,5 @@ export interface Bucket {
     created_at?: Date;
     region?: string;
     tags?: { key: string; value: string }[];
-    icon: StaticImageData;
+    icon?: StaticImageData;
 }
