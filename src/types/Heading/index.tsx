@@ -1,7 +1,6 @@
 import { type HeadingProps } from "@chakra-ui/react";
 
-export interface CustomHeadingProps extends HeadingProps {
+export interface PageHeadingProps extends HeadingProps {
     header: string;
+    description: string;
 }
-
-// exports CustomHeadingProps;
