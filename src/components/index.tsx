@@ -5,3 +5,4 @@ export * from "./Grid";
 export * from "./Card";
 export * from "./Tooltip";
 export * from "./Badge";
+export * from "./Breadcrumb";

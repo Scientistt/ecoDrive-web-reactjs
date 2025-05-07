@@ -4,3 +4,4 @@ export * from "./Card";
 export * from "./api";
 export * from "./Badge";
 export * from "./Entities";
+export * from "./Breadcrumb";

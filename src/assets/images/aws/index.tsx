@@ -17,3 +17,11 @@ export const bucketIcons: Record<string, StaticImageData> = {
 
     default: default_black
 };
+
+import aws_logo_light from "assets/images/aws/identity/aws_light.svg";
+import aws_logo_dark from "assets/images/aws/identity/aws_dark.svg";
+
+export const aws: Record<string, StaticImageData> = {
+    logo_light: aws_logo_light,
+    logo_dark: aws_logo_dark
+};
