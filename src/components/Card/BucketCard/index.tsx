@@ -4,11 +4,15 @@ import { memo, useState, useEffect } from "react";
 import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
 import { BucketCardProps, Bucket } from "types";
 import { getBucket } from "endpoints";
+import { useRouter } from "next/navigation";
 import { DateBadge, AWSRegionBadge, TagsBadge } from "components";
-import { bucketIcons } from "assets";
+import { bucketIcons /*aws*/ } from "assets";
+import { useColorMode } from "contexts";
+import { getBucketTagFields } from "utils";
 
 const BucketCard = (props: BucketCardProps) => {
     const bucketName = props.bucketName || "meu-bucket";
+
     const [bucket, setBucket] = useState<Bucket>({
         name: "my-bucket",
         description: "my description",
@@ -18,8 +22,15 @@ const BucketCard = (props: BucketCardProps) => {
         tags: [],
         icon: bucketIcons.default
     });
+
+    const { colorMode } = useColorMode();
+
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadindFailed, setIsLoadindFailed] = useState(false);
+
+    // const bucketContext = useBucket();
+
+    const router = useRouter();
 
     const loadBucketInfo = async () => {
         setIsLoading(true);
@@ -28,22 +39,9 @@ const BucketCard = (props: BucketCardProps) => {
         try {
             if (bucketName !== null) {
                 const bucketInfos = await getBucket(bucketName);
-
-                let bucketTagsName = bucketInfos.name;
-                let bucketDescription = ``;
-                let bucketIcon = bucketIcons.default;
-                for (const i in bucketInfos.tags) {
-                    if (bucketInfos.tags[i].key === "name") bucketTagsName = bucketInfos.tags[i].value;
-                    if (bucketInfos.tags[i].key === "description") bucketDescription = bucketInfos.tags[i].value;
-                    if (bucketInfos.tags[i].key === "icon")
-                        bucketIcon = bucketIcons[bucketInfos.tags[i].value] || bucketIcons.default;
-                }
-
                 setBucket({
                     ...bucketInfos,
-                    tag_name: bucketTagsName,
-                    description: bucketDescription,
-                    icon: bucketIcon
+                    ...getBucketTagFields(bucketInfos)
                 });
             } else {
             }
@@ -53,16 +51,23 @@ const BucketCard = (props: BucketCardProps) => {
             setIsLoading(false);
         }
     };
+
     useEffect(() => {
         loadBucketInfo();
     }, []);
+
+    const clickBucket = () => {
+        // bucketContext.setBucket(bucket);
+        router.push(`/b/${bucket.name}`);
+    };
 
     return (
         <Card.Root
             p="10px"
             minW="400px"
             width="100%"
-            /*onClick={clickBucket}*/ cursor="pointer"
+            onClick={clickBucket}
+            cursor="pointer"
             _hover={{ bg: { base: "teal.100", _dark: "teal.900" } }}
         >
             <HStack gap="10px">
@@ -72,7 +77,16 @@ const BucketCard = (props: BucketCardProps) => {
                         w="90%"
                         h="90%"
                         // src={getBucketIcon(bucketInfo?.icon).src}
-                        src={!isLoading && !isLoadindFailed ? bucket.icon.src : bucketIcons.default.src}
+                        src={
+                            !isLoading && !isLoadindFailed
+                                ? bucket.icon?.src ||
+                                  (colorMode === "light"
+                                      ? bucketIcons.default_black.src
+                                      : bucketIcons.default_white.src)
+                                : colorMode === "light"
+                                  ? bucketIcons.default_black.src
+                                  : bucketIcons.default_white.src
+                        }
                         alt="Caffe Latte"
                     />
                 </VStack>
@@ -122,6 +136,8 @@ const BucketCard = (props: BucketCardProps) => {
                         {!isLoading && !isLoadindFailed ? bucket.description : ""}
                     </Text> */}
                 </VStack>
+
+                {/* <Image bg='gren' w='35px' right={'10px'}  top={'5px'} position={'absolute'} src={aws.logo_light.src} alt="AWS" /> */}
             </HStack>
             <Spacer />
             <HStack w="100%" pt="10px" align="left" alignItems="left" textAlign="left" justify="left">
