@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { listBuckets } from "endpoints";
 import { Bucket } from "types";
+
 import { Body, PageHeading, ExplorerGrid, BucketCard } from "components";
 import { HStack, Spacer, Button } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
@@ -19,11 +20,13 @@ export default function Buckets() {
         try {
             const filter = {};
             const pagination = {
-                limit: 0,
+                limit: 13,
                 page: 1
             };
 
             const objs = await listBuckets(filter, pagination);
+
+            // throw Error("Simulnanod um erro aqui");
 
             setBuckets(objs || { elements: [], totalElements: 0 });
         } catch {

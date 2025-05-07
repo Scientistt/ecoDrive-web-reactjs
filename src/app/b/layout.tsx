@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Navbar } from "components";
+// import { BucketProvider } from "contexts";
 
 export const metadata: Metadata = {
     title: "My Buckets - ecoDrive"

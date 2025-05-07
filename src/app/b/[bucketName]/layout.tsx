@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BucketContext } from "contexts";
+import { BucketProvider } from "contexts";
 
 export const metadata: Metadata = {
     title: "My Buckets - ecoDrive"
@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 
 export default function BucketsLayout(props: Readonly<{ children: React.ReactNode }>) {
     const { children } = props;
-    const bucket = { name: "meu nome é bucket" };
-    return <BucketContext.Provider value={{ bucket }}>{children}</BucketContext.Provider>;
+    return <BucketProvider>{children}</BucketProvider>;
+    // return { children };
 }
