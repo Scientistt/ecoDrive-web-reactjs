@@ -19,7 +19,9 @@ export const parseFilePath = (bucketObject: BucketObject): BucketObject => {
     newObj.path = `${path}`;
     newObj.name = name || newObj.name;
     newObj.ext = ext || undefined;
-    newObj.icon = FileExtensionIcons[ext || "blank"] || FileExtensionIcons.blank;
+    if (newObj.ext) {
+        newObj.icon = FileExtensionIcons[`${ext}`.toLowerCase()] || FileExtensionIcons.blank;
+    }
 
     return newObj;
 };

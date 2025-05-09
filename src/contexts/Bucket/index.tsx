@@ -5,6 +5,7 @@ import { createContext, ReactNode, useState, useContext, useEffect } from "react
 import { Bucket, BucketContextType } from "types";
 import { getBucket } from "endpoints";
 import { getBucketTagFields } from "utils";
+import { useSupplier } from "contexts";
 import { useParams } from "next/navigation";
 
 const defaultValues = {
@@ -19,6 +20,7 @@ export function BucketProvider({ children }: { children: ReactNode }) {
     const [isLoadingFailed, setIsLoadingFailed] = useState(false);
     const [bucket, setBucket] = useState<Bucket>({ name: "_default_" });
     const { bucketName } = useParams();
+    const { supplier } = useSupplier();
 
     const getbucketInfo = async () => {
         setIsLoading(true);
@@ -28,7 +30,7 @@ export function BucketProvider({ children }: { children: ReactNode }) {
             if (bucket.name !== "_default_") {
             } else {
                 if (bucketName !== null) {
-                    const bucketInfos = await getBucket(`${bucketName}`);
+                    const bucketInfos = await getBucket(supplier, `${bucketName}`);
                     setBucket({
                         ...bucketInfos,
                         ...getBucketTagFields(bucketInfos)

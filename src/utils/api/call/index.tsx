@@ -1,5 +1,6 @@
 import axios from "axios";
 import { APIResponseType } from "types";
+import { getStorage } from "utils";
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_HOST,
@@ -8,11 +9,17 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        // const token = localStorage.getItem('token');
-        // if (token) {
-        //   config.headers['Authorization'] = `Bearer ${token}`;
-        // }
-        return config;
+        try {
+            const token = getStorage("usrtkn");
+
+            if (token && !config.headers["Authorization"]) {
+                config.headers["Authorization"] = `${token}`;
+            }
+        } catch {
+            //
+        } finally {
+            return config;
+        }
     },
     (error) => Promise.reject(error)
 );
@@ -25,18 +32,18 @@ api.interceptors.response.use(
 
         //   // Exemplo de tratamento de erros globais
         //   if (status === 401) {
-        //     console.error("Não autorizado.");
+        //
         //     // redirecionar para login ou limpar token
         //   } else if (status === 403) {
-        //     console.error("Acesso negado.");
+        //
         //   } else if (status === 500) {
-        //     console.error("Erro interno no servidor.");
+        //
         //   }
 
         //   // Você pode usar bibliotecas como react-toastify aqui
-        //   console.error(data?.message || "Erro desconhecido.");
+        //
         // } else {
-        //   console.error("Erro de conexão ou timeout.");
+        //
         // }
 
         return Promise.reject(error); // Permite tratar individualmente, se quiser

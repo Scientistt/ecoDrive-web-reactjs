@@ -32,6 +32,7 @@ export const FileExtensionIcons: Record<string, StaticImageData> = {
     exe: ext_exe,
     iso: ext_iso,
     jpg: ext_jpg,
+    jpeg: ext_jpg,
     json: ext_json,
     m4a: ext_m4a,
     mov: ext_mov,

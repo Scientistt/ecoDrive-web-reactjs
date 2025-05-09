@@ -7,7 +7,7 @@ import { listBucketObjects } from "endpoints";
 import { Body, BucketHeading, ExplorerGrid, DirectoryCard, FileCard, SimpleTooltip, Breadcrumb } from "components";
 import { HStack, Spacer, Button, Text, IconButton, Spinner } from "@chakra-ui/react";
 import { LuRefreshCw, LuArrowLeft, LuFile, LuFolderTree } from "react-icons/lu";
-import { useBucket } from "contexts";
+import { useBucket, useSupplier } from "contexts";
 import { useRouter } from "next/navigation";
 import { BucketObject } from "types";
 // import { useRouter } from "next/navigation";
@@ -18,6 +18,7 @@ export default function BucketObjects() {
     const router = useRouter();
     // const router = useRouter();
     const { bucket /*setBucket*/ } = useBucket();
+    const { supplier /*setBucket*/ } = useSupplier();
 
     // const { bucket } = BucketContextProvider();
 
@@ -42,7 +43,7 @@ export default function BucketObjects() {
                 page: 1
             };
 
-            const objs = await listBucketObjects(bucket.name, filter, pagination);
+            const objs = await listBucketObjects(supplier, bucket, filter, pagination);
 
             setObjects(objs || { elements: [], totalElements: 0 });
         } catch {
