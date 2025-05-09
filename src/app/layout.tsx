@@ -1,6 +1,7 @@
 import "./globals.css";
 // import { systemConfig } from "themes/system/index";
 import { Provider } from "components/ui/provider";
+// import { AuthProvider } from "contexts";
 // import { ColorModeProvider } from "components/ui/color-mode";
 // import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import type { Metadata } from "next";
@@ -16,11 +17,6 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
     return (
         <html suppressHydrationWarning={true}>
             <body>
-                {/* <ChakraProvider value={defaultSystem}>
-                    <ColorModeProvider {...props} />
-                    {children} 
-                </ChakraProvider> */}
-
                 <Provider>{children}</Provider>
             </body>
         </html>

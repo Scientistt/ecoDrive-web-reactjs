@@ -1,9 +1,15 @@
 import { callAPI } from "utils";
+import { Bucket, Supplier } from "types";
 
-export const listBucketObjects = async (bucketName: string, filter = {}, pagination = { limit: 10, page: 1 }) => {
+export const listBucketObjects = async (
+    supplier: Supplier,
+    bucket: Bucket,
+    filter = {},
+    pagination = { limit: 10, page: 1 }
+) => {
     const response = await callAPI({
         method: "POST",
-        url: `/bucket/${bucketName}/objects`,
+        url: `/supplier/${supplier.id}/bucket/${bucket.name}/objects`,
         data: { filter: filter, pagination: pagination }
     });
     return response?.body?.object || { elements: [] };

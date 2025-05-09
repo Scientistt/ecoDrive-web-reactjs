@@ -7,10 +7,12 @@ import { getBucket } from "endpoints";
 import { useRouter } from "next/navigation";
 import { DateBadge, AWSRegionBadge, TagsBadge } from "components";
 import { bucketIcons /*aws*/ } from "assets";
-import { useColorMode } from "contexts";
+import { useColorMode, useSupplier } from "contexts";
 import { getBucketTagFields } from "utils";
 
 const BucketCard = (props: BucketCardProps) => {
+    const { supplier } = useSupplier();
+
     const bucketName = props.bucketName || "meu-bucket";
 
     const [bucket, setBucket] = useState<Bucket>({
@@ -38,7 +40,7 @@ const BucketCard = (props: BucketCardProps) => {
 
         try {
             if (bucketName !== null) {
-                const bucketInfos = await getBucket(bucketName);
+                const bucketInfos = await getBucket(supplier, bucketName);
                 setBucket({
                     ...bucketInfos,
                     ...getBucketTagFields(bucketInfos)
@@ -58,7 +60,7 @@ const BucketCard = (props: BucketCardProps) => {
 
     const clickBucket = () => {
         // bucketContext.setBucket(bucket);
-        router.push(`/b/${bucket.name}`);
+        router.push(`/suppliers/${supplier.slug}/buckets/${bucket.name}/objects`);
     };
 
     return (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Navbar } from "components";
-// import { BucketProvider } from "contexts";
+// import { Navbar } from "components";
+
+import { SupplierProvider } from "contexts";
 
 export const metadata: Metadata = {
     title: "My Buckets - ecoDrive"
@@ -9,10 +10,6 @@ export const metadata: Metadata = {
 
 export default function BucketsLayout(props: Readonly<{ children: React.ReactNode }>) {
     const { children } = props;
-    return (
-        <>
-            <Navbar />
-            {children}
-        </>
-    );
+
+    return <SupplierProvider>{children}</SupplierProvider>;
 }

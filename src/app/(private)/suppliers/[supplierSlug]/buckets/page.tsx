@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import { listBuckets } from "endpoints";
 import { Bucket } from "types";
+import { useSupplier } from "contexts";
 
 import { Body, PageHeading, ExplorerGrid, BucketCard } from "components";
 import { HStack, Spacer, Button } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
 
 export default function Buckets() {
+    const { supplier } = useSupplier();
+
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
 
@@ -24,7 +27,7 @@ export default function Buckets() {
                 page: 1
             };
 
-            const objs = await listBuckets(filter, pagination);
+            const objs = await listBuckets(supplier, filter, pagination);
 
             // throw Error("Simulnanod um erro aqui");
 

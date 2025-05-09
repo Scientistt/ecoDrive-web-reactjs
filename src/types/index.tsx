@@ -5,3 +5,5 @@ export * from "./api";
 export * from "./Badge";
 export * from "./Entities";
 export * from "./Breadcrumb";
+export * from "./Auth";
+export * from "./Logo";
