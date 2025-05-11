@@ -1,4 +1,4 @@
-import { type GridProps, FlexProps } from "@chakra-ui/react";
+import { type GridProps, FlexProps, type StackProps } from "@chakra-ui/react";
 
 export interface ExplorerGridProps extends GridProps {
     isLoading: boolean;
@@ -8,4 +8,7 @@ export interface ExplorerGridProps extends GridProps {
 
 export interface NavBarProps extends FlexProps {
     decoyProp?: string;
+}
+export interface LoadingProps extends StackProps {
+    message?: string;
 }

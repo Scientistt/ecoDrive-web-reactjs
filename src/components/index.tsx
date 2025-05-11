@@ -7,3 +7,4 @@ export * from "./Tooltip";
 export * from "./Badge";
 export * from "./Breadcrumb";
 export * from "./Logo";
+export * from "./Loading";

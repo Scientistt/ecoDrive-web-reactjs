@@ -8,10 +8,6 @@ const publicRoutes = [
     {
         path: "/login",
         whenAuthenticated: "redirect"
-    },
-    {
-        path: "/about",
-        whenAuthenticated: "next"
     }
 ] as const;
 
@@ -31,7 +27,7 @@ export function middleware(request: NextRequest) {
 
     if (authToken && publicRoute && publicRoute.whenAuthenticated === "redirect") {
         const redurectUrl = request.nextUrl.clone();
-        redurectUrl.pathname = "/";
+        redurectUrl.pathname = "/suppliers";
         return NextResponse.redirect(redurectUrl);
     }
 

@@ -9,7 +9,6 @@ import {
     Input,
     Stack,
     Text,
-    Image,
     Field,
     useBreakpointValue,
     Spacer,
@@ -21,19 +20,21 @@ import {
 import { useState, useRef } from "react";
 
 import { EcoDriveLogo } from "components";
-import { useColorMode } from "contexts";
-import { USER_JWT_TOKEN_NAME, setStorage } from "utils";
+import { Toaster, toaster } from "components/ui/toaster";
+import { USER_JWT_TOKEN_NAME, isUsernameValid, setStorage } from "utils";
 import { bgImages } from "assets";
 import { login } from "endpoints";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-    const { colorMode } = useColorMode();
-
+    const [isLogInButtonActive, setIsLogInButtonActive] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingFailed, setIsLoadingFailed] = useState(false);
     const [loginPassword, setLoginPassword] = useState<string>();
+    const [isLoginPasswordValid, setIsLoginPasswordValid] = useState<boolean>(true);
     const [loginUserName, setLoginUserName] = useState<string>();
+    const [isLoginUserNameValid, setIsLoginUserNameValid] = useState<boolean>(true);
+
     const [loginKeep, setLoginKeep] = useState<boolean>(true);
 
     const router = useRouter();
@@ -43,17 +44,37 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            setIsLoading(true);
-            setIsLoadingFailed(false);
+            if (!(isUsernameValid(loginUserName || "") && loginUserName?.trim() !== "")) {
+                setIsLoginUserNameValid(false);
+                return;
+            }
 
-            const response = await login(loginUserName || "", loginPassword || "");
+            if ((loginPassword || "").trim().length < 8) {
+                setIsLoginPasswordValid(false);
+                return;
+            }
 
-            if (response?.token) {
-                setStorage(USER_JWT_TOKEN_NAME, `Bearer ${response?.token.jwt_token}`);
-                router.push("/suppliers");
-            } else {
-                setIsLoadingFailed(true);
-                focusOnPasswordInput();
+            if (isLoginUserNameValid && isLoginPasswordValid) {
+                setIsLoading(true);
+                setIsLoadingFailed(false);
+
+                const response = await login(loginUserName || "", loginPassword || "");
+
+                if (response?.token) {
+                    setStorage(USER_JWT_TOKEN_NAME, `Bearer ${response?.token.jwt_token}`);
+                    setIsLogInButtonActive(false);
+                    toaster.create({
+                        type: "success",
+                        title: "Log In com sucesso"
+                        // description: "Vamos direcioná-lo para a página de login"
+                    });
+                    setTimeout(() => {
+                        router.push("/suppliers");
+                    }, 2000);
+                } else {
+                    setIsLoadingFailed(true);
+                    focusOnPasswordInput();
+                }
             }
         } catch {
             focusOnPasswordInput();
@@ -68,10 +89,6 @@ export default function Login() {
         passwordInput.current?.focus();
     };
 
-    // const focusOnLoginInput = () => {
-    //     loginInput.current?.focus();
-    // };
-
     const enterOnPassInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             handleLogin();
@@ -84,14 +101,19 @@ export default function Login() {
         }
     };
 
+    const clickRegister = () => {
+        router.push("/register");
+    };
+
     return (
         <Flex
             margin="auto"
             alignSelf="center"
-            h={{ base: "auto", md: "100vh" }}
+            h={"calc(100vh - 50px)"}
             w="100%"
             flexDirection={{ base: "column", md: "row" }}
         >
+            <Toaster />
             {/* --- Left side of page --- */}
 
             <Stack
@@ -110,7 +132,7 @@ export default function Login() {
                     <EcoDriveLogo size="big" />
                 </HStack>
 
-                <Stack w="450px" h="500px" p="10">
+                <Stack w="450px" h="auto" p="10">
                     <Stack gap={8}>
                         <Stack gap={{ base: "2", md: "3" }} textAlign="center">
                             <Heading
@@ -125,8 +147,8 @@ export default function Login() {
                         <Box borderWidth="0px">
                             <Stack gap="6">
                                 <Stack gap="5">
-                                    <Field.Root>
-                                        <Field.Label htmlFor="login" fontSize={"md"}>
+                                    <Field.Root required invalid={!isLoginUserNameValid}>
+                                        <Field.Label htmlFor="login" fontSize={"lg"}>
                                             Usuário
                                         </Field.Label>
                                         <Input
@@ -134,24 +156,38 @@ export default function Login() {
                                             ref={loginInput}
                                             required={true}
                                             id="login"
+                                            colorPalette={"green"}
+                                            px="10px"
                                             type="text"
+                                            fontSize={"md"}
                                             onKeyDown={enterOnLoginInput}
                                             borderBottomWidth="2px"
                                             placeholder="Digite o seu nome de usuário"
                                             variant="flushed"
-                                            value={loginUserName}
                                             onChange={(event) => {
-                                                setLoginUserName(event.target.value.toLowerCase().replace(/\s/g, ""));
+                                                const newValue = event.target.value.toLowerCase().replace(/\s/g, "");
+                                                setLoginUserName(newValue);
+                                                setIsLoginUserNameValid(isUsernameValid(newValue));
                                             }}
                                         />
-
+                                        {(loginUserName || "").trim() === "" ? (
+                                            <Field.ErrorText color="red" fontSize={"sm"}>
+                                                Usuário não pode ser vazio
+                                            </Field.ErrorText>
+                                        ) : (
+                                            <Field.ErrorText color="red" fontSize={"sm"}>
+                                                Usuário inválido
+                                            </Field.ErrorText>
+                                        )}
+                                    </Field.Root>
+                                    <Field.Root required invalid={isLoadingFailed || !isLoginPasswordValid}>
                                         <HStack w="100%" justifyContent="space-between">
-                                            <Field.Label htmlFor="password" mt="4" fontSize={"md"}>
+                                            <Field.Label htmlFor="password" mt="4" fontSize={"lg"}>
                                                 Senha
                                             </Field.Label>
                                             <Spacer />
 
-                                            <Text color="muted" fontSize={"sm"}>
+                                            <Text color="muted" fontSize={"md"}>
                                                 <Link color={"green"} fontWeight={"medium"} variant="plain">
                                                     Esqueceu a senha?
                                                 </Link>
@@ -162,25 +198,37 @@ export default function Login() {
                                             w="100%"
                                             ref={passwordInput}
                                             required={true}
+                                            colorPalette={"green"}
+                                            px="10px"
+                                            fontSize={"md"}
                                             id="password"
                                             type="password"
                                             onKeyDown={enterOnPassInput}
-                                            value={loginPassword}
                                             borderBottomWidth="2px"
                                             placeholder="Digite a sua senha"
                                             variant="flushed"
                                             onChange={(event) => {
                                                 setLoginPassword(event.target.value);
+                                                const newValue = event.target.value;
+                                                setLoginPassword(newValue);
+                                                setIsLoginPasswordValid(newValue?.length >= 8);
                                             }}
                                         />
+
+                                        {isLoginPasswordValid ? (
+                                            <Field.ErrorText color="red" fontSize={"sm"}>
+                                                Usuário e/ou Senha inválido(s)
+                                            </Field.ErrorText>
+                                        ) : (loginPassword || "").trim() === "" ? (
+                                            <Field.ErrorText color="red" fontSize={"sm"}>
+                                                Informe a sua senha
+                                            </Field.ErrorText>
+                                        ) : (
+                                            <Field.ErrorText color="red" fontSize={"sm"}>
+                                                A senha deve conter pelo menos 8 dígitos
+                                            </Field.ErrorText>
+                                        )}
                                     </Field.Root>
-                                    {isLoadingFailed ? (
-                                        <Text color="red" fontSize={"sm"}>
-                                            Usuário e/ou senha inválido(s)
-                                        </Text>
-                                    ) : (
-                                        <></>
-                                    )}
                                 </Stack>
                                 <Checkbox.Root
                                     variant={"solid"}
@@ -197,6 +245,8 @@ export default function Login() {
                                     <Button
                                         variant="solid"
                                         color="dark"
+                                        fontSize={"lg"}
+                                        size={"lg"}
                                         type="submit"
                                         bgColor={{ base: "green.700", _dark: "green.500" }}
                                         borderLeftRadius="0"
@@ -204,13 +254,19 @@ export default function Login() {
                                         borderRightRadius="50"
                                         loading={isLoading}
                                         onClick={handleLogin}
+                                        disabled={!isLogInButtonActive}
                                     >
                                         Log In
                                     </Button>
                                     <HStack gap={1} justify="center">
                                         <Text color="muted" fontSize={"md"}>
                                             Novo por aqui?{" "}
-                                            <Link color={"green"} fontWeight={"medium"} variant="plain">
+                                            <Link
+                                                color={"green"}
+                                                onClick={clickRegister}
+                                                fontWeight={"medium"}
+                                                variant="plain"
+                                            >
                                                 Registre-se
                                             </Link>
                                         </Text>
@@ -225,22 +281,24 @@ export default function Login() {
             {/* Right: Login Illustration */}
             <Stack
                 // bg="red"
-                bgImage={`url(${colorMode === "dark" ? bgImages.dev_dark.src : bgImages.dev.src})`}
-                bgSize={"180%"}
+                bgImage={`url(${bgImages.login.src})`}
+                bgSize={"cover"}
+                bgRepeat={"no-repeat"}
                 bgPos={"center"}
                 bgColor={"green.600"}
                 alignItems="center"
                 justifyContent="center"
-                w={{ base: "100%", md: "50%" }}
+                w={{ base: "100vw", md: "50vw" }}
+                minH={{ base: "50vw", md: "00vw" }}
                 p={{ base: "25px", md: "0px" }}
                 mt={{ base: "25px", md: "0px" }}
             >
-                <Image
+                {/* <Image
                     src={"favicon.ico"}
                     alt="algo aqui"
                     w={{ base: "95vw", sm: "60%" }}
                     // display={{ base: "none", sm: "block" }}
-                />
+                /> */}
             </Stack>
         </Flex>
     );

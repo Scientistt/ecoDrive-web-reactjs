@@ -5,6 +5,7 @@ import { Provider } from "components/ui/provider";
 // import { ColorModeProvider } from "components/ui/color-mode";
 // import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import type { Metadata } from "next";
+import { Navbar } from "components";
 
 export const metadata: Metadata = {
     title: "ecoDrive",
@@ -17,7 +18,10 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
     return (
         <html suppressHydrationWarning={true}>
             <body>
-                <Provider>{children}</Provider>
+                <Provider>
+                    <Navbar />
+                    {children}
+                </Provider>
             </body>
         </html>
     );

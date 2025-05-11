@@ -1,11 +1,11 @@
 "use client";
 
-import { Text } from "@chakra-ui/react";
 import { createContext, ReactNode, useState, useContext, useEffect } from "react";
 import { AuthContextType, User } from "types";
 import { checkAuthToken } from "endpoints";
 import { getStorage, deleteStorage, USER_JWT_TOKEN_NAME } from "utils";
 import { useRouter } from "next/navigation";
+import { FullPageLoading } from "components";
 
 const defaultValues = {
     user: null,
@@ -58,7 +58,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider value={{ user, setUser, logout }}>
-            {isLoading ? <Text>Carregando informações do Usuário...</Text> : children}
+            {isLoading ? <FullPageLoading message="Verificando login" pt="50px" /> : children}
         </AuthContext.Provider>
     );
 }

@@ -1,6 +1,16 @@
+"use client";
+
 import { Heading, VStack, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+    const router = useRouter();
+
+    useEffect(() => {
+        router.push("/suppliers");
+    });
+
     return (
         <>
             <VStack minH="100vh" align="center" pt="10%" pb="10%" bg={{ base: "gray.100", _dark: "gray.900" }}>

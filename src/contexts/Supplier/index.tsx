@@ -5,6 +5,7 @@ import { createContext, ReactNode, useState, useContext, useEffect } from "react
 import { Supplier, SupplierContextType } from "types";
 import { getSupplier } from "endpoints";
 import { useParams } from "next/navigation";
+import { FullPageLoading } from "components";
 
 const defaultValues = {
     supplier: { id: 0n, slug: "null", name: "null", status: "I", account_supplier: "null" },
@@ -46,10 +47,11 @@ export function SupplierProvider({ children }: { children: ReactNode }) {
         getSupplierInfo();
     }, []);
 
+    // return <FullPageLoading message="Checando credenciais" />;
     return (
         <SupplierContext.Provider value={{ supplier, setSupplier }}>
             {isLoading ? (
-                <Text>Carregando informações do fornecedor...</Text>
+                <FullPageLoading message="Checando credenciais" />
             ) : isLoadingFailed || `${supplier.id}` === `0` ? (
                 <Text>Erro ao carregar o fornecedor selecionado!</Text>
             ) : (
