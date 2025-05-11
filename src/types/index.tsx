@@ -7,3 +7,4 @@ export * from "./Entities";
 export * from "./Breadcrumb";
 export * from "./Auth";
 export * from "./Logo";
+export * from "./Navbar";
