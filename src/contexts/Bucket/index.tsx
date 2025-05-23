@@ -4,6 +4,7 @@ import { Text } from "@chakra-ui/react";
 import { createContext, ReactNode, useState, useContext, useEffect } from "react";
 import { Bucket, BucketContextType } from "types";
 import { getBucket } from "endpoints";
+import { FullPageLoading } from "components";
 import { getBucketTagFields } from "utils";
 import { useSupplier } from "contexts";
 import { useParams } from "next/navigation";
@@ -53,7 +54,7 @@ export function BucketProvider({ children }: { children: ReactNode }) {
     return (
         <BucketContext.Provider value={{ bucket, setBucket }}>
             {isLoading ? (
-                <Text>Carregando informações do bucket...</Text>
+                <FullPageLoading message="Verificando Bucket" />
             ) : isLoadingFailed ? (
                 <Text>Erro ao carregar o bucket selecionado!</Text>
             ) : (

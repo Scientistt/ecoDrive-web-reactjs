@@ -1,19 +1,22 @@
 "use client";
 
-import { memo } from "react";
-import { Card, HStack, VStack, Image, Text, Spacer } from "@chakra-ui/react";
+import { memo, useState } from "react";
+import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
 import { SupplierCardProps } from "types";
 import { aws, LoadingIcons } from "assets";
 import { useColorMode } from "contexts";
 import { useRouter } from "next/navigation";
 
 const SupplierCard = (props: SupplierCardProps) => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const supplier = props.supplier || {};
 
     const { colorMode } = useColorMode();
     const router = useRouter();
 
     const clickSupplier = () => {
+        setIsLoading(true);
         router.push(`/suppliers/${supplier.slug}/buckets`);
     };
 
@@ -24,9 +27,9 @@ const SupplierCard = (props: SupplierCardProps) => {
             width="100%"
             onClick={clickSupplier}
             cursor="pointer"
-            _hover={{ bg: { base: "teal.100", _dark: "teal.900" } }}
+            _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
         >
-            <HStack gap="10px">
+            <HStack gap={"10px"}>
                 <VStack gap="0" w="120px">
                     <Image
                         objectFit="cover"
@@ -42,38 +45,59 @@ const SupplierCard = (props: SupplierCardProps) => {
                         }
                         alt="Caffe Latte"
                     />
+                    {/* <IdBadge myId={supplier.id} /> */}
                 </VStack>
                 <VStack gap="0" w="100%" align="left">
                     <Text lineClamp={1} w="100%" fontWeight="bold" maxHeight="24px" overflow="hidden">
                         {supplier.name}
                     </Text>
-                    <Text
-                        lineClamp={1}
-                        w="100%"
-                        textAlign="left"
-                        fontSize="sm"
-                        fontWeight="light"
-                        maxHeight="24px"
-                        overflow="hidden"
-                    >
-                        {supplier.name}
-                    </Text>
 
-                    <Spacer />
-                    <Text lineClamp={2} mt="10px" textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
+                    {isLoading ? (
+                        <>
+                            <HStack>
+                                <Spinner size="sm" />
+                                <Text
+                                    lineClamp={1}
+                                    w="100%"
+                                    textAlign="left"
+                                    fontSize="sm"
+                                    fontWeight="light"
+                                    maxHeight="24px"
+                                    overflow="hidden"
+                                >
+                                    Carregando...
+                                </Text>
+                            </HStack>
+                        </>
+                    ) : (
+                        <>
+                            <Text
+                                lineClamp={1}
+                                w="100%"
+                                textAlign="left"
+                                fontSize="sm"
+                                fontWeight="light"
+                                maxHeight="24px"
+                                overflow="hidden"
+                            >
+                                {supplier.slug}
+                            </Text>
+                        </>
+                    )}
+
+                    <Text lineClamp={2} textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
                         {supplier.description}
                     </Text>
+
                     {/* <Spinner size="sm" mt="10px" /> */}
 
                     {/* <Text lineClamp={2} mt="10px" textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
                         {!isLoading && !isLoadindFailed ? bucket.description : ""}
                     </Text> */}
                 </VStack>
-
-                {/* <Image bg='gren' w='35px' right={'10px'}  top={'5px'} position={'absolute'} src={aws.logo_light.src} alt="AWS" /> */}
             </HStack>
             <Spacer />
-            <HStack w="100%" pt="10px" align="left" alignItems="left" textAlign="left" justify="left">
+            <HStack w="100%" align="left" alignItems="left" textAlign="left" justify="left">
                 {/* <DateBadge
                     startText={"Criado em "}
                     date={!isLoading && !isLoadindFailed ? bucket.created_at : undefined}

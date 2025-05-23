@@ -1,9 +1,9 @@
 import "./globals.css";
 // import { systemConfig } from "themes/system/index";
 import { Provider } from "components/ui/provider";
-// import { AuthProvider } from "contexts";
-// import { ColorModeProvider } from "components/ui/color-mode";
-// import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+
+import { Toaster } from "components";
+import { NavbarProvider, AuthContextProvider } from "contexts";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,7 +17,12 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
     return (
         <html suppressHydrationWarning={true}>
             <body>
-                <Provider>{children}</Provider>
+                <Provider>
+                    <Toaster />
+                    <AuthContextProvider>
+                        <NavbarProvider>{children}</NavbarProvider>
+                    </AuthContextProvider>
+                </Provider>
             </body>
         </html>
     );

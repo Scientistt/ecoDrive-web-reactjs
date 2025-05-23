@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { listSuppliers } from "endpoints";
 import { Supplier } from "types";
 
-import { Body, PageHeading, ExplorerGrid, SupplierCard } from "components";
-import { HStack, Spacer, Button } from "@chakra-ui/react";
+import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, toaster } from "components";
+import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
 
 export default function Buckets() {
@@ -24,17 +24,12 @@ export default function Buckets() {
                 page: 1
             };
 
-            console.log("B4");
             const objs = await listSuppliers(filter, pagination);
-
-            console.log("objs: ", objs);
 
             // throw Error("Simulnanod um erro aqui");
 
             setSuppliers(objs || { elements: [], totalElements: 0 });
-        } catch (error) {
-            console.log("error: ", error);
-
+        } catch {
             setIsLoadFailed(true);
         } finally {
             setIsLoading(false);
@@ -49,7 +44,13 @@ export default function Buckets() {
         loadSuppliersList();
     };
 
-    const clickedNewSupplier = async () => {};
+    const clickedNewSupplier = async () => {
+        toaster.create({
+            type: "info",
+            title: "Funcionalidade não disponível",
+            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
+        });
+    };
 
     return (
         <>
@@ -57,12 +58,12 @@ export default function Buckets() {
                 <HStack>
                     <PageHeading header="Minhas credenciais" description="Fornecedores de serviços em núvem" />
                     <Spacer />
-                    <Button onClick={clickedRefresh} disabled={isLoading} variant="subtle">
+                    <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
                         <LuRefreshCw /> Atualizar
-                    </Button>
-                    <Button disabled onClick={clickedNewSupplier}>
+                    </SubtleButton>
+                    <SimpleButton onClick={clickedNewSupplier}>
                         <LuPlus /> Nova Credencial
-                    </Button>
+                    </SimpleButton>
                 </HStack>
                 <ExplorerGrid isLoading={isLoading} loadingFailed={isLoadFailed} eWidth={"400px"}>
                     {suppliers.elements.map((obj: Supplier, index) => {

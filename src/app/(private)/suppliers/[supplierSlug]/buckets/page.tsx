@@ -4,16 +4,28 @@ import { useState, useEffect } from "react";
 import { listBuckets } from "endpoints";
 import { Bucket } from "types";
 import { useSupplier } from "contexts";
-
-import { Body, PageHeading, ExplorerGrid, BucketCard } from "components";
-import { HStack, Spacer, Button } from "@chakra-ui/react";
-import { LuRefreshCw, LuPlus } from "react-icons/lu";
+import { useRouter } from "next/navigation";
+import {
+    Body,
+    PageHeading,
+    ExplorerGrid,
+    BucketCard,
+    SimpleButton,
+    SubtleButton,
+    toaster,
+    SimpleIconButton
+} from "components";
+import { HStack, Spacer } from "@chakra-ui/react";
+import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-icons/lu";
 
 export default function Buckets() {
     const { supplier } = useSupplier();
+    const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
+
+    const [isToLoadEachBucketDetail, setIsToLoadEachBucketDetail] = useState(false);
 
     const [buckets, setBuckets] = useState({ elements: [], totalElements: 0 });
 
@@ -21,9 +33,12 @@ export default function Buckets() {
         setIsLoading(true);
         setIsLoadFailed(false);
         try {
-            const filter = {};
+            const filter = {
+                // details: isToLoadEachBucketDetail
+                details: false
+            };
             const pagination = {
-                limit: 13,
+                limit: 30,
                 page: 1
             };
 
@@ -41,30 +56,74 @@ export default function Buckets() {
 
     useEffect(() => {
         loadBucketList();
-    }, []);
+    }, [isToLoadEachBucketDetail]);
 
     const clickedRefresh = async () => {
         loadBucketList();
     };
 
-    const clickedNewBucket = async () => {};
+    const loadBucketDetails = async () => {
+        setIsToLoadEachBucketDetail(true);
+    };
+
+    const doNotLoadBucketDetails = async () => {
+        setIsToLoadEachBucketDetail(false);
+    };
+
+    const clickBackToSuppliers = async () => {
+        router.push("/suppliers");
+    };
+
+    const clickedNewBucket = async () => {
+        toaster.create({
+            type: "info",
+            title: "Funcionalidade não disponível",
+            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
+        });
+    };
 
     return (
         <>
             <Body>
+                <SubtleButton onClick={clickBackToSuppliers}>
+                    <LuArrowLeft />
+                    Lista de Credenciais
+                </SubtleButton>
                 <HStack>
                     <PageHeading header="Meus Buckets" description="Amazon Simple Storage Service (S3)" />
+
                     <Spacer />
-                    <Button onClick={clickedRefresh} disabled={isLoading} variant="subtle">
+
+                    {isToLoadEachBucketDetail ? (
+                        <SimpleIconButton
+                            tooltip="Não carregar detalhes (Mais rápido)"
+                            onClick={doNotLoadBucketDetails}
+                        >
+                            <LuSparkle />
+                        </SimpleIconButton>
+                    ) : (
+                        <SimpleIconButton tooltip="Carregar detalhes (Mais lento)" onClick={loadBucketDetails}>
+                            <LuSparkles />
+                        </SimpleIconButton>
+                    )}
+
+                    <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
                         <LuRefreshCw /> Atualizar
-                    </Button>
-                    <Button disabled onClick={clickedNewBucket}>
+                    </SubtleButton>
+                    <SimpleButton onClick={clickedNewBucket}>
                         <LuPlus /> Novo Bucket
-                    </Button>
+                    </SimpleButton>
                 </HStack>
+
                 <ExplorerGrid isLoading={isLoading} loadingFailed={isLoadFailed} eWidth={"400px"}>
                     {buckets.elements.map((obj: Bucket, index) => {
-                        return <BucketCard bucketName={obj.name} key={`bucketCard#${index}`} />;
+                        return (
+                            <BucketCard
+                                bucket={obj}
+                                loadDetails={isToLoadEachBucketDetail}
+                                key={`bucketCard#${index}`}
+                            />
+                        );
                     })}
                 </ExplorerGrid>
             </Body>

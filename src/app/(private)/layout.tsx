@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { AuthContextProvider } from "contexts";
-import { Navbar } from "components";
 
 export const metadata: Metadata = {
     title: "ecoDrive",
@@ -8,10 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function PrivateLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-    return (
-        <AuthContextProvider>
-            <Navbar />
-            {children}
-        </AuthContextProvider>
-    );
+    return children;
+    return <AuthContextProvider>{children}</AuthContextProvider>;
 }

@@ -4,9 +4,20 @@ import { useState, useEffect } from "react";
 import { listBucketObjects } from "endpoints";
 // import { Bucket } from "types";
 // import { BucketContextProvider } from "contexts";
-import { Body, BucketHeading, ExplorerGrid, DirectoryCard, FileCard, SimpleTooltip, Breadcrumb } from "components";
-import { HStack, Spacer, Button, Text, IconButton, Spinner } from "@chakra-ui/react";
-import { LuRefreshCw, LuArrowLeft, LuFile, LuFolderTree } from "react-icons/lu";
+import {
+    Body,
+    BucketHeading,
+    ExplorerGrid,
+    DirectoryCard,
+    FileCard,
+    Breadcrumb,
+    SubtleButton,
+    SimpleButton,
+    toaster,
+    SimpleIconButton
+} from "components";
+import { HStack, Spacer } from "@chakra-ui/react";
+import { LuRefreshCw, LuArrowLeft, LuFile, LuFolderTree, LuUpload } from "react-icons/lu";
 import { useBucket, useSupplier } from "contexts";
 import { useRouter } from "next/navigation";
 import { BucketObject } from "types";
@@ -72,8 +83,16 @@ export default function BucketObjects() {
         loadBucketObjects();
     };
 
+    const clickedUpload = async () => {
+        toaster.create({
+            type: "info",
+            title: "Funcionalidade não disponível",
+            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
+        });
+    };
+
     const clickBackToBuckets = async () => {
-        router.push("/b");
+        router.push(`/suppliers/${supplier.slug}/buckets`);
     };
 
     const clickDirectory = async (obj: BucketObject) => {
@@ -87,9 +106,11 @@ export default function BucketObjects() {
     return (
         <>
             <Body>
-                <Button onClick={clickBackToBuckets} variant="ghost">
-                    <LuArrowLeft /> Todos os Buckets
-                </Button>
+                <SubtleButton onClick={clickBackToBuckets}>
+                    <LuArrowLeft />
+                    Lista de Buckets
+                </SubtleButton>
+
                 <HStack>
                     <BucketHeading bucket={bucket} />
                     <Spacer />
@@ -107,36 +128,23 @@ export default function BucketObjects() {
                     <Spacer />
 
                     {isShowingDirectories ? (
-                        <SimpleTooltip content="Ver todos os documentos">
-                            <IconButton onClick={seeFilesOnly} variant="subtle">
-                                <LuFile />
-                            </IconButton>
-                        </SimpleTooltip>
+                        <SimpleIconButton tooltip="Ver todos os documentos" onClick={seeFilesOnly}>
+                            <LuFile />
+                        </SimpleIconButton>
                     ) : (
-                        <SimpleTooltip content="Ver árvore de diretórios">
-                            <IconButton onClick={seeDirectories} variant="subtle">
-                                <LuFolderTree />
-                            </IconButton>
-                        </SimpleTooltip>
+                        <SimpleIconButton tooltip="Ver árvore de diretórios" onClick={seeDirectories}>
+                            <LuFolderTree />
+                        </SimpleIconButton>
                     )}
-                    <Button onClick={clickedRefresh} disabled={isLoading} variant="subtle">
+
+                    <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
                         <LuRefreshCw /> Atualizar
-                    </Button>
+                    </SubtleButton>
+
+                    <SimpleButton onClick={clickedUpload}>
+                        <LuUpload /> Upload
+                    </SimpleButton>
                 </HStack>
-                {isLoading ? (
-                    <HStack>
-                        <Spinner />
-                        <Text>Carregando...</Text>
-                    </HStack>
-                ) : isLoadFailed ? (
-                    <Text>Não foi possível carregar</Text>
-                ) : objects.elements.length === 0 ? (
-                    <Text>Nenhum objeto encontrado</Text>
-                ) : (
-                    <Text>
-                        Encontrados <b>{objects.elements.length}</b> objetos
-                    </Text>
-                )}
 
                 <ExplorerGrid mt="10px" isLoading={isLoading} loadingFailed={isLoadFailed} eWidth={"90px"}>
                     {objects.elements.map((obj: BucketObject, index) => {

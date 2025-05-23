@@ -13,21 +13,18 @@ import { getBucketTagFields } from "utils";
 const BucketCard = (props: BucketCardProps) => {
     const { supplier } = useSupplier();
 
-    const bucketName = props.bucketName || "meu-bucket";
+    const bucketFromProps = { ...props.bucket, ...getBucketTagFields(props.bucket) };
 
-    const [bucket, setBucket] = useState<Bucket>({
-        name: "my-bucket",
-        description: "my description",
-        tag_name: "Meu Bucket",
-        created_at: undefined,
-        region: "us-east-1",
-        tags: [],
-        icon: bucketIcons.default
-    });
+    const bucketName = "meu-bucket";
+    const loadDetails = !!props.loadDetails;
+
+    const [bucket, setBucket] = useState<Bucket>(bucketFromProps);
+
+    console.log("My-bucket: ", bucket);
 
     const { colorMode } = useColorMode();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isLoadindFailed, setIsLoadindFailed] = useState(false);
 
     // const bucketContext = useBucket();
@@ -35,6 +32,10 @@ const BucketCard = (props: BucketCardProps) => {
     const router = useRouter();
 
     const loadBucketInfo = async () => {
+        if (!loadDetails) {
+            return;
+        }
+        // return;
         setIsLoading(true);
         setIsLoadindFailed(false);
 
@@ -59,7 +60,6 @@ const BucketCard = (props: BucketCardProps) => {
     }, []);
 
     const clickBucket = () => {
-        // bucketContext.setBucket(bucket);
         router.push(`/suppliers/${supplier.slug}/buckets/${bucket.name}/objects`);
     };
 
@@ -70,7 +70,7 @@ const BucketCard = (props: BucketCardProps) => {
             width="100%"
             onClick={clickBucket}
             cursor="pointer"
-            _hover={{ bg: { base: "teal.100", _dark: "teal.900" } }}
+            _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
         >
             <HStack gap="10px">
                 <VStack gap="0" w="120px">
@@ -100,38 +100,44 @@ const BucketCard = (props: BucketCardProps) => {
                                 : bucket.name
                             : bucketName}
                     </Text>
-                    <Text
-                        lineClamp={1}
-                        w="100%"
-                        textAlign="left"
-                        fontSize="sm"
-                        fontWeight="light"
-                        maxHeight="24px"
-                        overflow="hidden"
-                    >
-                        {!isLoading && !isLoadindFailed ? bucket.name : bucketName}
-                    </Text>
+
+                    {isLoading ? (
+                        <>
+                            <HStack>
+                                <Spinner size="sm" />
+                                <Text
+                                    lineClamp={1}
+                                    w="100%"
+                                    textAlign="left"
+                                    fontSize="sm"
+                                    fontWeight="light"
+                                    maxHeight="24px"
+                                    overflow="hidden"
+                                >
+                                    Carregando...
+                                </Text>
+                            </HStack>
+                        </>
+                    ) : (
+                        <>
+                            <Text
+                                lineClamp={1}
+                                w="100%"
+                                textAlign="left"
+                                fontSize="sm"
+                                fontWeight="light"
+                                maxHeight="24px"
+                                overflow="hidden"
+                            >
+                                {!isLoading && !isLoadindFailed ? bucket.name : bucketName}
+                            </Text>
+                        </>
+                    )}
 
                     <Spacer />
-                    {isLoading ? (
-                        <HStack align={"start"} gap={1}>
-                            <Spinner size="sm" mt="10px" />
-                            <Text lineClamp={2} mt="10px" textAlign="left" overflow="hidden">
-                                Carregando...
-                            </Text>
-                        </HStack>
-                    ) : (
-                        <Text
-                            lineClamp={2}
-                            mt="10px"
-                            textAlign="left"
-                            fontSize="sm"
-                            fontWeight="light"
-                            overflow="hidden"
-                        >
-                            {!isLoading && !isLoadindFailed ? bucket.description : ""}
-                        </Text>
-                    )}
+                    <Text lineClamp={2} mt="10px" textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
+                        {!isLoading && !isLoadindFailed ? bucket.description : ""}
+                    </Text>
                     {/* <Spinner size="sm" mt="10px" /> */}
 
                     {/* <Text lineClamp={2} mt="10px" textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
@@ -142,6 +148,7 @@ const BucketCard = (props: BucketCardProps) => {
                 {/* <Image bg='gren' w='35px' right={'10px'}  top={'5px'} position={'absolute'} src={aws.logo_light.src} alt="AWS" /> */}
             </HStack>
             <Spacer />
+
             <HStack w="100%" pt="10px" align="left" alignItems="left" textAlign="left" justify="left">
                 <DateBadge
                     startText={"Criado em "}
@@ -150,7 +157,6 @@ const BucketCard = (props: BucketCardProps) => {
                 />
                 <AWSRegionBadge region={!isLoading && !isLoadindFailed ? bucket.region : undefined} />
                 <TagsBadge tags={!isLoading && !isLoadindFailed ? bucket.tags : []} />
-                {/* <AWSRegionBadge region={bucketInfo ? bucketInfo.region : "..."} /> */}
             </HStack>
         </Card.Root>
     );

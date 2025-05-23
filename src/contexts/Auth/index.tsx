@@ -1,11 +1,12 @@
 "use client";
 
-import { Text } from "@chakra-ui/react";
 import { createContext, ReactNode, useState, useContext, useEffect } from "react";
 import { AuthContextType, User } from "types";
 import { checkAuthToken } from "endpoints";
-import { getStorage, deleteStorage, USER_JWT_TOKEN_NAME } from "utils";
-import { useRouter } from "next/navigation";
+import { getStorage, deleteStorage, USER_JWT_TOKEN_NAME, PUBLIC_ROUTES } from "utils";
+import { useRouter, usePathname } from "next/navigation";
+import { FullPageLoading } from "components";
+import { toaster } from "components";
 
 const defaultValues = {
     user: null,
@@ -20,11 +21,23 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
     const router = useRouter();
+    const pathname = usePathname();
 
     const logout = async () => {
-        console.log("vou deslogar");
         deleteStorage(USER_JWT_TOKEN_NAME);
-        router.push("/login");
+        setUser(null);
+
+        toaster.create({
+            type: "info",
+            title: "Usuário desconectado",
+            description: "Redirecionando para a pagina de login"
+        });
+
+        const publicRoute = PUBLIC_ROUTES.find((route) => route.path === pathname);
+
+        if (!publicRoute) {
+            router.push("/login");
+        }
     };
 
     const checkToken = async () => {
@@ -32,20 +45,14 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             const jwt = getStorage(USER_JWT_TOKEN_NAME);
 
-            console.log("JWT: ", jwt);
-
             const loggedUser = await checkAuthToken(`${jwt}`);
-
-            console.log("User: ", loggedUser);
 
             if (!loggedUser) {
                 logout();
             } else {
-                console.log("Segue o bonde");
                 setUser(loggedUser);
             }
         } catch {
-            console.log("Vou pra tela de login por erro");
             logout();
         } finally {
             setIsLoading(false);
@@ -58,7 +65,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider value={{ user, setUser, logout }}>
-            {isLoading ? <Text>Carregando informações do Usuário...</Text> : children}
+            {isLoading ? <FullPageLoading message="Verificando login" pt="50px" /> : children}
         </AuthContext.Provider>
     );
 }
