@@ -2,7 +2,8 @@ import { type CardRootProps, type StackProps } from "@chakra-ui/react";
 import { Bucket, BucketObject, Supplier } from "types";
 
 export interface BucketCardProps extends CardRootProps {
-    bucketName: string;
+    bucket: Bucket;
+    loadDetails: boolean;
 }
 
 export interface BucketHeadingProps extends CardRootProps {

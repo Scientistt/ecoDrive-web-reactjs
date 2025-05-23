@@ -1,12 +1,14 @@
 "use client";
 
-import { Flex, HStack, Text } from "@chakra-ui/react";
-import { EcoDriveLogo } from "components";
+import { Flex, HStack } from "@chakra-ui/react";
+import { EcoDriveLogo, UserNavbarMenu } from "components";
 import { ColorModeButton } from "components/ui/color-mode";
 
 import { createContext, ReactNode, useContext } from "react";
 import { NavbarContextType } from "types";
 import { useAuthContext } from "contexts";
+
+import { useRouter } from "next/navigation";
 
 const defaultValues = {
     setUser: () => {}
@@ -16,18 +18,21 @@ export const NavbarContext = createContext<NavbarContextType>(defaultValues);
 
 export function NavbarProvider({ children }: { children: ReactNode }) {
     const { user } = useAuthContext();
+    const router = useRouter();
 
-    console.log("que passa?", user);
+    const clickMainLogo = () => {
+        router.push("/");
+    };
 
     return (
         <>
             <Flex h="50px" w="full" align="center" justify="space-between" px={4}>
-                <EcoDriveLogo size="sm" />
+                <EcoDriveLogo size="sm" onClick={clickMainLogo} cursor={"pointer"} />
                 <HStack gap={1}>
-                    <Text>Olá, Fabio {user?.id}</Text>
                     <Flex align="center" gap={0}>
                         <ColorModeButton />
                     </Flex>
+                    <UserNavbarMenu user={user}></UserNavbarMenu>
                 </HStack>
             </Flex>
             {children}

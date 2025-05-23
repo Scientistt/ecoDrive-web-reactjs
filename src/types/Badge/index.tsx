@@ -11,3 +11,6 @@ export interface AWSRegionBadgeProps extends BadgeProps {
 export interface TagsBadgeProps extends BadgeProps {
     tags?: { key: string; value: string }[];
 }
+export interface IdBadgeProps extends BadgeProps {
+    myId: bigint;
+}

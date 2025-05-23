@@ -1,21 +1,14 @@
 import { NextResponse, type MiddlewareConfig, type NextRequest } from "next/server";
 
-const publicRoutes = [
-    {
-        path: "/register",
-        whenAuthenticated: "redirect"
-    },
-    {
-        path: "/login",
-        whenAuthenticated: "redirect"
-    }
-] as const;
+import { PUBLIC_ROUTES } from "utils";
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/login";
 
 export function middleware(request: NextRequest) {
-    const publicRoute = publicRoutes.find((route) => route.path === request.nextUrl.pathname);
+    const publicRoute = PUBLIC_ROUTES.find((route) => route.path === request.nextUrl.pathname);
     const authToken = request.cookies.get("usrtkn");
+
+    console.log("a rota atual é o que? ", publicRoute);
 
     if (!authToken && publicRoute) return NextResponse.next();
 

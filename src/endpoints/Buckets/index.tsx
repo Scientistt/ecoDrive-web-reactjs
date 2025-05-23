@@ -2,6 +2,7 @@ import { callAPI } from "utils";
 import { Supplier } from "types";
 
 export const listBuckets = async (supplier: Supplier, filter = {}, pagination = { limit: 10, page: 1 }) => {
+    console.log("Filter: ", { filter: filter, pagination: pagination });
     const response = await callAPI({
         method: "POST",
         url: `/supplier/${supplier.id}/buckets`,

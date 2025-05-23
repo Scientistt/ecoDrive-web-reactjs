@@ -6,7 +6,7 @@ import { BreadcrumbProps } from "types";
 import { Breadcrumb, Text } from "@chakra-ui/react";
 import { SimpleTooltip } from "components";
 
-function getBreadCrumbFirstItem(title: string, onClickPath: (path: string) => void, isCurrentPathRoot: boolean) {
+function getBreadCrumbFirstItem(title: string, onClickPath: (path: string) => void) {
     return (
         <Breadcrumb.Item key={`bc-item-first`}>
             <SimpleTooltip content={`Ir para ${title}`}>
@@ -17,7 +17,9 @@ function getBreadCrumbFirstItem(title: string, onClickPath: (path: string) => vo
                         onClickPath("");
                     }}
                 >
-                    <Text fontWeight={isCurrentPathRoot ? "bold" : "normal"}>{title}</Text>
+                    <Text fontWeight={"bold"} fontSize={"md"} color={"green.600"}>
+                        {title}
+                    </Text>
                 </Breadcrumb.Link>
             </SimpleTooltip>
         </Breadcrumb.Item>
@@ -43,9 +45,11 @@ function getBreadCrumbItem(
                     }}
                 >
                     {isLast ? (
-                        <Text fontWeight="bold">{title.toString().toLowerCase()}</Text>
+                        <Text fontSize={"md"} color={"green.600"}>
+                            {title.toString().toLowerCase()}
+                        </Text>
                     ) : (
-                        <Text>{title.toString().toLowerCase()}</Text>
+                        <Text fontSize={"md"}>{title.toString().toLowerCase()}</Text>
                     )}
                 </Breadcrumb.Link>
             </SimpleTooltip>
@@ -64,7 +68,7 @@ const MyBreadcrumb = (props: BreadcrumbProps) => {
         <>
             <Breadcrumb.Root>
                 <Breadcrumb.List key="bc-list">
-                    {getBreadCrumbFirstItem(rootName, onCLick, paths.length === 1)}
+                    {getBreadCrumbFirstItem(rootName, onCLick)}
 
                     {paths.map((segment, index) => {
                         const eachPath = paths.slice(0, index + 1).join("/") + "/";

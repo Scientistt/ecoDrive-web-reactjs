@@ -17,7 +17,12 @@ const FullPageLoading = (props: LoadingProps) => {
     }, []);
 
     return (
-        <VStack align={"center"} h="100dvh" overflow={"hidden"} bg={{ base: "gray.100", _dark: "gray.800" }}>
+        <VStack
+            align={"center"}
+            minH="calc(100vh - 50px)"
+            overflow={"hidden"}
+            bg={{ base: "gray.100", _dark: "gray.800" }}
+        >
             <Spacer />
             <HStack align={"center"}>
                 <Spinner />{" "}

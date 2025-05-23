@@ -7,5 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function PrivateLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+    return children;
     return <AuthContextProvider>{children}</AuthContextProvider>;
 }

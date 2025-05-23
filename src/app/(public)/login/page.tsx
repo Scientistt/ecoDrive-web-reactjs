@@ -19,12 +19,12 @@ import {
 // import * as React from "react";
 import { useState, useRef } from "react";
 
-import { EcoDriveLogo } from "components";
-import { Toaster, toaster } from "components/ui/toaster";
+import { EcoDriveLogo, toaster, PasswordInput } from "components";
 import { USER_JWT_TOKEN_NAME, isUsernameValid, setStorage } from "utils";
 import { bgImages } from "assets";
 import { login } from "endpoints";
 import { useRouter } from "next/navigation";
+import { useAuthContext } from "contexts";
 
 export default function Login() {
     const [isLogInButtonActive, setIsLogInButtonActive] = useState(true);
@@ -41,6 +41,8 @@ export default function Login() {
 
     const passwordInput = useRef<HTMLInputElement>(null);
     const loginInput = useRef<HTMLInputElement>(null);
+
+    const { setUser } = useAuthContext();
 
     const handleLogin = async () => {
         try {
@@ -65,12 +67,11 @@ export default function Login() {
                     setIsLogInButtonActive(false);
                     toaster.create({
                         type: "success",
-                        title: "Log In com sucesso"
-                        // description: "Vamos direcioná-lo para a página de login"
+                        title: "Log In com sucesso",
+                        description: "redirecion"
                     });
-                    setTimeout(() => {
-                        router.push("/suppliers");
-                    }, 2000);
+                    setUser(response.user);
+                    router.push("/suppliers");
                 } else {
                     setIsLoadingFailed(true);
                     focusOnPasswordInput();
@@ -104,6 +105,14 @@ export default function Login() {
     const clickRegister = () => {
         router.push("/register");
     };
+    const clickForgetPassword = () => {
+        toaster.create({
+            type: "info",
+            title: "Funcionalidade não disponível",
+            description:
+                "Estamos trabalhando para que seja possível recuperar a senha em breve, por hora: Fale com o suporte"
+        });
+    };
 
     return (
         <Flex
@@ -113,7 +122,6 @@ export default function Login() {
             w="100%"
             flexDirection={{ base: "column", md: "row" }}
         >
-            <Toaster />
             {/* --- Left side of page --- */}
 
             <Stack
@@ -188,13 +196,18 @@ export default function Login() {
                                             <Spacer />
 
                                             <Text color="muted" fontSize={"md"}>
-                                                <Link color={"green"} fontWeight={"medium"} variant="plain">
+                                                <Link
+                                                    color={"green"}
+                                                    onClick={clickForgetPassword}
+                                                    fontWeight={"medium"}
+                                                    variant="plain"
+                                                >
                                                     Esqueceu a senha?
                                                 </Link>
                                             </Text>
                                         </HStack>
 
-                                        <Input
+                                        <PasswordInput
                                             w="100%"
                                             ref={passwordInput}
                                             required={true}

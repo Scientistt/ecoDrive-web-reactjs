@@ -8,3 +8,6 @@ export * from "./Badge";
 export * from "./Breadcrumb";
 export * from "./Logo";
 export * from "./Loading";
+export * from "./Menu";
+export * from "./Toast";
+export * from "./Input";

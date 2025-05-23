@@ -19,9 +19,9 @@ import {
 // import * as React from "react";
 import { useState, useRef, RefObject } from "react";
 
-import { EcoDriveLogo } from "components";
-import { PasswordInput } from "components/ui/password-input";
-import { Toaster, toaster } from "components/ui/toaster";
+import { EcoDriveLogo, PasswordInput } from "components";
+
+import { toaster } from "components";
 import { bgImages } from "assets";
 import { validateRegisterVoucher, validateRegisterEmail, validateRegisterUserName, register } from "endpoints";
 import { useRouter } from "next/navigation";
@@ -245,9 +245,7 @@ export default function Login() {
                         title: "Conta criada com sucesso",
                         description: "Vamos direcioná-lo para a página de login"
                     });
-                    setTimeout(() => {
-                        router.push("/login");
-                    }, 2000);
+                    router.push("/login");
 
                     // timeout
                 } else {
@@ -324,8 +322,6 @@ export default function Login() {
             w="100%"
             flexDirection={{ base: "column", md: "row" }}
         >
-            <Toaster />
-
             {/* --- Left side of page --- */}
 
             <Stack

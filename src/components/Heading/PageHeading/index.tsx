@@ -14,11 +14,16 @@ const PageHeading = (props: PageHeadingProps) => {
                 direction="column"
                 pt="10px"
                 pb="20px"
-                gap={1}
+                gap={2}
                 align={{ base: "flex-start", sm: "center", md: "flex-start" }}
             >
-                <Heading>{props.header}</Heading>
-                <Text>{props.description}</Text>
+                <Heading fontSize={"4xl"} fontWeight={"bold"} colorPalette={"green"} colorScheme={"green"}>
+                    {props.header}
+                </Heading>
+
+                <Text ml={"2px"} fontSize={"lg"} colorPalette={"green"}>
+                    {props.description}
+                </Text>
             </Flex>
         </>
     );

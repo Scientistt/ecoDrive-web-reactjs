@@ -1,15 +1,15 @@
 "use client";
 
 import { Heading, VStack, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
 
 export default function Home() {
-    const router = useRouter();
+    // const router = useRouter();
 
-    useEffect(() => {
-        router.push("/suppliers");
-    });
+    // useEffect(() => {
+    //     router.push("/suppliers");
+    // });
 
     return (
         <>
