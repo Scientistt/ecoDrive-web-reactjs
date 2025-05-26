@@ -12,8 +12,8 @@ import {
     BucketCard,
     SimpleButton,
     SubtleButton,
-    toaster,
-    SimpleIconButton
+    SimpleIconButton,
+    NewBucketDrawer
 } from "components";
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-icons/lu";
@@ -24,6 +24,8 @@ export default function Buckets() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
+
+    const [isNewBucketDrawerOpen, setIsNewBucketDrawerOpen] = useState(false);
 
     const [isToLoadEachBucketDetail, setIsToLoadEachBucketDetail] = useState(false);
 
@@ -75,11 +77,11 @@ export default function Buckets() {
     };
 
     const clickedNewBucket = async () => {
-        toaster.create({
-            type: "info",
-            title: "Funcionalidade não disponível",
-            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
-        });
+        setIsNewBucketDrawerOpen(true);
+    };
+
+    const clickedCloseNewBucket = async () => {
+        setIsNewBucketDrawerOpen(false);
     };
 
     return (
@@ -126,6 +128,8 @@ export default function Buckets() {
                         );
                     })}
                 </ExplorerGrid>
+
+                <NewBucketDrawer isOpen={isNewBucketDrawerOpen} onClose={clickedCloseNewBucket} />
             </Body>
         </>
     );

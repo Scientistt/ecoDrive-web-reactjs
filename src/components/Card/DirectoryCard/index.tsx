@@ -8,6 +8,7 @@ import { FileDirectoryIcons } from "assets";
 
 const DirectoryCard = (props: BucketObjectProps) => {
     const directory = parseDirectoryPath(props.bucketObject);
+
     return (
         <>
             <VStack
@@ -19,7 +20,7 @@ const DirectoryCard = (props: BucketObjectProps) => {
                 textAlign="center"
                 borderRadius="md"
                 align="center"
-                _hover={{ bg: { base: "white", _dark: "black" } }}
+                _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
             >
                 <VStack gap="0" w="80%">
                     <Image
@@ -34,16 +35,7 @@ const DirectoryCard = (props: BucketObjectProps) => {
                     />
                 </VStack>
 
-                <Text
-                    mt="5px"
-                    color="light"
-                    fontSize="xs"
-                    lineHeight="13px"
-                    fontWeight="normal"
-                    lineClamp={2}
-                    overflow="hidden"
-                    w="100%"
-                >
+                <Text mt="5px" color="light" fontSize="sm" fontWeight="normal" lineClamp={2} overflow="hidden" w="100%">
                     {directory.name}
                 </Text>
 

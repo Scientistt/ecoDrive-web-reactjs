@@ -27,7 +27,7 @@ const FileCard = (props: BucketObjectProps) => {
                     textAlign="center"
                     borderRadius="md"
                     align="center"
-                    _hover={{ bg: { base: "white", _dark: "black" } }}
+                    _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
                 >
                     <VStack gap="0" w="80%">
                         <Image
