@@ -85,7 +85,7 @@ const AWSStorageClassSelect = (props: AWSStorageClassSelectProps) => {
                 <Select.Positioner>
                     <Select.Content>
                         {tiers.items.map((tier) => (
-                            <Select.Item item={tier} key={tier.key} justifyContent="flex-start">
+                            <Select.Item item={tier} key={tier.key}>
                                 <AWSStorageClassSelectItem storageClass={tier} item={tier} />
                                 <Select.ItemIndicator />
                             </Select.Item>

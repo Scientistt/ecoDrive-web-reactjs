@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Drawer, Portal, CloseButton, Heading } from "@chakra-ui/react";
+import { Drawer, Portal, CloseButton, Heading, Box, Spacer } from "@chakra-ui/react";
 import { DrawerProps } from "types";
 
 const SimpleDrawer = (props: DrawerProps) => {
@@ -15,16 +15,20 @@ const SimpleDrawer = (props: DrawerProps) => {
             <Portal>
                 <Drawer.Backdrop />
                 <Drawer.Positioner>
-                    <Drawer.Content>
-                        <Heading size="xl" pt={"20px"} pl={"10px"}>
+                    <Drawer.Content display="flex" flexDirection="column" maxH="100vh">
+                        <Heading size="xl" pt="20px" pl="10px">
                             {props.title}
                         </Heading>
-                        {props.body}
-                        <Drawer.Footer>
-                            {/* <Button variant="outline">Cancel</Button>
-                            <Button>Save</Button> */}
+
+                        <Box flex="1" overflowY="auto" p="10px">
+                            {props.body}
+                        </Box>
+
+                        <Drawer.Footer mt="auto">
+                            <Spacer />
                             {props.footer}
                         </Drawer.Footer>
+
                         <Drawer.CloseTrigger asChild>
                             <CloseButton size="sm" />
                         </Drawer.CloseTrigger>

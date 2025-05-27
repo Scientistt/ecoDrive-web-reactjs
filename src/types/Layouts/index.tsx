@@ -16,6 +16,7 @@ export interface LoadingProps extends StackProps {
 export interface DrawerProps extends UseDrawerProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpen: () => void;
     body?: ReactNode;
     footer?: ReactNode;
     title?: string;
@@ -23,7 +24,7 @@ export interface DrawerProps extends UseDrawerProps {
 
 export interface NewFileDrawerProps extends DrawerProps {
     path?: string;
-    file: File | null;
+    // file: File | null;
 }
 export interface NewBucketDrawerProps extends DrawerProps {
     oi?: string;

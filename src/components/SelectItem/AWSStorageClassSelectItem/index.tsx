@@ -8,7 +8,7 @@ import { memo /*useState, useEffect */ } from "react";
 // import { DateBadge, AWSRegionBadge, TagsBadge } from "components";
 // import { bucketIcons /*aws*/ } from "assets";
 // import { useColorMode, useSupplier } from "contexts";
-import { LuToilet } from "react-icons/lu";
+import { LuFileX2 } from "react-icons/lu";
 
 import { AWSStorageClassSelectItemProps } from "types";
 
@@ -16,19 +16,19 @@ import { VStack, Text, HStack, Icon } from "@chakra-ui/react";
 import { SimpleTooltip } from "components/Tooltip";
 
 const AWSStorageClassSelectItem = (props: AWSStorageClassSelectItemProps) => {
-    const { name, key, bgColor, description } = props.storageClass;
+    const { name, key, bgColor, description, icon } = props.storageClass;
     return (
         <SimpleTooltip content={description}>
-            <HStack w={"100%"}>
-                <Icon color={bgColor} size={"lg"}>
-                    <LuToilet />
+            <HStack>
+                <Icon color={bgColor} size={"md"}>
+                    {icon ? icon : <LuFileX2 />}
                 </Icon>
-                <VStack align={"left"}>
+                <VStack align={"left"} gap={0}>
                     <Text fontSize={"sm"} fontWeight={"normal"}>
                         {name}
                     </Text>
-                    <Text fontSize={"xs"} mt={"-10px"} fontWeight={"light"}>
-                        {key}
+                    <Text fontSize={"xs"} fontWeight={"light"} mt={"-5px"}>
+                        {key.toLowerCase()}
                     </Text>
                 </VStack>
             </HStack>
