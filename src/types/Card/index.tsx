@@ -12,6 +12,7 @@ export interface BucketHeadingProps extends CardRootProps {
 
 export interface BucketObjectProps extends StackProps {
     bucketObject: BucketObject;
+    isSelected: boolean;
 }
 
 export interface SupplierCardProps extends StackProps {

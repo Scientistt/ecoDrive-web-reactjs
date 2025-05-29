@@ -1,5 +1,8 @@
 "use client";
+
 import { memo, useEffect, useState, useRef } from "react";
+import { toast } from "react-toastify";
+
 import {
     VStack,
     HStack,
@@ -12,62 +15,89 @@ import {
     Center,
     Image,
     Heading,
-    Highlight
+    Highlight,
+    useFileUpload
 } from "@chakra-ui/react";
+
 import { LuUpload } from "react-icons/lu";
 import { AWSStorageClass, NewFileDrawerProps } from "types";
-import { Drawer, SimpleButton, SimpleCancelButton, toaster, AWSStorageClassSelect } from "components";
-
-import { useFileUploadContext } from "@chakra-ui/react";
+import { Drawer, SimpleButton, SimpleCancelButton, AWSStorageClassSelect } from "components";
+import { uploadSingleObject } from "endpoints";
 
 import dropFileBgImage from "assets/images/layouts/bg/drop-file-bgimage.svg";
-
-const InjectDroppedFileToContext = ({ file }: { file?: File }) => {
-    const { setFiles } = useFileUploadContext();
-
-    useEffect(() => {
-        if (file) {
-            setTimeout(() => {
-                setFiles([file]);
-            }, 100);
-        }
-    }, [file, setFiles]);
-
-    return null;
-};
 
 const NewFileDrawer = (props: NewFileDrawerProps) => {
     const isOpen = !!props.isOpen;
     const onClose = props.onClose ? props.onClose : () => {};
     const onOpen = props.onOpen ? props.onOpen : () => {};
+    const onUpload = props.onUpload ? props.onUpload : () => {};
     const path = props.path ? props.path : "";
 
     const [selectedStorageClass, setSelectedStorageClass] = useState("standard");
+
     const [isDragging, setIsDragging] = useState(false);
-    const [droppedFile, setDroppedFile] = useState<File | null>(null);
+
     // const { acceptedFiles } = useFileUploadContext();
+
+    const fileUpload = useFileUpload();
 
     const overlayRef = useRef<HTMLDivElement>(null);
     const inputFileNameRef = useRef<HTMLInputElement>(null);
 
-    const submitFiles = () => {
+    const submitFiles = async () => {
         const pathPart = path === "Raiz" ? "" : path; // se o path for 'Raiz', não adiciona nada
-        // const file = acceptedFiles?.[0];
+        const fileName = inputFileNameRef.current?.value?.trim() || fileUpload.acceptedFiles[0].name;
+        const file = fileUpload.acceptedFiles[0];
 
-        const fileName = inputFileNameRef.current?.value?.trim();
-        // nome default para o arquivo
-
-        toaster.create({
-            type: "error",
-            title: "Funcionalidade não disponível",
-            description: `Storage: ${selectedStorageClass}\nPath: ${pathPart}\nNome do arquivo: ${fileName}\nDropped File: ${droppedFile?.name}`
+        // const toastId = toast.loading("Enviando arquivo...");
+        const toastId = toast.loading("Enviando arquivo", {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            type: "info",
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
         });
+        onClose();
 
-        // const formData = new FormData();
-        // formData.append("file", file);
-        // formData.append("fileName", fileName);
-        // formData.append("storageClass", selectedStorageClass?.toString()); // ou selectedStorageClass.name, conforme sua API
-        // formData.append("path", path); // se quiser enviar o path atual também
+        try {
+            const object = await uploadSingleObject({
+                supplier: props.supplier,
+                bucket: props.bucket,
+                file: file,
+                name: `${pathPart}${fileName}`,
+                storageClass: selectedStorageClass
+            });
+
+            if (object?.name) {
+                toast.update(toastId, {
+                    render: "Upload concluído com sucesso!",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                    closeButton: true
+                });
+                onUpload();
+            } else {
+                toast.update(toastId, {
+                    render: "Não foi possível concluir o upload!",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                    closeButton: true
+                });
+            }
+        } catch {
+            toast.update(toastId, {
+                render: "Não foi possível concluir o upload!",
+                type: "error",
+                isLoading: false,
+                autoClose: 5000,
+                closeButton: true
+            });
+        }
     };
 
     const onChangeStorageClassSelect = (item: AWSStorageClass) => {
@@ -106,9 +136,8 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
             const files = e.dataTransfer?.files;
 
             if (files && files.length > 0) {
-                setDroppedFile(files[0]);
-                console.log("Arquivo solto:", files[0]);
-                console.log("droppedFile:", droppedFile);
+                fileUpload.acceptedFiles.pop();
+                fileUpload.acceptedFiles.push(files[0]);
                 onOpen();
             }
         };
@@ -183,10 +212,7 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                             <Input placeholder="Nome do arquivo" ref={inputFileNameRef} />
                         </InputGroup>
 
-                        <FileUpload.Root maxW="100%" alignItems="stretch">
-                            {/* Aqui injetamos o arquivo assim que o contexto estiver montado */}
-                            {/* <SetarArquivoInicial file={startingFile} /> */}
-                            {droppedFile && <InjectDroppedFileToContext file={droppedFile} />}
+                        <FileUpload.RootProvider value={fileUpload} maxW="100%" alignItems="stretch">
                             <FileUpload.HiddenInput />
                             <FileUpload.Dropzone>
                                 <Icon as={LuUpload} boxSize="5" color="fg.muted" />
@@ -195,8 +221,22 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                                     <Box color="fg.muted">Tamanho máximo de 1TB</Box>
                                 </FileUpload.DropzoneContent>
                             </FileUpload.Dropzone>
-                            <FileUpload.List />
-                        </FileUpload.Root>
+                            {/* <FileUpload.List /> */}
+                            <FileUpload.ItemGroup>
+                                <FileUpload.Context>
+                                    {({ acceptedFiles }) =>
+                                        acceptedFiles.map((file) => (
+                                            <FileUpload.Item key={file.name} file={file}>
+                                                <FileUpload.ItemPreview />
+                                                <FileUpload.ItemName />
+                                                <FileUpload.ItemSizeText />
+                                                <FileUpload.ItemDeleteTrigger />
+                                            </FileUpload.Item>
+                                        ))
+                                    }
+                                </FileUpload.Context>
+                            </FileUpload.ItemGroup>
+                        </FileUpload.RootProvider>
                     </VStack>
                 }
                 footer={
