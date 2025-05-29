@@ -10,3 +10,4 @@ export * from "./Logo";
 export * from "./Navbar";
 export * from "./Menu";
 export * from "./Button";
+export * from "./Select";

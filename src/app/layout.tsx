@@ -2,8 +2,9 @@ import "./globals.css";
 // import { systemConfig } from "themes/system/index";
 import { Provider } from "components/ui/provider";
 
-import { Toaster } from "components";
-import { NavbarProvider, AuthContextProvider } from "contexts";
+import { ToastContainer } from "react-toastify";
+
+import { NavbarProvider, AuthContextProvider, ContextMenuProvider } from "contexts";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,9 +19,11 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
         <html suppressHydrationWarning={true}>
             <body>
                 <Provider>
-                    <Toaster />
+                    <ToastContainer />
                     <AuthContextProvider>
-                        <NavbarProvider>{children}</NavbarProvider>
+                        <NavbarProvider>
+                            <ContextMenuProvider>{children}</ContextMenuProvider>
+                        </NavbarProvider>
                     </AuthContextProvider>
                 </Provider>
             </body>

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { listBucketObjects } from "endpoints";
-// import { Bucket } from "types";
-// import { BucketContextProvider } from "contexts";
+import { useEffect, useState } from "react";
+import { listBucketObjects, requestObjectRestore, getBucketObject } from "endpoints";
+import { toast } from "react-toastify";
+import { getViewableObjectProperties, isObjectReadyToBeDownloaded } from "utils";
+import { LuDownload, LuShare2, LuHeart, LuWrench, LuCloudDownload, LuTextCursorInput, LuLoader } from "react-icons/lu";
+
 import {
     Body,
     BucketHeading,
@@ -13,25 +15,24 @@ import {
     Breadcrumb,
     SubtleButton,
     SimpleButton,
-    toaster,
-    SimpleIconButton
+    SimpleIconButton,
+    NewFileDrawer
 } from "components";
-import { HStack, Spacer } from "@chakra-ui/react";
+
+import { HStack, Spacer, useDisclosure } from "@chakra-ui/react";
 import { LuRefreshCw, LuArrowLeft, LuFile, LuFolderTree, LuUpload } from "react-icons/lu";
-import { useBucket, useSupplier } from "contexts";
+import { useBucket, useSupplier, useContextMenu } from "contexts";
 import { useRouter } from "next/navigation";
 import { BucketObject } from "types";
-// import { useRouter } from "next/navigation";
-
-// import { useRouter } from "next/router";
 
 export default function BucketObjects() {
     const router = useRouter();
-    // const router = useRouter();
-    const { bucket /*setBucket*/ } = useBucket();
-    const { supplier /*setBucket*/ } = useSupplier();
 
-    // const { bucket } = BucketContextProvider();
+    const { bucket } = useBucket();
+    const { supplier } = useSupplier();
+    const contextMenu = useContextMenu();
+
+    const newFileDrawer = useDisclosure();
 
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
@@ -40,9 +41,13 @@ export default function BucketObjects() {
 
     const [isShowingDirectories, setIsShowingDirectories] = useState(true);
     const [objects, setObjects] = useState({ elements: [], totalElements: 0 });
+    const [selectedObjectKey, setSelectedObjectKey] = useState("");
 
-    const loadBucketObjects = async () => {
-        setIsLoading(true);
+    const loadBucketObjects = async (soft = false) => {
+        if (!soft) {
+            setIsLoading(true);
+        }
+        setSelectedObjectKey("");
         setIsLoadFailed(false);
         try {
             const filter = {
@@ -61,6 +66,85 @@ export default function BucketObjects() {
             setIsLoadFailed(true);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const softReloadBucketObjects = async () => {
+        loadBucketObjects(true);
+    };
+
+    const handleObjectRestoreRequest = async (object: BucketObject) => {
+        const toastId = toast.loading(`Solicitando restauração do arquivo ${object.name}`, {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            type: "info",
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
+        });
+        try {
+            await requestObjectRestore({
+                supplier,
+                bucket,
+                object,
+                days: 2,
+                tier: "Bulk"
+            });
+
+            toast.update(toastId, {
+                render: "Solicitação feita! Seu arquivo ficará disponível para download em até 72h",
+                type: "success",
+                isLoading: false,
+                autoClose: 5000,
+                closeButton: true
+            });
+        } catch {
+            toast.update(toastId, {
+                render: "Não foi possível concluir a solicitação!",
+                type: "error",
+                isLoading: false,
+                autoClose: 5000,
+                closeButton: true
+            });
+        } finally {
+        }
+    };
+
+    const handleObjectDownloadRequest = async (object: BucketObject) => {
+        const toastId = toast.loading(`Baixando o arquivo ${object.name}`, {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            type: "info",
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
+        });
+        try {
+            const obj = await getBucketObject(supplier, bucket, object.key);
+
+            //
+            window.open(obj.url, "_blank");
+
+            toast.update(toastId, {
+                render: "Seu download começará em instantes",
+                type: "success",
+                isLoading: false,
+                autoClose: 5000,
+                closeButton: true
+            });
+        } catch {
+            toast.update(toastId, {
+                render: "Download indisponível",
+                type: "error",
+                isLoading: false,
+                autoClose: 5000,
+                closeButton: true
+            });
+        } finally {
         }
     };
 
@@ -84,11 +168,11 @@ export default function BucketObjects() {
     };
 
     const clickedUpload = async () => {
-        toaster.create({
-            type: "info",
-            title: "Funcionalidade não disponível",
-            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
-        });
+        newFileDrawer.onOpen();
+    };
+
+    const clickedCloseFileUpload = async () => {
+        newFileDrawer.onClose();
     };
 
     const clickBackToBuckets = async () => {
@@ -103,6 +187,186 @@ export default function BucketObjects() {
         setCurrentPath(path);
     };
 
+    const handleFileContextMenu = (e: React.MouseEvent, obj: BucketObject) => {
+        const items = [];
+
+        const viewableObject = getViewableObjectProperties(obj);
+        const downloadable = isObjectReadyToBeDownloaded(obj);
+
+        if (viewableObject.visible)
+            items.push({
+                title: "Visualizar",
+                value: "view",
+                onClick: () => {
+                    handleObjectDownloadRequest(obj);
+                },
+                icon: viewableObject.icon,
+                disabled: !downloadable
+            }); // view
+
+        items.push({
+            title: "Download",
+            value: "download",
+            onClick: () => {
+                handleObjectDownloadRequest(obj);
+            },
+            icon: <LuDownload />,
+            disabled: !downloadable
+        }); // dowload
+
+        if (!downloadable && obj?.restore?.status !== "RESTORED")
+            items.push({
+                title: obj?.restore?.status === "RESTORING" ? "Restaurando..." : "Solicitar Restauração",
+                value: "restore",
+                onClick: () => {
+                    handleObjectRestoreRequest(obj);
+                },
+                icon: obj?.restore?.status === "RESTORING" ? <LuLoader /> : <LuCloudDownload />,
+                disabled: obj?.restore?.status !== "UNAVAILABLE"
+            }); // restore
+
+        items.push({
+            title: "Compartilhar",
+            value: "share",
+            onClick: () => {
+                toast.loading(`Compartilhar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuShare2 />
+        }); //share
+
+        items.push({
+            title: "Favoritar",
+            value: "favorite",
+            onClick: () => {
+                toast.loading(`Favoritar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuHeart />
+        }); // favorite
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Mover",
+            value: "move",
+            onClick: () => {
+                toast.loading(`Mover ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            }
+        }); // move
+
+        items.push({
+            title: "Copiar Caminho",
+            value: "copy_path",
+            onClick: () => {
+                toast.loading(`Copiar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            command: "Ctrl+C"
+        }); // copy
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Renomear",
+            value: "rename",
+            onClick: () => {
+                toast.loading(`Renomear ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuTextCursorInput />
+        }); // rename
+
+        items.push({
+            title: "Deletar",
+            value: "delete",
+            onClick: () => {
+                toast.loading(`Deletar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            danger: true
+        }); // delete
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Propriedades",
+            value: "properties",
+            onClick: () => {
+                toast.loading(`Acessar propriedades ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuWrench />
+        }); // properties
+
+        contextMenu.setEntity?.(obj);
+        contextMenu.setMenu?.({ items });
+        contextMenu.clickHandler?.(e);
+    };
+
     return (
         <>
             <Body>
@@ -110,14 +374,9 @@ export default function BucketObjects() {
                     <LuArrowLeft />
                     Lista de Buckets
                 </SubtleButton>
-
                 <HStack>
                     <BucketHeading bucket={bucket} />
                     <Spacer />
-
-                    {/* <Button disabled onClick={clickedNewBucket}>
-                        <LuPlus /> Novo Bucket
-                    </Button> */}
                 </HStack>
                 <HStack>
                     <Breadcrumb
@@ -150,15 +409,44 @@ export default function BucketObjects() {
                     {objects.elements.map((obj: BucketObject, index) => {
                         return obj.kind === "dir" ? (
                             <DirectoryCard
+                                isSelected={selectedObjectKey === obj.key}
                                 bucketObject={obj}
                                 onClick={() => clickDirectory(obj)}
                                 key={`directoryCard#${index}`}
                             />
                         ) : (
-                            <FileCard bucketObject={obj} key={`FileCard#${index}`} />
+                            <FileCard
+                                tabIndex={index}
+                                _focus={{ outline: "none" }}
+                                onFocus={() => {
+                                    setSelectedObjectKey(obj.key);
+                                }}
+                                isSelected={selectedObjectKey === obj.key}
+                                bucketObject={obj}
+                                key={`FileCard#${index}`}
+                                onContextMenu={(e) => {
+                                    handleFileContextMenu(e, obj);
+                                }}
+                                onClick={() => {
+                                    setSelectedObjectKey(obj.key);
+                                }}
+                                onDoubleClick={() => {
+                                    alert(`Abrir drawer para o arquivo: ${obj.name}`);
+                                }}
+                            />
                         );
                     })}
                 </ExplorerGrid>
+
+                <NewFileDrawer
+                    isOpen={newFileDrawer.open}
+                    onClose={clickedCloseFileUpload}
+                    onOpen={clickedUpload}
+                    onUpload={softReloadBucketObjects}
+                    bucket={bucket}
+                    supplier={supplier}
+                    path={currentPath}
+                />
             </Body>
         </>
     );
