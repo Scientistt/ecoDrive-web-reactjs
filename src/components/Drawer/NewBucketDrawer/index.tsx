@@ -7,11 +7,13 @@ import { Drawer } from "components";
 const NewBucketDrawer = (props: NewBucketDrawerProps) => {
     const isOpen = !!props.isOpen;
     const onClose = props.onClose ? props.onClose : () => {};
+    const onOpen = props.onOpen ? props.onOpen : () => {};
 
     return (
         <Drawer
             isOpen={isOpen}
             onClose={onClose}
+            onOpen={onOpen}
             title={"Novo Bucket"}
             body={
                 <>

@@ -3,8 +3,17 @@
 import { useEffect, useState } from "react";
 import { listBucketObjects, requestObjectRestore, getBucketObject } from "endpoints";
 import { toast } from "react-toastify";
-import { getViewableObjectProperties, isObjectReadyToBeDownloaded } from "utils";
-import { LuDownload, LuShare2, LuHeart, LuWrench, LuCloudDownload, LuTextCursorInput, LuLoader } from "react-icons/lu";
+import { getViewableObjectProperties, isObjectReadyToBeDownloaded, parseDateDistance } from "utils";
+import {
+    LuDownload,
+    LuShare2,
+    LuHeart,
+    LuWrench,
+    LuCloudDownload,
+    LuTextCursorInput,
+    LuLoader,
+    LuFolderOpen
+} from "react-icons/lu";
 
 import {
     Body,
@@ -180,7 +189,27 @@ export default function BucketObjects() {
     };
 
     const clickDirectory = async (obj: BucketObject) => {
+        setSelectedObjectKey(obj.key);
+    };
+    const clickFile = async (obj: BucketObject) => {
+        setSelectedObjectKey(obj.key);
+    };
+
+    const doubleClickDirectory = async (obj: BucketObject) => {
         setCurrentPath(obj.name);
+    };
+
+    const doubleClickFile = async (obj: BucketObject) => {
+        toast.loading(`Abrir o drawer ${obj.name}`, {
+            position: "bottom-right",
+            closeOnClick: true,
+            type: "error",
+            pauseOnHover: true,
+            draggable: true,
+            isLoading: false,
+            autoClose: 5000,
+            theme: "colored"
+        });
     };
 
     const clickBreadCrumb = async (path: string) => {
@@ -205,7 +234,7 @@ export default function BucketObjects() {
             }); // view
 
         items.push({
-            title: "Download",
+            title: `Download${downloadable && obj?.restore?.status === "RESTORED" ? ` (até ${parseDateDistance(obj?.restore?.available_until || "")})` : ""}`,
             value: "download",
             onClick: () => {
                 handleObjectDownloadRequest(obj);
@@ -224,6 +253,160 @@ export default function BucketObjects() {
                 icon: obj?.restore?.status === "RESTORING" ? <LuLoader /> : <LuCloudDownload />,
                 disabled: obj?.restore?.status !== "UNAVAILABLE"
             }); // restore
+
+        items.push({
+            title: "Compartilhar",
+            value: "share",
+            onClick: () => {
+                toast.loading(`Compartilhar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuShare2 />
+        }); //share
+
+        items.push({
+            title: "Favoritar",
+            value: "favorite",
+            onClick: () => {
+                toast.loading(`Favoritar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuHeart />
+        }); // favorite
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Mover",
+            value: "move",
+            onClick: () => {
+                toast.loading(`Mover ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            }
+        }); // move
+
+        items.push({
+            title: "Copiar Caminho",
+            value: "copy_path",
+            onClick: () => {
+                toast.loading(`Copiar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            command: "Ctrl+C"
+        }); // copy
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Renomear",
+            value: "rename",
+            onClick: () => {
+                toast.loading(`Renomear ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuTextCursorInput />
+        }); // rename
+
+        items.push({
+            title: "Deletar",
+            value: "delete",
+            onClick: () => {
+                toast.loading(`Deletar ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            danger: true
+        }); // delete
+
+        items.push({
+            divider: true
+        });
+
+        items.push({
+            title: "Propriedades",
+            value: "properties",
+            onClick: () => {
+                toast.loading(`Acessar propriedades ${obj.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuWrench />
+        }); // properties
+
+        contextMenu.setEntity?.(obj);
+        contextMenu.setMenu?.({ items });
+        contextMenu.clickHandler?.(e);
+    };
+
+    const handleDirectoryContextMenu = (e: React.MouseEvent, obj: BucketObject) => {
+        const items = [];
+
+        items.push({
+            title: "Abrir",
+            value: "open",
+            onClick: () => {
+                doubleClickDirectory(obj);
+            },
+            icon: <LuFolderOpen />
+        }); // open
 
         items.push({
             title: "Compartilhar",
@@ -409,14 +592,23 @@ export default function BucketObjects() {
                     {objects.elements.map((obj: BucketObject, index) => {
                         return obj.kind === "dir" ? (
                             <DirectoryCard
+                                tabIndex={index + 1}
+                                _focus={{ outline: "none" }}
+                                onFocus={() => {
+                                    setSelectedObjectKey(obj.key);
+                                }}
                                 isSelected={selectedObjectKey === obj.key}
                                 bucketObject={obj}
-                                onClick={() => clickDirectory(obj)}
                                 key={`directoryCard#${index}`}
+                                onContextMenu={(e) => {
+                                    handleDirectoryContextMenu(e, obj);
+                                }}
+                                onClick={() => clickDirectory(obj)}
+                                onDoubleClick={() => doubleClickDirectory(obj)}
                             />
                         ) : (
                             <FileCard
-                                tabIndex={index}
+                                tabIndex={index + 1}
                                 _focus={{ outline: "none" }}
                                 onFocus={() => {
                                     setSelectedObjectKey(obj.key);
@@ -427,12 +619,8 @@ export default function BucketObjects() {
                                 onContextMenu={(e) => {
                                     handleFileContextMenu(e, obj);
                                 }}
-                                onClick={() => {
-                                    setSelectedObjectKey(obj.key);
-                                }}
-                                onDoubleClick={() => {
-                                    alert(`Abrir drawer para o arquivo: ${obj.name}`);
-                                }}
+                                onClick={() => clickFile(obj)}
+                                onDoubleClick={() => doubleClickFile(obj)}
                             />
                         );
                     })}

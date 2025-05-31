@@ -9,7 +9,7 @@ const ContextMenu = (props: ContextMenuItemProps) => {
     return (
         <>
             <Menu.Item
-                {...props}
+                // {...props}
                 key={item.value}
                 px={"5px"}
                 gap={0}

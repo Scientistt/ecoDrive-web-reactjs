@@ -21,13 +21,14 @@ const ContextMenu = (props: ContextMenuProps) => {
                 <Portal>
                     <Menu.Root open>
                         <Menu.Content
-                            display={!display ? "none" : `block`}
+                            // display={!display ? "none" : `block`}
                             ref={menuRef}
                             onContextMenu={(e) => e.preventDefault()}
                             position="fixed"
                             top={`${positionY}px`}
                             left={`${positionX}px`}
-                            zIndex={9999}
+                            // zIndex={9999}
+                            zIndex={display ? 9999 : -1}
                             borderRadius="md"
                             boxShadow="md"
                             p={0}
