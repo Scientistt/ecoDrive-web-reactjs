@@ -21,7 +21,7 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
 
     const menuRef = useRef<HTMLDivElement>(null);
 
-    // const [displayContextMenu, setDisplayContextMenu] = useState(true);
+    const [displayContextMenu, setDisplayContextMenu] = useState(true);
 
     const clickHandler = (e: React.MouseEvent) => {
         if (e) {
@@ -29,7 +29,7 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
             if (contextMenu.open) contextMenu.onClose();
             const { clientX, clientY } = e;
 
-            // setDisplayContextMenu(false);
+            setDisplayContextMenu(false);
             contextMenu.onOpen(); // ToDo: review this logic
 
             requestAnimationFrame(() => {
@@ -37,7 +37,8 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
                     const rect = menuRef.current.getBoundingClientRect();
                     const pos = calculatePosition(clientX, clientY, rect.width, rect.height);
                     setPosition(pos);
-                    // setDisplayContextMenu(true);
+                    console.log("PQ uai");
+                    setDisplayContextMenu(true);
                 }
             });
         }
@@ -60,14 +61,17 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
         let x = clickX;
         let y = clickY;
 
+        // Se o menu sair da direita, abre totalmente à esquerda do clique
         if (clickX + menuWidth > viewportWidth) {
-            x = viewportWidth - menuWidth - 10;
+            x = clickX - menuWidth;
         }
 
+        // Se o menu sair embaixo, abre totalmente acima do clique
         if (clickY + menuHeight > viewportHeight) {
-            y = viewportHeight - menuHeight - 10;
+            y = clickY - menuHeight;
         }
 
+        // Garante que não fique colado demais nas bordas da tela
         x = Math.max(10, x);
         y = Math.max(10, y);
 
@@ -79,8 +83,8 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
             {children}
             <ContextMenu
                 open={contextMenu.open}
-                // display={displayContextMenu}
-                display={true}
+                display={displayContextMenu}
+                // display={true}
                 menuRef={menuRef}
                 positionX={position.x}
                 positionY={position.y}

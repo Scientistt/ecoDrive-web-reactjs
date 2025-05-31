@@ -1,18 +1,24 @@
 "use client";
 
 import { memo } from "react";
-import { Text, VStack, Image, Spacer } from "@chakra-ui/react";
+import { Text, VStack, Image, Spacer, Progress, Icon } from "@chakra-ui/react";
 import { BucketObjectProps } from "types";
-import { parseFilePath, parseObjectSize } from "utils";
+import { parseFilePath, parseObjectSize, getAWSStorageClass } from "utils";
 import { FileExtensionIcons } from "assets";
+import { LuCheck } from "react-icons/lu";
 
 const FileCard = (props: BucketObjectProps) => {
     const file = parseFilePath(props.bucketObject);
     const isSelected = !!props?.isSelected;
 
+    const fileStorage = getAWSStorageClass(file.tier);
+
+    console.log("file: ", fileStorage);
+
     return (
         <>
             <VStack
+                position="relative"
                 userSelect="none"
                 draggable={false}
                 p="5px"
@@ -41,13 +47,42 @@ const FileCard = (props: BucketObjectProps) => {
                         objectFit="cover"
                         mx="auto"
                     />
+                    {file.restore?.status === "RESTORING" ? (
+                        <Progress.Root
+                            transform="rotate(180deg)"
+                            mt={"-2px"}
+                            width="77%"
+                            striped
+                            animated
+                            value={100}
+                            colorPalette="green"
+                        >
+                            <Progress.Track h="5px">
+                                <Progress.Range bgColor={{ base: "green.500", _dark: "green.600" }} />
+                            </Progress.Track>
+                        </Progress.Root>
+                    ) : (
+                        <></>
+                    )}
+
+                    <Icon position={"absolute"} top="5px" left="5px" color={fileStorage.bgColor}>
+                        {fileStorage.icon}
+                    </Icon>
+
+                    {file.restore?.status === "RESTORED" ? (
+                        <Icon mt={"-16px"} ml={"-48px"} color={"green"} size={"md"}>
+                            <LuCheck />
+                        </Icon>
+                    ) : (
+                        <></>
+                    )}
                 </VStack>
 
                 <Text
                     userSelect="none"
                     mt="5px"
                     color="light"
-                    fontSize="sm"
+                    fontSize="small"
                     fontWeight="normal"
                     lineClamp={2}
                     overflow="hidden"

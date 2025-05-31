@@ -129,7 +129,7 @@ export default function Buckets() {
                     })}
                 </ExplorerGrid>
 
-                <NewBucketDrawer isOpen={isNewBucketDrawerOpen} onClose={clickedCloseNewBucket} />
+                <NewBucketDrawer isOpen={isNewBucketDrawerOpen} onClose={clickedCloseNewBucket} onOpen={() => {}} />
             </Body>
         </>
     );
