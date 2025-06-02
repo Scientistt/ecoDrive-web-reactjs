@@ -7,3 +7,4 @@ export * from "./storage";
 export * from "./constants";
 export * from "./validation";
 export * from "./menu";
+export * from "./locales";

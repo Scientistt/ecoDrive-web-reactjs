@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { listBuckets } from "endpoints";
 import { Bucket } from "types";
 import { useSupplier } from "contexts";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
     Body,
@@ -21,7 +22,7 @@ import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-i
 export default function Buckets() {
     const { supplier } = useSupplier();
     const router = useRouter();
-
+    const t = useTranslations("Buckets");
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
 
@@ -92,7 +93,7 @@ export default function Buckets() {
                     Lista de Credenciais
                 </SubtleButton>
                 <HStack>
-                    <PageHeading header="Meus Buckets" description="Amazon Simple Storage Service (S3)" />
+                    <PageHeading header={t("title")} description={t("description")} />
 
                     <Spacer />
 

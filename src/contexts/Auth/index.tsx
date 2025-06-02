@@ -65,6 +65,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider value={{ user, setUser, logout }}>
+            {/* {children} */}
             {isLoading ? <FullPageLoading message="Verificando login" pt="50px" /> : children}
         </AuthContext.Provider>
     );

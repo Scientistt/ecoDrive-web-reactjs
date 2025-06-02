@@ -11,3 +11,4 @@ export * from "./Navbar";
 export * from "./Menu";
 export * from "./Button";
 export * from "./Select";
+export * from "./Locales";

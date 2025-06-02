@@ -1,7 +1,7 @@
 "use client";
 
 import { Flex, HStack } from "@chakra-ui/react";
-import { EcoDriveLogo, UserNavbarMenu } from "components";
+import { EcoDriveLogo, UserNavbarMenu, LocaleSelect } from "components";
 import { ColorModeButton } from "components/ui/color-mode";
 
 import { createContext, ReactNode, useContext } from "react";
@@ -29,9 +29,12 @@ export function NavbarProvider({ children }: { children: ReactNode }) {
             <Flex h="50px" w="full" align="center" justify="space-between" px={4}>
                 <EcoDriveLogo size="sm" onClick={clickMainLogo} cursor={"pointer"} />
                 <HStack gap={1}>
+                    <LocaleSelect />
+
                     <Flex align="center" gap={0}>
                         <ColorModeButton />
                     </Flex>
+
                     <UserNavbarMenu user={user}></UserNavbarMenu>
                 </HStack>
             </Flex>
