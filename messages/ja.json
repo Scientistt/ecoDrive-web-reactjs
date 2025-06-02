@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Início",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "エコドライブ"
+    },
+
+    "Login": {
+        "title": "ログイン",
+        "username": "ユーザー名",
+        "password": "パスワード",
+        "forgotPassword": "パスワードをお忘れですか?",
+        "saveSession": "私を覚えておいてください",
+        "login": "ログイン",
+        "newAccount": "新しいアカウントですか?",
+        "createAccount": "登録",
+        "usernamePlaceholder": "ユーザー名を入力してください",
+        "passwordPlaceholder": "パスワードを入力してください",
+        "emptyUsernameError": "ユーザー名を空にすることはできません",
+        "invalidUsernameError": "無効なユーザー名",
+        "incorrectUsernamePasswordError": "無効なユーザー名および/またはパスワード",
+        "emptyPasswordError": "パスワードを空にすることはできません",
+        "tooShortPasswordError": "パスワードには少なくとも {minSizePassword} 文字が必要です"
+    },
+    "Providers": {
+        "title": "私の資格情報",
+        "description": "クラウドサービスプロバイダー"
+    },
+    "Buckets": {
+        "title": "私のバケツ",
+        "description": "Amazon シンプル ストレージ サービス (S3)"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Home",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
+    "Login": {
+        "title": "Log In",
+        "username": "Username",
+        "password": "Password",
+        "forgotPassword": "Forgot Password?",
+        "saveSession": "Remember me",
+        "login": "Log In",
+        "newAccount": "New Account?",
+        "createAccount": "Register",
+        "usernamePlaceholder": "Enter your username",
+        "passwordPlaceholder": "Enter your password",
+        "emptyUsernameError": "Username cannot be empty",
+        "invalidUsernameError": "Invalid Username",
+        "incorrectUsernamePasswordError": "Invalid Username and/or Password",
+        "emptyPasswordError": "Password cannot be empty",
+        "tooShortPasswordError": "Password must have at least {minSizePassword} characters"
+    },
+    "Providers": {
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
+    },
+    "Buckets": {
+        "title": "My buckets",
+        "description": "亚马逊简单存储服务 (S3)"
+    }
+}

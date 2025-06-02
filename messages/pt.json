@@ -1,0 +1,58 @@
+{
+    "Index": {
+        "title": "Início",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
+    "Login": {
+        "title": "Entrar",
+        "username": "Usuário",
+        "password": "Senha",
+        "forgotPassword": "Esqueceu sua senha?",
+        "saveSession": "Salvar Sessão",
+        "login": "Entrar",
+        "newAccount": "novo por aqui?",
+        "createAccount": "Registre-se",
+        "usernamePlaceholder": "Digite o seu nome de usuário",
+        "passwordPlaceholder": "Digite a sua senha",
+        "emptyUsernameError": "Usuário não pode ser vazio",
+        "invalidUsernameError": "Usuário inválido",
+        "incorrectUsernamePasswordError": "Usuário e/ou Senha inválido(s)",
+        "emptyPasswordError": "A senha não pode ser vazia",
+        "tooShortPasswordError": "A senha deve ter pelo menos {minSizePassword} caracteres"
+    },
+
+    "Providers": {
+        "title": "Minhas Credenciais",
+        "description": "Fornecedores de serviços em núvem"
+    },
+    "Buckets": {
+        "title": "私のバケツ",
+        "description": "Serviço de armazenamento simples da Amazon (S3)"
+    }
+}

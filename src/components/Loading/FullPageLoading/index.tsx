@@ -24,6 +24,7 @@ const FullPageLoading = (props: LoadingProps) => {
             bg={{ base: "gray.100", _dark: "gray.800" }}
         >
             <Spacer />
+
             <HStack align={"center"}>
                 <Spinner />{" "}
                 <Heading pl="10px">

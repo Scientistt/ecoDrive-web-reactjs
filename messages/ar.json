@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Home",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "محرك ايكو"
+    },
+
+    "Login": {
+        "title": "تسجيل الدخول",
+        "username": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "forgotPassword": "هل نسيت كلمة السر؟",
+        "saveSession": "تذكرنى",
+        "login": "تسجيل الدخول",
+        "newAccount": "حساب جديد؟",
+        "createAccount": "يسجل",
+        "usernamePlaceholder": "أدخل اسم المستخدم الخاص بك",
+        "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
+        "emptyUsernameError": "لا يمكن أن يكون اسم المستخدم فارغًا",
+        "invalidUsernameError": "اسم مستخدم غير صالح",
+        "incorrectUsernamePasswordError": "اسم المستخدم و/أو كلمة المرور غير صالحة",
+        "emptyPasswordError": "لا يمكن أن تكون كلمة المرور فارغة",
+        "tooShortPasswordError": "يجب أن تحتوي كلمة المرور على أحرف {minSizePassword} على الأقل"
+    },
+    "Providers": {
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
+    },
+    "Buckets": {
+        "title": "My buckets",
+        "description": "亚马逊简单存储服务 (S3)"
+    }
+}

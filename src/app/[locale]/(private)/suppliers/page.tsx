@@ -3,12 +3,14 @@
 import { useState, useEffect } from "react";
 import { listSuppliers } from "endpoints";
 import { Supplier } from "types";
-
+import { useTranslations } from "next-intl";
 import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, toaster } from "components";
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
 
 export default function Buckets() {
+    const t = useTranslations("Providers");
+
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
 
@@ -56,7 +58,8 @@ export default function Buckets() {
         <>
             <Body>
                 <HStack>
-                    <PageHeading header="Minhas credenciais" description="Fornecedores de serviços em núvem" />
+                    <PageHeading header={t("title")} description={t("description")} />
+
                     <Spacer />
                     <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
                         <LuRefreshCw /> Atualizar

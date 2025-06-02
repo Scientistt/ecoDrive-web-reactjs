@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Startseite",
+        "loggedIn": "Angemeldet als {username}",
+        "loggedOut": "Du bist abgemeldet.",
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "secret": "Geheime Seite für angemeldete Benutzer"
+    },
+    "LocaleLayout": {
+        "title": "next-intl mit Auth.js Beispiel"
+    },
+    "Loginx": {
+        "title": "Anmelden",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "submit": "Anmelden",
+        "error": "{error, select, CredentialsSignin {Ungültiger Benutzername oder Passwort} other {Unbekannter Fehler}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Geheime Seite",
+        "description": "Diese Seite ist nur für angemeldete Benutzer sichtbar."
+    },
+
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
+    "Login": {
+        "title": "Iniciar Sesión",
+        "username": "Nombre de Usuario",
+        "password": "Contraseña",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "saveSession": "Recuérdame",
+        "login": "Iniciar sesión",
+        "newAccount": "¿Nueva cuenta?",
+        "createAccount": "Registrarse",
+        "usernamePlaceholder": "Ingrese su nombre de usuario",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "emptyUsernameError": "El nombre de usuario no puede estar vacío",
+        "invalidUsernameError": "Nombre de usuario no válido",
+        "incorrectUsernamePasswordError": "Nombre de usuario y/o contraseña no válidos",
+        "emptyPasswordError": "La contraseña no puede estar vacía",
+        "tooShortPasswordError": "La contraseña debe tener al menos {minSizePassword} caracteres"
+    },
+    "Providers": {
+        "title": "Mis credenciales",
+        "description": "Proveedores de servicios en la nube"
+    },
+    "Buckets": {
+        "title": "Mis cubos",
+        "description": "Servicio de almacenamiento simple de Amazon (S3)"
+    }
+}

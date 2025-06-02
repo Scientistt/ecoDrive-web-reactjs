@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Home",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "에코드라이브"
+    },
+
+    "Login": {
+        "title": "로그인",
+        "username": "사용자 이름",
+        "password": "비밀번호",
+        "forgotPassword": "비밀번호를 잊으셨나요?",
+        "saveSession": "기억하기",
+        "login": "로그인",
+        "newAccount": "새 계정을 원하시나요?",
+        "createAccount": "등록",
+        "usernamePlaceholder": "사용자 이름을 입력하세요",
+        "passwordPlaceholder": "비밀번호를 입력하세요",
+        "emptyUsernameError": "사용자 이름은 비워둘 수 없습니다",
+        "invalidUsernameError": "잘못된 사용자 이름",
+        "incorrectUsernamePasswordError": "잘못된 사용자 이름 및/또는 비밀번호",
+        "emptyPasswordError": "비밀번호는 비워둘 수 없습니다",
+        "tooShortPasswordError": "비밀번호는 최소 {minSizePassword}자 이상이어야 합니다"
+    },
+    "Providers": {
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
+    },
+    "Buckets": {
+        "title": "My buckets",
+        "description": "亚马逊简单存储服务 (S3)"
+    }
+}

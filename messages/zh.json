@@ -1,0 +1,58 @@
+{
+    "Index": {
+        "title": "Início",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "生态驱动"
+    },
+
+    "Login": {
+        "title": "登录",
+        "username": "用户名",
+        "password": "密码",
+        "forgotPassword": "忘记密码?",
+        "saveSession": "记住我",
+        "login": "登录",
+        "newAccount": "新帐户?",
+        "createAccount": "注册",
+        "usernamePlaceholder": "输入您的用户名",
+        "passwordPlaceholder": "输入您的密码",
+        "emptyUsernameError": "用户名不能为空",
+        "invalidUsernameError": "无效的用户名",
+        "incorrectUsernamePasswordError": "无效的用户名和/或密码",
+        "emptyPasswordError": "密码不能为空",
+        "tooShortPasswordError": "密码必须至少包含 {minSizePassword} 个字符"
+    },
+
+    "Providers": {
+        "title": "我的凭据",
+        "description": "云服务提供商"
+    },
+    "Buckets": {
+        "title": "我的桶",
+        "description": "亚马逊简单存储服务 (S3)"
+    }
+}

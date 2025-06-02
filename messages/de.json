@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Home",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
+    "Login": {
+        "title": "Anmelden",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "forgotPassword": "Passwort vergessen?",
+        "saveSession": "Erinnere dich an mich",
+        "login": "Anmelden",
+        "newAccount": "Neues Konto?",
+        "createAccount": "Registrieren",
+        "usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+        "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+        "emptyUsernameError": "Benutzername darf nicht leer sein",
+        "invalidUsernameError": "Ungültiger Benutzername",
+        "incorrectUsernamePasswordError": "Ungültiger Benutzername und/oder Passwort",
+        "emptyPasswordError": "Passwort darf nicht leer sein",
+        "tooShortPasswordError": "Passwort muss mindestens {minSizePassword} Zeichen haben"
+    },
+    "Providers": {
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
+    },
+    "Buckets": {
+        "title": "My buckets",
+        "description": "亚马逊简单存储服务（S3）"
+    }
+}

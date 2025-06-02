@@ -1,0 +1,57 @@
+{
+    "Index": {
+        "title": "Home",
+        "loggedIn": "Logged in as {username}",
+        "loggedOut": "You are logged out.",
+        "login": "Login",
+        "logout": "Logout",
+        "secret": "Secret page for logged in users"
+    },
+    "LocaleLayout": {
+        "title": "next-intl with Auth.js example"
+    },
+    "Loginx": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
+    },
+    "LocaleSwitcher": {
+        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
+    },
+    "Secret": {
+        "title": "Secret page",
+        "description": "This page is only visible for logged in users."
+    },
+
+    "NavBar": {
+        "title": "इकोड्राइव"
+    },
+
+    "Login": {
+        "title": "लॉग इन करें",
+        "username": "उपयोगकर्ता नाम",
+        "password": "पासवर्ड",
+        "forgotPassword": "पासवर्ड भूल गए?",
+        "saveSession": "मुझे याद रखें",
+        "login": "लॉग इन करें",
+        "newAccount": "नया खाता?",
+        "createAccount": "रजिस्टर",
+        "usernamePlaceholder": "अपना उपयोगकर्ता नाम दर्ज करें",
+        "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
+        "emptyUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "invalidUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "incorrectUsernamePasswordError": "अमान्य उपयोगकर्ता नाम और/या पासवर्ड",
+        "emptyPasswordError": "पासवर्ड खाली नहीं हो सकता",
+        "tooShortPasswordError": "पासवर्ड में कम से कम {minSizePassword} अक्षर होने चाहिए"
+    },
+    "Providers": {
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
+    },
+    "Buckets": {
+        "title": "My buckets",
+        "description": "亚马逊简单存储服务 (S3)"
+    }
+}
