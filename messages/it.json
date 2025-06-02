@@ -1,6 +1,6 @@
 {
     "Index": {
-        "title": "Início",
+        "title": "Home",
         "loggedIn": "Logged in as {username}",
         "loggedOut": "You are logged out.",
         "login": "Login",
@@ -26,28 +26,27 @@
     },
 
     "Login": {
-        "title": "登录",
-        "username": "用户名",
-        "password": "密码",
-        "forgotPassword": "忘记密码?",
-        "saveSession": "记住我",
-        "login": "登录",
-        "newAccount": "新帐户?",
-        "createAccount": "注册",
+        "title": "Accedi",
+        "username": "Nome utente",
+        "password": "Password",
+        "forgotPassword": "Ha dimenticato la password?",
+        "saveSession": "Ricordami",
+        "login": "Accedi",
+        "newAccount": "Nuovo conto?",
+        "createAccount": "Registrati",
 
-        "emptyUsernameError": "用户名不能为空",
-        "invalidUsernameError": "无效的用户名",
-        "incorrectUsernamePasswordError": "无效的用户名和/或密码",
-        "emptyPasswordError": "密码不能为空",
-        "tooShortPasswordError": "密码必须至少包含 {minSizePassword} 个字符"
+        "emptyUsernameError": "Il nome utente non può essere vuoto",
+        "invalidUsernameError": "Nome utente non valido",
+        "incorrectUsernamePasswordError": "Nome utente e/o password non validi",
+        "emptyPasswordError": "La password non può essere vuota",
+        "tooShortPasswordError": "La password deve contenere almeno {minSizePassword} caratteri"
     },
-
     "Providers": {
-        "title": "我的凭据",
-        "description": "云服务提供商"
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
     },
     "Buckets": {
-        "title": "我的桶",
+        "title": "My buckets",
         "description": "亚马逊简单存储服务 (S3)"
     }
 }

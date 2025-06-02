@@ -26,7 +26,10 @@ import { login } from "endpoints";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "contexts";
 
+import { useTranslations } from "next-intl";
+
 export default function Login() {
+    const t = useTranslations("Login");
     const [isLogInButtonActive, setIsLogInButtonActive] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingFailed, setIsLoadingFailed] = useState(false);
@@ -34,6 +37,8 @@ export default function Login() {
     const [isLoginPasswordValid, setIsLoginPasswordValid] = useState<boolean>(true);
     const [loginUserName, setLoginUserName] = useState<string>();
     const [isLoginUserNameValid, setIsLoginUserNameValid] = useState<boolean>(true);
+
+    const MIN_SIZE_PASSWORD = 8;
 
     const [loginKeep, setLoginKeep] = useState<boolean>(true);
 
@@ -149,7 +154,7 @@ export default function Login() {
                                 fontWeight={"bold"}
                                 fontSize={useBreakpointValue({ base: "40px", md: "50px" })}
                             >
-                                Log in
+                                {t("title")}
                             </Heading>
                         </Stack>
                         <Box borderWidth="0px">
@@ -157,7 +162,7 @@ export default function Login() {
                                 <Stack gap="5">
                                     <Field.Root required invalid={!isLoginUserNameValid}>
                                         <Field.Label htmlFor="login" fontSize={"lg"}>
-                                            Usuário
+                                            {t("username")}
                                         </Field.Label>
                                         <Input
                                             w="100%"
@@ -180,18 +185,18 @@ export default function Login() {
                                         />
                                         {(loginUserName || "").trim() === "" ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                Usuário não pode ser vazio
+                                                {t("emptyUsernameError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                Usuário inválido
+                                                {t("invalidUsernameError")}
                                             </Field.ErrorText>
                                         )}
                                     </Field.Root>
                                     <Field.Root required invalid={isLoadingFailed || !isLoginPasswordValid}>
                                         <HStack w="100%" justifyContent="space-between">
                                             <Field.Label htmlFor="password" mt="4" fontSize={"lg"}>
-                                                Senha
+                                                {t("password")}
                                             </Field.Label>
                                             <Spacer />
 
@@ -202,7 +207,7 @@ export default function Login() {
                                                     fontWeight={"medium"}
                                                     variant="plain"
                                                 >
-                                                    Esqueceu a senha?
+                                                    {t("forgotPassword")}
                                                 </Link>
                                             </Text>
                                         </HStack>
@@ -224,21 +229,21 @@ export default function Login() {
                                                 setLoginPassword(event.target.value);
                                                 const newValue = event.target.value;
                                                 setLoginPassword(newValue);
-                                                setIsLoginPasswordValid(newValue?.length >= 8);
+                                                setIsLoginPasswordValid(newValue?.length >= MIN_SIZE_PASSWORD);
                                             }}
                                         />
 
                                         {isLoginPasswordValid ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                Usuário e/ou Senha inválido(s)
+                                                {t("incorrectUsernamePasswordError")}
                                             </Field.ErrorText>
                                         ) : (loginPassword || "").trim() === "" ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                Informe a sua senha
+                                                {t("emptyPasswordError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                A senha deve conter pelo menos 8 dígitos
+                                                {t("tooShortPasswordError", { minSizePassword: MIN_SIZE_PASSWORD })}
                                             </Field.ErrorText>
                                         )}
                                     </Field.Root>
@@ -252,7 +257,7 @@ export default function Login() {
                                 >
                                     <Checkbox.HiddenInput />
                                     <Checkbox.Control />
-                                    <Checkbox.Label fontSize={"md"}>Salvar sessão</Checkbox.Label>
+                                    <Checkbox.Label fontSize={"md"}>{t("saveSession")}</Checkbox.Label>
                                 </Checkbox.Root>
                                 <Stack gap="6">
                                     <Button
@@ -269,18 +274,18 @@ export default function Login() {
                                         onClick={handleLogin}
                                         disabled={!isLogInButtonActive}
                                     >
-                                        Log In
+                                        {t("login")}
                                     </Button>
                                     <HStack gap={1} justify="center">
                                         <Text color="muted" fontSize={"md"}>
-                                            Novo por aqui?{" "}
+                                            {t("newAccount")}{" "}
                                             <Link
                                                 color={"green"}
                                                 onClick={clickRegister}
                                                 fontWeight={"medium"}
                                                 variant="plain"
                                             >
-                                                Registre-se
+                                                {t("createAccount")}
                                             </Link>
                                         </Text>
                                     </HStack>

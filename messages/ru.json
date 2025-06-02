@@ -26,20 +26,20 @@
     },
 
     "Login": {
-        "title": "Log In",
-        "username": "Username",
-        "password": "Password",
-        "forgotPassword": "Forgot Password?",
-        "saveSession": "Remember me",
-        "login": "Log In",
-        "newAccount": "New Account?",
-        "createAccount": "Register",
+        "title": "Войти",
+        "username": "Имя пользователя",
+        "password": "Пароль",
+        "forgotPassword": "Забыли пароль?",
+        "saveSession": "Запомнить меня",
+        "login": "Войти",
+        "newAccount": "Новая учетная запись?",
+        "createAccount": "Зарегистрироваться",
 
-        "emptyUsernameError": "Username cannot be empty",
-        "invalidUsernameError": "Invalid Username",
-        "incorrectUsernamePasswordError": "Invalid Username and/or Password",
-        "emptyPasswordError": "Password cannot be empty",
-        "tooShortPasswordError": "Password must have at least {minSizePassword} characters"
+        "emptyUsernameError": "Имя пользователя не может быть пустым",
+        "invalidUsernameError": "Неверное имя пользователя",
+        "incorrectUsernamePasswordError": "Неверное имя пользователя и/или пароль",
+        "emptyPasswordError": "Пароль не может быть пустым",
+        "tooShortPasswordError": "Пароль должен содержать не менее {minSizePassword} символов"
     },
     "Providers": {
         "title": "My Credentials",

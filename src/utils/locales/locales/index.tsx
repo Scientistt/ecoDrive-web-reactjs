@@ -16,32 +16,62 @@ const LOCALES: Record<string, Locale> = {
     pt: {
         key: "pt",
         flag: countryFlags.brazil,
-        name: "Português"
+        name: "Portugês"
     },
     en: {
         key: "en",
         flag: countryFlags.united_states,
-        name: "Inglês"
+        name: "English"
     },
     es: {
         key: "es",
         flag: countryFlags.spain,
-        name: "Espanhol"
+        name: "Español"
+    },
+    fr: {
+        key: "fr",
+        flag: countryFlags.france,
+        name: "Français"
+    },
+    de: {
+        key: "de",
+        flag: countryFlags.germany,
+        name: "Deutsch"
+    },
+    it: {
+        key: "it",
+        flag: countryFlags.italy,
+        name: "Italiano"
+    },
+    ru: {
+        key: "ru",
+        flag: countryFlags.russia,
+        name: "Русский"
+    },
+    ko: {
+        key: "ko",
+        flag: countryFlags.south_korea,
+        name: "한국인"
     },
     ja: {
         key: "ja",
         flag: countryFlags.japan,
-        name: "Japonês"
+        name: "日本語"
     },
     zh: {
         key: "zh",
         flag: countryFlags.china,
-        name: "Chinês (Simplificado)"
+        name: "中国人"
+    },
+    hi: {
+        key: "hi",
+        flag: countryFlags.india,
+        name: "हिंदी"
     },
     unknown: {
         key: "un",
         flag: countryFlags.united_kingdom,
-        name: "undefined"
+        name: "unknown"
     }
 };
 

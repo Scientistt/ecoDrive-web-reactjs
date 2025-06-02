@@ -3,14 +3,12 @@
 import { useState, useEffect } from "react";
 import { listSuppliers } from "endpoints";
 import { Supplier } from "types";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, toaster } from "components";
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
 
 export default function Buckets() {
-    const locale = useLocale();
-    console.log("Locale: ", locale);
     const t = useTranslations("Providers");
 
     const [isLoading, setIsLoading] = useState(true);

@@ -10,7 +10,7 @@
     "LocaleLayout": {
         "title": "next-intl with Auth.js example"
     },
-    "Login": {
+    "Loginx": {
         "title": "Login",
         "username": "Username",
         "password": "Password",
@@ -24,6 +24,24 @@
         "title": "Secret page",
         "description": "This page is only visible for logged in users."
     },
+
+    "Login": {
+        "title": "Entrar",
+        "username": "Usuário",
+        "password": "Senha",
+        "forgotPassword": "Esqueceu sua senha?",
+        "saveSession": "Salvar Sessão",
+        "login": "Entrar",
+        "newAccount": "novo por aqui?",
+        "createAccount": "Registre-se",
+
+        "emptyUsernameError": "Usuário não pode ser vazio",
+        "invalidUsernameError": "Usuário inválido",
+        "incorrectUsernamePasswordError": "Usuário e/ou Senha inválido(s)",
+        "emptyPasswordError": "A senha não pode ser vazia",
+        "tooShortPasswordError": "A senha deve ter pelo menos {minSizePassword} caracteres"
+    },
+
     "Providers": {
         "title": "Minhas Credenciais",
         "description": "Fornecedores de serviços em núvem"

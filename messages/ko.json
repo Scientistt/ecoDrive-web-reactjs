@@ -1,6 +1,6 @@
 {
     "Index": {
-        "title": "Início",
+        "title": "Home",
         "loggedIn": "Logged in as {username}",
         "loggedOut": "You are logged out.",
         "login": "Login",
@@ -26,28 +26,27 @@
     },
 
     "Login": {
-        "title": "登录",
-        "username": "用户名",
-        "password": "密码",
-        "forgotPassword": "忘记密码?",
-        "saveSession": "记住我",
-        "login": "登录",
-        "newAccount": "新帐户?",
-        "createAccount": "注册",
+        "title": "로그인",
+        "username": "사용자 이름",
+        "password": "비밀번호",
+        "forgotPassword": "비밀번호를 잊으셨나요?",
+        "saveSession": "기억하기",
+        "login": "로그인",
+        "newAccount": "새 계정을 원하시나요?",
+        "createAccount": "등록",
 
-        "emptyUsernameError": "用户名不能为空",
-        "invalidUsernameError": "无效的用户名",
-        "incorrectUsernamePasswordError": "无效的用户名和/或密码",
-        "emptyPasswordError": "密码不能为空",
-        "tooShortPasswordError": "密码必须至少包含 {minSizePassword} 个字符"
+        "emptyUsernameError": "사용자 이름은 비워둘 수 없습니다",
+        "invalidUsernameError": "잘못된 사용자 이름",
+        "incorrectUsernamePasswordError": "잘못된 사용자 이름 및/또는 비밀번호",
+        "emptyPasswordError": "비밀번호는 비워둘 수 없습니다",
+        "tooShortPasswordError": "비밀번호는 최소 {minSizePassword}자 이상이어야 합니다"
     },
-
     "Providers": {
-        "title": "我的凭据",
-        "description": "云服务提供商"
+        "title": "My Credentials",
+        "description": "Cloud Service Providers"
     },
     "Buckets": {
-        "title": "我的桶",
+        "title": "My buckets",
         "description": "亚马逊简单存储服务 (S3)"
     }
 }

@@ -26,20 +26,20 @@
     },
 
     "Login": {
-        "title": "Log In",
-        "username": "Username",
-        "password": "Password",
-        "forgotPassword": "Forgot Password?",
-        "saveSession": "Remember me",
-        "login": "Log In",
-        "newAccount": "New Account?",
-        "createAccount": "Register",
+        "title": "Connexion",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "forgotPassword": "Mot de passe oublié?",
+        "saveSession": "Se souvenir de moi",
+        "login": "Connexion",
+        "newAccount": "Nouveau compte?",
+        "createAccount": "S'inscrire",
 
-        "emptyUsernameError": "Username cannot be empty",
-        "invalidUsernameError": "Invalid Username",
-        "incorrectUsernamePasswordError": "Invalid Username and/or Password",
-        "emptyPasswordError": "Password cannot be empty",
-        "tooShortPasswordError": "Password must have at least {minSizePassword} characters"
+        "emptyUsernameError": "Le nom d'utilisateur ne peut pas être vide",
+        "invalidUsernameError": "Nom d'utilisateur invalide",
+        "incorrectUsernamePasswordError": "Nom d'utilisateur et/ou mot de passe invalides",
+        "emptyPasswordError": "Le mot de passe ne peut pas être vide",
+        "tooShortPasswordError": "Le mot de passe doit contenir au moins {minSizePassword} caractères"
     },
     "Providers": {
         "title": "My Credentials",
@@ -47,6 +47,6 @@
     },
     "Buckets": {
         "title": "My buckets",
-        "description": "亚马逊简单存储服务 (S3)"
+        "description": "亚马逊简单存储服务（S3）"
     }
 }

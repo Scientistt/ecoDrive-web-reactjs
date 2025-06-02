@@ -26,20 +26,20 @@
     },
 
     "Login": {
-        "title": "Log In",
-        "username": "Username",
-        "password": "Password",
-        "forgotPassword": "Forgot Password?",
-        "saveSession": "Remember me",
-        "login": "Log In",
-        "newAccount": "New Account?",
-        "createAccount": "Register",
+        "title": "लॉग इन करें",
+        "username": "उपयोगकर्ता नाम",
+        "password": "पासवर्ड",
+        "forgotPassword": "पासवर्ड भूल गए?",
+        "saveSession": "मुझे याद रखें",
+        "login": "लॉग इन करें",
+        "newAccount": "नया खाता?",
+        "createAccount": "रजिस्टर",
 
-        "emptyUsernameError": "Username cannot be empty",
-        "invalidUsernameError": "Invalid Username",
-        "incorrectUsernamePasswordError": "Invalid Username and/or Password",
-        "emptyPasswordError": "Password cannot be empty",
-        "tooShortPasswordError": "Password must have at least {minSizePassword} characters"
+        "emptyUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "invalidUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "incorrectUsernamePasswordError": "अमान्य उपयोगकर्ता नाम और/या पासवर्ड",
+        "emptyPasswordError": "पासवर्ड खाली नहीं हो सकता",
+        "tooShortPasswordError": "पासवर्ड में कम से कम {minSizePassword} अक्षर होने चाहिए"
     },
     "Providers": {
         "title": "My Credentials",

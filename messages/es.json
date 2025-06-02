@@ -10,7 +10,7 @@
     "LocaleLayout": {
         "title": "next-intl mit Auth.js Beispiel"
     },
-    "Login": {
+    "Loginx": {
         "title": "Anmelden",
         "username": "Benutzername",
         "password": "Passwort",
@@ -23,6 +23,23 @@
     "Secret": {
         "title": "Geheime Seite",
         "description": "Diese Seite ist nur für angemeldete Benutzer sichtbar."
+    },
+
+    "Login": {
+        "title": "Iniciar Sesión",
+        "username": "Nombre de Usuario",
+        "password": "Contraseña",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "saveSession": "Recuérdame",
+        "login": "Iniciar sesión",
+        "newAccount": "¿Nueva cuenta?",
+        "createAccount": "Registrarse",
+
+        "emptyUsernameError": "El nombre de usuario no puede estar vacío",
+        "invalidUsernameError": "Nombre de usuario no válido",
+        "incorrectUsernamePasswordError": "Nombre de usuario y/o contraseña no válidos",
+        "emptyPasswordError": "La contraseña no puede estar vacía",
+        "tooShortPasswordError": "La contraseña debe tener al menos {minSizePassword} caracteres"
     },
     "Providers": {
         "title": "Mis credenciales",

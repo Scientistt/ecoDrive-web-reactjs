@@ -10,7 +10,7 @@
     "LocaleLayout": {
         "title": "next-intl with Auth.js example"
     },
-    "Login": {
+    "Loginx": {
         "title": "Login",
         "username": "Username",
         "password": "Password",
@@ -23,6 +23,23 @@
     "Secret": {
         "title": "Secret page",
         "description": "This page is only visible for logged in users."
+    },
+
+    "Login": {
+        "title": "ログイン",
+        "username": "ユーザー名",
+        "password": "パスワード",
+        "forgotPassword": "パスワードをお忘れですか?",
+        "saveSession": "私を覚えておいてください",
+        "login": "ログイン",
+        "newAccount": "新しいアカウントですか?",
+        "createAccount": "登録",
+
+        "emptyUsernameError": "ユーザー名を空にすることはできません",
+        "invalidUsernameError": "無効なユーザー名",
+        "incorrectUsernamePasswordError": "無効なユーザー名および/またはパスワード",
+        "emptyPasswordError": "パスワードを空にすることはできません",
+        "tooShortPasswordError": "パスワードには少なくとも {minSizePassword} 文字が必要です"
     },
     "Providers": {
         "title": "私の資格情報",
