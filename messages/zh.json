@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "生态驱动"
+    },
+
     "Login": {
         "title": "登录",
         "username": "用户名",
@@ -34,7 +38,8 @@
         "login": "登录",
         "newAccount": "新帐户?",
         "createAccount": "注册",
-
+        "usernamePlaceholder": "输入您的用户名",
+        "passwordPlaceholder": "输入您的密码",
         "emptyUsernameError": "用户名不能为空",
         "invalidUsernameError": "无效的用户名",
         "incorrectUsernamePasswordError": "无效的用户名和/或密码",

@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
     "Login": {
         "title": "Entrar",
         "username": "Usuário",
@@ -34,7 +38,8 @@
         "login": "Entrar",
         "newAccount": "novo por aqui?",
         "createAccount": "Registre-se",
-
+        "usernamePlaceholder": "Digite o seu nome de usuário",
+        "passwordPlaceholder": "Digite a sua senha",
         "emptyUsernameError": "Usuário não pode ser vazio",
         "invalidUsernameError": "Usuário inválido",
         "incorrectUsernamePasswordError": "Usuário e/ou Senha inválido(s)",

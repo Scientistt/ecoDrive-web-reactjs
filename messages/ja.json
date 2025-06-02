@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "エコドライブ"
+    },
+
     "Login": {
         "title": "ログイン",
         "username": "ユーザー名",
@@ -34,7 +38,8 @@
         "login": "ログイン",
         "newAccount": "新しいアカウントですか?",
         "createAccount": "登録",
-
+        "usernamePlaceholder": "ユーザー名を入力してください",
+        "passwordPlaceholder": "パスワードを入力してください",
         "emptyUsernameError": "ユーザー名を空にすることはできません",
         "invalidUsernameError": "無効なユーザー名",
         "incorrectUsernamePasswordError": "無効なユーザー名および/またはパスワード",

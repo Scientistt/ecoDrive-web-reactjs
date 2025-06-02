@@ -142,7 +142,7 @@ export default function Login() {
                     align="center"
                     w="100%"
                 >
-                    <EcoDriveLogo size="big" />
+                    <EcoDriveLogo size="big" name={t("title")} />
                 </HStack>
 
                 <Stack w="450px" h="auto" p="10">
@@ -175,7 +175,7 @@ export default function Login() {
                                             fontSize={"md"}
                                             onKeyDown={enterOnLoginInput}
                                             borderBottomWidth="2px"
-                                            placeholder="Digite o seu nome de usuário"
+                                            placeholder={t("usernamePlaceholder")}
                                             variant="flushed"
                                             onChange={(event) => {
                                                 const newValue = event.target.value.toLowerCase().replace(/\s/g, "");
@@ -223,7 +223,7 @@ export default function Login() {
                                             type="password"
                                             onKeyDown={enterOnPassInput}
                                             borderBottomWidth="2px"
-                                            placeholder="Digite a sua senha"
+                                            placeholder={t("passwordPlaceholder")}
                                             variant="flushed"
                                             onChange={(event) => {
                                                 setLoginPassword(event.target.value);

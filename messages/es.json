@@ -25,6 +25,10 @@
         "description": "Diese Seite ist nur für angemeldete Benutzer sichtbar."
     },
 
+    "NavBar": {
+        "title": "ecoDrive"
+    },
+
     "Login": {
         "title": "Iniciar Sesión",
         "username": "Nombre de Usuario",
@@ -34,7 +38,8 @@
         "login": "Iniciar sesión",
         "newAccount": "¿Nueva cuenta?",
         "createAccount": "Registrarse",
-
+        "usernamePlaceholder": "Ingrese su nombre de usuario",
+        "passwordPlaceholder": "Ingrese su contraseña",
         "emptyUsernameError": "El nombre de usuario no puede estar vacío",
         "invalidUsernameError": "Nombre de usuario no válido",
         "incorrectUsernamePasswordError": "Nombre de usuario y/o contraseña no válidos",

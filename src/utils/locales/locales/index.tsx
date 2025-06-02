@@ -16,7 +16,7 @@ const LOCALES: Record<string, Locale> = {
     pt: {
         key: "pt",
         flag: countryFlags.brazil,
-        name: "Portugês"
+        name: "Português"
     },
     en: {
         key: "en",
@@ -47,6 +47,11 @@ const LOCALES: Record<string, Locale> = {
         key: "ru",
         flag: countryFlags.russia,
         name: "Русский"
+    },
+    ar: {
+        key: "ar",
+        flag: countryFlags.emirates,
+        name: "عربي"
     },
     ko: {
         key: "ko",

@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "écoDrive"
+    },
+
     "Login": {
         "title": "Connexion",
         "username": "Nom d'utilisateur",
@@ -34,7 +38,8 @@
         "login": "Connexion",
         "newAccount": "Nouveau compte?",
         "createAccount": "S'inscrire",
-
+        "usernamePlaceholder": "Entrez votre nom d'utilisateur",
+        "passwordPlaceholder": "Entrez votre mot de passe",
         "emptyUsernameError": "Le nom d'utilisateur ne peut pas être vide",
         "invalidUsernameError": "Nom d'utilisateur invalide",
         "incorrectUsernamePasswordError": "Nom d'utilisateur et/ou mot de passe invalides",

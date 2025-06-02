@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "इकोड्राइव"
+    },
+
     "Login": {
         "title": "लॉग इन करें",
         "username": "उपयोगकर्ता नाम",
@@ -34,7 +38,8 @@
         "login": "लॉग इन करें",
         "newAccount": "नया खाता?",
         "createAccount": "रजिस्टर",
-
+        "usernamePlaceholder": "अपना उपयोगकर्ता नाम दर्ज करें",
+        "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
         "emptyUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
         "invalidUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
         "incorrectUsernamePasswordError": "अमान्य उपयोगकर्ता नाम और/या पासवर्ड",

@@ -6,7 +6,7 @@ import navigation from "next/navigation";
 import { listSupporteLocales } from "utils";
 import { Locale } from "types";
 
-import { Portal, Select, createListCollection, Avatar, useSelectContext, VStack } from "@chakra-ui/react";
+import { Portal, Select, createListCollection, Avatar, useSelectContext, VStack, Text, HStack } from "@chakra-ui/react";
 
 const locales = createListCollection({
     items: listSupporteLocales(false),
@@ -43,6 +43,7 @@ export default function LocaleSelect() {
             defaultValue={[locale]}
             variant={"subtle"}
             bg="transparent"
+            positioning={{ placement: locale === "ar" ? "right-start" : "left-start", flip: false }}
             onValueChange={(newLocale) => {
                 const selectedLocale = newLocale.items[0];
                 const newPathname = nextPathName.replace(`/${locale}`, `/${selectedLocale.key}`);
@@ -64,16 +65,19 @@ export default function LocaleSelect() {
                     <Select.Content p={0} maxHeight="none">
                         {locales.items.map((item) => (
                             <Select.Item item={item} key={item.key} bg="transparent">
-                                <VStack align={"center"} bg="transparent" w="40px">
-                                    <Avatar.Root shape="square" size="xs" bg="transparent" p={0} m={0}>
-                                        <Avatar.Image src={item.flag.src} w={"50px"} alt={item.name} bg="transparent" />
-                                        {/* <Avatar.Fallback name={item.key} bg="transparent" p={0} m={0} /> */}
-                                    </Avatar.Root>
+                                <VStack align={"left"} bg="transparent">
+                                    <HStack gap="5px" align={"center"}>
+                                        <Avatar.Root shape="square" size="xs" bg="transparent" p={0} m={0}>
+                                            <Avatar.Image
+                                                src={item.flag.src}
+                                                w={"50px"}
+                                                alt={item.name}
+                                                bg="transparent"
+                                            />
+                                        </Avatar.Root>
+                                        <Text>{item.name}</Text>
+                                    </HStack>
                                 </VStack>
-                                {/* <Avatar.Root shape="square" size="2xs" bg="transparent">
-                                    <Avatar.Image src={item.flag.src} alt={item.name} bg="transparent" />
-                                    <Avatar.Fallback name={item.key} bg="transparent" />
-                                </Avatar.Root> */}
                             </Select.Item>
                         ))}
                     </Select.Content>

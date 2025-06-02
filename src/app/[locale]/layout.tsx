@@ -9,6 +9,9 @@ import { NavbarProvider, AuthContextProvider, ContextMenuProvider } from "contex
 import type { Metadata } from "next";
 import { getMessages } from "next-intl/server";
 
+// import { CacheProvider } from "@emotion/react";
+// import { rtlCache } from "../../../rtl-cache";
+
 export const metadata: Metadata = {
     title: "ecoDrive",
     description: "Armazene com consciência. Use com liberdade."
@@ -21,10 +24,14 @@ export default async function LocaleLayout(props: Readonly<{ children: React.Rea
     if (!hasLocale(routing.locales, locale)) {
         notFound();
     }
+
+    let dir = "ltr";
+    if (locale === "ar") dir = "rtl";
+
     const messages = await getMessages();
 
     return (
-        <html suppressHydrationWarning lang={locale}>
+        <html suppressHydrationWarning lang={locale} dir={dir}>
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <Provider>

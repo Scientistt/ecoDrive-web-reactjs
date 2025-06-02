@@ -26,25 +26,25 @@
     },
 
     "NavBar": {
-        "title": "에코드라이브"
+        "title": "محرك ايكو"
     },
 
     "Login": {
-        "title": "로그인",
-        "username": "사용자 이름",
-        "password": "비밀번호",
-        "forgotPassword": "비밀번호를 잊으셨나요?",
-        "saveSession": "기억하기",
-        "login": "로그인",
-        "newAccount": "새 계정을 원하시나요?",
-        "createAccount": "등록",
-        "usernamePlaceholder": "사용자 이름을 입력하세요",
-        "passwordPlaceholder": "비밀번호를 입력하세요",
-        "emptyUsernameError": "사용자 이름은 비워둘 수 없습니다",
-        "invalidUsernameError": "잘못된 사용자 이름",
-        "incorrectUsernamePasswordError": "잘못된 사용자 이름 및/또는 비밀번호",
-        "emptyPasswordError": "비밀번호는 비워둘 수 없습니다",
-        "tooShortPasswordError": "비밀번호는 최소 {minSizePassword}자 이상이어야 합니다"
+        "title": "تسجيل الدخول",
+        "username": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "forgotPassword": "هل نسيت كلمة السر؟",
+        "saveSession": "تذكرنى",
+        "login": "تسجيل الدخول",
+        "newAccount": "حساب جديد؟",
+        "createAccount": "يسجل",
+        "usernamePlaceholder": "أدخل اسم المستخدم الخاص بك",
+        "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
+        "emptyUsernameError": "لا يمكن أن يكون اسم المستخدم فارغًا",
+        "invalidUsernameError": "اسم مستخدم غير صالح",
+        "incorrectUsernamePasswordError": "اسم المستخدم و/أو كلمة المرور غير صالحة",
+        "emptyPasswordError": "لا يمكن أن تكون كلمة المرور فارغة",
+        "tooShortPasswordError": "يجب أن تحتوي كلمة المرور على أحرف {minSizePassword} على الأقل"
     },
     "Providers": {
         "title": "My Credentials",

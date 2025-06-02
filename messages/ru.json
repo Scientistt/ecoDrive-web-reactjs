@@ -25,6 +25,10 @@
         "description": "This page is only visible for logged in users."
     },
 
+    "NavBar": {
+        "title": "экоДрайв"
+    },
+
     "Login": {
         "title": "Войти",
         "username": "Имя пользователя",
@@ -34,7 +38,8 @@
         "login": "Войти",
         "newAccount": "Новая учетная запись?",
         "createAccount": "Зарегистрироваться",
-
+        "usernamePlaceholder": "Введите свое имя пользователя",
+        "passwordPlaceholder": "Введите свой пароль",
         "emptyUsernameError": "Имя пользователя не может быть пустым",
         "invalidUsernameError": "Неверное имя пользователя",
         "incorrectUsernamePasswordError": "Неверное имя пользователя и/или пароль",
