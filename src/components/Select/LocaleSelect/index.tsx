@@ -1,5 +1,7 @@
 import { useLocale } from "next-intl";
-import { usePathname } from "i18n/navigation";
+// import { usePathname } from "i18n/navigation";
+
+import navigation from "next/navigation";
 
 import { listSupporteLocales } from "utils";
 import { Locale } from "types";
@@ -29,8 +31,10 @@ const SelectValue = () => {
 };
 
 export default function LocaleSelect() {
-    const pathname = usePathname();
+    // const pathname = usePathname();
+    const nextPathName = navigation.usePathname();
     const locale = useLocale();
+    const router = navigation.useRouter();
 
     return (
         <Select.Root
@@ -39,10 +43,13 @@ export default function LocaleSelect() {
             defaultValue={[locale]}
             variant={"subtle"}
             bg="transparent"
-            onValueChange={(locale) => {
-                const selectedLocale = locale.items[0];
-                const newPath = `/${selectedLocale.key}${pathname}`;
-                window.location.href = newPath;
+            onValueChange={(newLocale) => {
+                const selectedLocale = newLocale.items[0];
+                const newPathname = nextPathName.replace(`/${locale}`, `/${selectedLocale.key}`);
+                // const newPath = `/${selectedLocale.key}${pathname}`;
+
+                router.replace(newPathname);
+                // window.location.href = newPath;
             }}
         >
             <Select.HiddenSelect />
@@ -54,7 +61,7 @@ export default function LocaleSelect() {
             </Select.Control>
             <Portal>
                 <Select.Positioner p={0}>
-                    <Select.Content p={0}>
+                    <Select.Content p={0} maxHeight="none">
                         {locales.items.map((item) => (
                             <Select.Item item={item} key={item.key} bg="transparent">
                                 <VStack align={"center"} bg="transparent" w="40px">

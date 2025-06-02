@@ -5,7 +5,7 @@ import { AuthContextType, User } from "types";
 import { checkAuthToken } from "endpoints";
 import { getStorage, deleteStorage, USER_JWT_TOKEN_NAME, PUBLIC_ROUTES } from "utils";
 import { useRouter, usePathname } from "next/navigation";
-import { FullPageLoading } from "components";
+// import { FullPageLoading } from "components";
 import { toaster } from "components";
 
 const defaultValues = {
@@ -29,7 +29,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
         toaster.create({
             type: "info",
-            title: "Usuário desconectado",
+            title: "Usuário desconectado: " + isLoading,
             description: "Redirecionando para a pagina de login"
         });
 
@@ -65,8 +65,8 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider value={{ user, setUser, logout }}>
-            {/* {children} */}
-            {isLoading ? <FullPageLoading message="Verificando login" pt="50px" /> : children}
+            {children}
+            {/* {isLoading ? <FullPageLoading message="Verificando login" pt="50px" /> : children} */}
         </AuthContext.Provider>
     );
 }
