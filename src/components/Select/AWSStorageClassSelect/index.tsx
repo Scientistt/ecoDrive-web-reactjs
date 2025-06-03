@@ -11,14 +11,14 @@ import { memo } from "react";
 import { listAWSStorageClasses } from "utils";
 import { AWSStorageClass, AWSStorageClassSelectProps } from "types";
 import { AWSStorageClassSelectItem } from "components";
+import { useTranslations } from "next-intl";
+import { Select, createListCollection, useSelectContext } from "@chakra-ui/react";
 
-import { Select, VStack, createListCollection, useSelectContext, Text } from "@chakra-ui/react";
-
-const tiers = createListCollection({
-    items: listAWSStorageClasses(false),
-    itemToString: (item) => item.name,
-    itemToValue: (item) => item.key
-});
+// const tiers = createListCollection({
+//     items: listAWSStorageClasses(false, t),
+//     itemToString: (item) => item.name,
+//     itemToValue: (item) => item.key
+// });
 
 const SelectValue = () => {
     const select = useSelectContext();
@@ -29,34 +29,16 @@ const SelectValue = () => {
             <AWSStorageClassSelectItem storageClass={items[0]} item={items[0]} />
         </Select.ValueText>
     );
-
-    const { name, key } = items?.[0];
-
-    return (
-        <Select.ValueText placeholder="Escolha um Storage Class">
-            <VStack align={"left"}>
-                <Text fontSize={"md"} fontWeight={"normal"}>
-                    {name}
-                </Text>
-                <Text fontSize={"sm"} mt={"-10px"} fontWeight={"light"}>
-                    {key}
-                </Text>
-            </VStack>
-        </Select.ValueText>
-    );
 };
 
 const AWSStorageClassSelect = (props: AWSStorageClassSelectProps) => {
-    /*const [storageClass, setstorageClass] = useState(tiers.items[0]);*/
-
-    // const handleChange = (event: FormEventHandler<HTMLDivElement>) => {
-    //     const selectedTier = tiers.items.find((tier) => tier.key === event?.target?.value) as AWSStorageClass;
-
-    //     setstorageClass(selectedTier);
-    //     if (props?.onChangeValue) {
-    //         props.onChangeValue(selectedTier);
-    //     }
-    // };
+    const t = useTranslations("AWSStorageClass");
+    console.log("Here?", t);
+    const tiers = createListCollection({
+        items: listAWSStorageClasses(false, t as unknown as typeof useTranslations),
+        itemToString: (item) => item.name,
+        itemToValue: (item) => item.key
+    });
 
     return (
         <>

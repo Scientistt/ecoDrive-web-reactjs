@@ -14,3 +14,5 @@ export const PUBLIC_ROUTES = [
         whenAuthenticated: "next"
     }
 ] as const;
+
+export const NEXT_LOCALE_TOKEN_NAME = "NEXT_LOCALE";

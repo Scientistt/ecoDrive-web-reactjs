@@ -1,34 +1,11 @@
 {
-    "Index": {
-        "title": "Home",
-        "loggedIn": "Logged in as {username}",
-        "loggedOut": "You are logged out.",
-        "login": "Login",
-        "logout": "Logout",
-        "secret": "Secret page for logged in users"
+    "Utils": {
+        "loading": "लोड हो रहा है",
+        "somethingIsWrong": "कुछ गलत हो गया"
     },
-    "LocaleLayout": {
-        "title": "next-intl with Auth.js example"
-    },
-    "Loginx": {
-        "title": "Login",
-        "username": "Username",
-        "password": "Password",
-        "submit": "Login",
-        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
-    },
-    "LocaleSwitcher": {
-        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
-    },
-    "Secret": {
-        "title": "Secret page",
-        "description": "This page is only visible for logged in users."
-    },
-
     "NavBar": {
         "title": "इकोड्राइव"
     },
-
     "Login": {
         "title": "लॉग इन करें",
         "username": "उपयोगकर्ता नाम",
@@ -37,21 +14,122 @@
         "saveSession": "मुझे याद रखें",
         "login": "लॉग इन करें",
         "newAccount": "नया खाता?",
-        "createAccount": "रजिस्टर",
+        "createAccount": "पंजीकरण करें",
         "usernamePlaceholder": "अपना उपयोगकर्ता नाम दर्ज करें",
         "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
         "emptyUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
-        "invalidUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "invalidUsernameError": "अमान्य उपयोगकर्ता नाम",
         "incorrectUsernamePasswordError": "अमान्य उपयोगकर्ता नाम और/या पासवर्ड",
         "emptyPasswordError": "पासवर्ड खाली नहीं हो सकता",
         "tooShortPasswordError": "पासवर्ड में कम से कम {minSizePassword} अक्षर होने चाहिए"
     },
-    "Providers": {
-        "title": "My Credentials",
-        "description": "Cloud Service Providers"
+    "Register": {
+        "title": "पंजीकरण करें",
+        "voucher": "वाउचर",
+        "voucherPlaceholder": "ABC1D234",
+        "emptyVoucherError": "वाउचर खाली नहीं हो सकता",
+        "invalidVoucherError": "अमान्य वाउचर",
+        "name": "पूरा नाम",
+        "namePlaceholder": "अपना पूरा नाम दर्ज करें",
+        "emptyNameError": "नाम खाली नहीं हो सकता",
+        "email": "ईमेल",
+        "emailPlaceholder": "अपना सर्वोत्तम ईमेल पता दर्ज करें",
+        "emptyEmailError": "ईमेल खाली नहीं हो सकता",
+        "takenEmailError": "ईमेल पहले से उपयोग में है",
+        "invalidEmailError": "अमान्य ईमेल पता",
+        "username": "उपयोगकर्ता नाम",
+        "usernamePlaceholder": "अपना उपयोगकर्ता नाम दर्ज करें",
+        "emptyUsernameError": "उपयोगकर्ता नाम खाली नहीं हो सकता",
+        "invalidUsernameError": "अमान्य उपयोगकर्ता नाम",
+        "takenUsernameError": "उपयोगकर्ता नाम पहले से उपयोग में है",
+        "password": "पासवर्ड",
+        "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
+        "emptyPasswordError": "पासवर्ड खाली नहीं हो सकता",
+        "tooShortPasswordError": "पासवर्ड में कम से कम {minSizePassword} अक्षर होने चाहिए",
+        "passwordConfirmation": "पासवर्ड की पुष्टि",
+        "passwordConfirmationPlaceholder": "अपना पासवर्ड दोबारा दर्ज करें",
+        "emptyPasswordConfirmationError": "पासवर्ड की पुष्टि खाली नहीं हो सकती",
+        "differentPasswordConfirmationError": "पासवर्ड मेल नहीं खाते",
+        "hasAccount": "पहले से खाता है?",
+        "login": "लॉग इन करें"
+    },
+    "Credentials": {
+        "title": "मेरी क्रेडेंशियल्स",
+        "description": "क्लाउड सेवा प्रदाता",
+        "update": "अपडेट करें",
+        "newCredential": "नई क्रेडेंशियल"
     },
     "Buckets": {
-        "title": "My buckets",
-        "description": "亚马逊简单存储服务 (S3)"
+        "title": "मेरे बकेट्स",
+        "description": "अमेज़न सिंपल स्टोरेज सेवा (S3)",
+        "backToCredentials": "क्रेडेंशियल्स पर लौटें",
+        "update": "अपडेट करें",
+        "newBucket": "नया बकेट",
+        "doNotLoadBucketDetails": "विवरण लोड न करें (तेज़)",
+        "loadBucketDetails": "विवरण लोड करें (धीमा)"
+    },
+    "Objects": {
+        "backToBuckets": "बकेट्स पर लौटें",
+        "update": "अपडेट करें",
+        "newObject": "अपलोड करें",
+        "root": "मूल",
+        "allObjects": "सभी ऑब्जेक्ट्स",
+        "seeAllObjects": "सभी ऑब्जेक्ट्स देखें",
+        "seeAsDirectoryTree": "डायरेक्टरी ट्री के रूप में देखें"
+    },
+    "newFileDrawer": {
+        "drawerTitle": "ऑब्जेक्ट अपलोड",
+        "directory": "डायरेक्टरी",
+        "dropTheFileHereTitle": "फ़ाइल को यहां छोड़ें",
+        "dropTheFileHereDescription": "अधिकतम 200GB",
+        "clickToSearchFileTitle": "फ़ाइल खोजने के लिए क्लिक करें या यहां खींचें और छोड़ें",
+        "clickToSearchFileDescription": "अधिकतम 200GB",
+        "uploading": "अपलोड हो रहा है",
+        "uploadingFailed": "अपलोड विफल हुआ",
+        "uploadingDone": "सफलतापूर्वक अपलोड किया गया",
+        "cancel": "रद्द करें",
+        "save": "सहेजें"
+    },
+    "FileContextMenu": {
+        "view": "देखें",
+        "download": "डाउनलोड करें {until}",
+        "downloadAvailableEnds": "समाप्त होता है",
+        "restoring": "पुनर्स्थापित हो रहा है...",
+        "restore": "पुनर्स्थापित करें",
+        "share": "साझा करें",
+        "addToFavorites": "पसंदीदा में जोड़ें",
+        "move": "स्थानांतरित करें",
+        "copyPath": "पथ कॉपी करें",
+        "rename": "नाम बदलें",
+        "delete": "हटाएं",
+        "properties": "गुण"
+    },
+    "DirectoryContextMenu": {
+        "open": "खोलें",
+        "share": "साझा करें",
+        "addToFavorites": "पसंदीदा में जोड़ें",
+        "move": "स्थानांतरित करें",
+        "copyPath": "पथ कॉपी करें",
+        "rename": "नाम बदलें",
+        "delete": "हटाएं",
+        "properties": "गुण"
+    },
+    "AWSStorageClass": {
+        "standardName": "स्टैंडर्ड",
+        "standardDescription": "S3 स्टैंडर्ड क्लास उच्च स्थायित्व, उपलब्धता और प्रदर्शन के साथ अक्सर एक्सेस किए जाने वाले डेटा के लिए ऑब्जेक्ट स्टोरेज प्रदान करता है। यह क्लाउड ऐप्स, डायनामिक वेबसाइट्स, कंटेंट डिस्ट्रीब्यूशन, मोबाइल और गेमिंग ऐप्स, और बिग डेटा एनालिटिक्स जैसे उपयोगों के लिए आदर्श है।",
+        "standardIAName": "स्टैंडर्ड (कम आवृत्ति एक्सेस)",
+        "standardIADescription": "S3 स्टैंडर्ड-IA क्लास उन डेटा के लिए अनुशंसित है जिन्हें कम बार एक्सेस किया जाता है लेकिन आवश्यकता पड़ने पर जल्दी एक्सेस की जरूरत होती है। यह स्टोरेज और पुनर्प्राप्ति पर कम दरों के साथ उच्च स्थायित्व और प्रदर्शन प्रदान करता है।",
+        "intelligentTieringName": "इंटेलिजेंट टियरिंग",
+        "intelligentTieringDescription": "S3 इंटेलिजेंट-टियरिंग स्टोरेज लागत को स्वचालित रूप से कम करने के लिए डेटा को एक्सेस पैटर्न के आधार पर विभिन्न स्तरों में स्थानांतरित करता है। यह परिवर्तनीय एक्सेस पैटर्न वाले डेटा के लिए आदर्श है।",
+        "oneZoneIAName": "वन ज़ोन (कम आवृत्ति एक्सेस)",
+        "oneZoneIADescription": "S3 वन ज़ोन-IA केवल एक ज़ोन में डेटा संग्रहीत करता है, जिससे लागत में 20% की कमी आती है। यह उन उपयोगकर्ताओं के लिए है जिन्हें उच्च उपलब्धता की आवश्यकता नहीं होती।",
+        "glacierIRName": "ग्लेशियर इंस्टेंट रिट्रीवल",
+        "glacierIRDescription": "S3 ग्लेशियर इंस्टेंट रिट्रीवल शायद ही कभी एक्सेस किए गए डेटा के लिए सबसे कम लागत वाली स्टोरेज है, जिसमें मिलीसेकंड पुनर्प्राप्ति समय होता है।",
+        "glacierName": "ग्लेशियर फ्लेक्सिबल रिट्रीवल",
+        "glacierDescription": "S3 ग्लेशियर फ्लेक्सिबल रिट्रीवल प्रति वर्ष 1-2 बार एक्सेस की जाने वाली आर्काइव डेटा के लिए है, जिसमें मिनटों से घंटों तक पुनर्प्राप्ति समय होता है।",
+        "deepArchiveName": "ग्लेशियर डीप आर्काइव",
+        "deepArchiveDescription": "S3 ग्लेशियर डीप आर्काइव सबसे किफायती स्टोरेज क्लास है, जो लंबे समय तक डेटा के संरक्षण के लिए आदर्श है, जैसे कि 7-10 वर्षों तक की नियामक आवश्यकताएं।",
+        "unknownName": "अज्ञात",
+        "unknownDescription": "अज्ञात"
     }
 }

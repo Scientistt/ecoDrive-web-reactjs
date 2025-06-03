@@ -90,7 +90,7 @@ export default function Buckets() {
             <Body>
                 <SubtleButton onClick={clickBackToSuppliers}>
                     <LuArrowLeft />
-                    Lista de Credenciais
+                    {t("backToCredentials")}
                 </SubtleButton>
                 <HStack>
                     <PageHeading header={t("title")} description={t("description")} />
@@ -98,23 +98,20 @@ export default function Buckets() {
                     <Spacer />
 
                     {isToLoadEachBucketDetail ? (
-                        <SimpleIconButton
-                            tooltip="Não carregar detalhes (Mais rápido)"
-                            onClick={doNotLoadBucketDetails}
-                        >
+                        <SimpleIconButton tooltip={t("doNotLoadBucketDetails")} onClick={doNotLoadBucketDetails}>
                             <LuSparkle />
                         </SimpleIconButton>
                     ) : (
-                        <SimpleIconButton tooltip="Carregar detalhes (Mais lento)" onClick={loadBucketDetails}>
+                        <SimpleIconButton tooltip={t("loadBucketDetails")} onClick={loadBucketDetails}>
                             <LuSparkles />
                         </SimpleIconButton>
                     )}
 
                     <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
-                        <LuRefreshCw /> Atualizar
+                        <LuRefreshCw /> {t("update")}
                     </SubtleButton>
                     <SimpleButton onClick={clickedNewBucket}>
-                        <LuPlus /> Novo Bucket
+                        <LuPlus /> {t("newBucket")}
                     </SimpleButton>
                 </HStack>
 

@@ -6,12 +6,14 @@ import { BucketObjectProps } from "types";
 import { parseFilePath, parseObjectSize, getAWSStorageClass } from "utils";
 import { FileExtensionIcons } from "assets";
 import { LuCheck } from "react-icons/lu";
+import { useTranslations } from "next-intl";
 
 const FileCard = (props: BucketObjectProps) => {
+    const t = useTranslations("AWSStorageClass");
     const file = parseFilePath(props.bucketObject);
     const isSelected = !!props?.isSelected;
 
-    const fileStorage = getAWSStorageClass(file.tier);
+    const fileStorage = getAWSStorageClass(file.tier, t as unknown as typeof useTranslations);
 
     console.log("file: ", fileStorage);
 

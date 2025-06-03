@@ -1,5 +1,6 @@
 import { Locale } from "types";
 import { countryFlags } from "assets";
+import { setStorage, NEXT_LOCALE_TOKEN_NAME } from "utils";
 
 // import {
 //     LuShieldCheck,
@@ -48,16 +49,7 @@ const LOCALES: Record<string, Locale> = {
         flag: countryFlags.russia,
         name: "Русский"
     },
-    ar: {
-        key: "ar",
-        flag: countryFlags.emirates,
-        name: "عربي"
-    },
-    ko: {
-        key: "ko",
-        flag: countryFlags.south_korea,
-        name: "한국인"
-    },
+
     ja: {
         key: "ja",
         flag: countryFlags.japan,
@@ -68,10 +60,45 @@ const LOCALES: Record<string, Locale> = {
         flag: countryFlags.china,
         name: "中国人"
     },
+    ko: {
+        key: "ko",
+        flag: countryFlags.south_korea,
+        name: "한국인"
+    },
+    ar: {
+        key: "ar",
+        flag: countryFlags.emirates,
+        name: "عربي"
+    },
     hi: {
         key: "hi",
         flag: countryFlags.india,
         name: "हिंदी"
+    },
+    vi: {
+        key: "vi",
+        flag: countryFlags.vietnam,
+        name: "Tiếng Việt"
+    },
+    el: {
+        key: "el",
+        flag: countryFlags.greece,
+        name: "ελληνικά"
+    },
+    he: {
+        key: "he",
+        flag: countryFlags.israel,
+        name: "עִברִית"
+    },
+    eo: {
+        key: "eo",
+        flag: countryFlags.esperanto,
+        name: "Esperanto"
+    },
+    la: {
+        key: "la",
+        flag: countryFlags.vatican,
+        name: "Latin"
     },
     unknown: {
         key: "un",
@@ -82,6 +109,10 @@ const LOCALES: Record<string, Locale> = {
 
 export const getSupportedLocale = (locale: string = "unknown"): Locale => {
     return LOCALES[locale] || LOCALES.unknown;
+};
+
+export const setLocale = (locale: string) => {
+    setStorage(NEXT_LOCALE_TOKEN_NAME, locale);
 };
 
 export const listSupporteLocales = (showBlank: boolean) => {

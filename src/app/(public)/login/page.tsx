@@ -30,6 +30,7 @@ import { useTranslations } from "next-intl";
 
 export default function Login() {
     const t = useTranslations("Login");
+    const tNavBar = useTranslations("NavBar");
     const [isLogInButtonActive, setIsLogInButtonActive] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingFailed, setIsLoadingFailed] = useState(false);
@@ -142,7 +143,7 @@ export default function Login() {
                     align="center"
                     w="100%"
                 >
-                    <EcoDriveLogo size="big" name={t("title")} />
+                    <EcoDriveLogo size="big" name={tNavBar("title")} />
                 </HStack>
 
                 <Stack w="450px" h="auto" p="10">

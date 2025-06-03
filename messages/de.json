@@ -1,40 +1,17 @@
 {
-    "Index": {
-        "title": "Home",
-        "loggedIn": "Logged in as {username}",
-        "loggedOut": "You are logged out.",
-        "login": "Login",
-        "logout": "Logout",
-        "secret": "Secret page for logged in users"
+    "Utils": {
+        "loading": "Wird geladen",
+        "somethingIsWrong": "Etwas ist schief gelaufen"
     },
-    "LocaleLayout": {
-        "title": "next-intl with Auth.js example"
-    },
-    "Loginx": {
-        "title": "Login",
-        "username": "Username",
-        "password": "Password",
-        "submit": "Login",
-        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
-    },
-    "LocaleSwitcher": {
-        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
-    },
-    "Secret": {
-        "title": "Secret page",
-        "description": "This page is only visible for logged in users."
-    },
-
     "NavBar": {
         "title": "ecoDrive"
     },
-
     "Login": {
         "title": "Anmelden",
         "username": "Benutzername",
         "password": "Passwort",
         "forgotPassword": "Passwort vergessen?",
-        "saveSession": "Erinnere dich an mich",
+        "saveSession": "Angemeldet bleiben",
         "login": "Anmelden",
         "newAccount": "Neues Konto?",
         "createAccount": "Registrieren",
@@ -44,14 +21,115 @@
         "invalidUsernameError": "Ungültiger Benutzername",
         "incorrectUsernamePasswordError": "Ungültiger Benutzername und/oder Passwort",
         "emptyPasswordError": "Passwort darf nicht leer sein",
-        "tooShortPasswordError": "Passwort muss mindestens {minSizePassword} Zeichen haben"
+        "tooShortPasswordError": "Das Passwort muss mindestens {minSizePassword} Zeichen lang sein"
     },
-    "Providers": {
-        "title": "My Credentials",
-        "description": "Cloud Service Providers"
+    "Register": {
+        "title": "Registrieren",
+        "voucher": "Gutschein",
+        "voucherPlaceholder": "ABC1D234",
+        "emptyVoucherError": "Gutschein darf nicht leer sein",
+        "invalidVoucherError": "Ungültiger Gutschein",
+        "name": "Name",
+        "namePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+        "emptyNameError": "Name darf nicht leer sein",
+        "email": "E-Mail",
+        "emailPlaceholder": "Geben Sie Ihre beste E-Mail-Adresse ein",
+        "emptyEmailError": "E-Mail darf nicht leer sein",
+        "takenEmailError": "E-Mail wird bereits verwendet",
+        "invalidEmailError": "Ungültige E-Mail-Adresse",
+        "username": "Benutzername",
+        "usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+        "emptyUsernameError": "Benutzername darf nicht leer sein",
+        "invalidUsernameError": "Ungültiger Benutzername",
+        "takenUsernameError": "Benutzername wird bereits verwendet",
+        "password": "Passwort",
+        "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+        "emptyPasswordError": "Passwort darf nicht leer sein",
+        "tooShortPasswordError": "Das Passwort muss mindestens {minSizePassword} Zeichen lang sein",
+        "passwordConfirmation": "Passwort bestätigen",
+        "passwordConfirmationPlaceholder": "Geben Sie Ihr Passwort erneut ein",
+        "emptyPasswordConfirmationError": "Passwortbestätigung darf nicht leer sein",
+        "differentPasswordConfirmationError": "Passwörter stimmen nicht überein",
+        "hasAccount": "Haben Sie bereits ein Konto?",
+        "login": "Anmelden"
+    },
+    "Credentials": {
+        "title": "Meine Zugangsdaten",
+        "description": "Cloud-Dienstanbieter",
+        "update": "Aktualisieren",
+        "newCredential": "Neue Zugangsdaten"
     },
     "Buckets": {
-        "title": "My buckets",
-        "description": "亚马逊简单存储服务（S3）"
+        "title": "Meine Buckets",
+        "description": "Amazon Simple Storage Service (S3)",
+        "backToCredentials": "Zurück zu den Zugangsdaten",
+        "update": "Aktualisieren",
+        "newBucket": "Neuer Bucket",
+        "doNotLoadBucketDetails": "Details nicht laden (Schneller)",
+        "loadBucketDetails": "Details laden (Langsamer)"
+    },
+    "Objects": {
+        "backToBuckets": "Zurück zu den Buckets",
+        "update": "Aktualisieren",
+        "newObject": "Hochladen",
+        "root": "Wurzelverzeichnis",
+        "allObjects": "Alle Objekte",
+        "seeAllObjects": "Alle Objekte anzeigen",
+        "seeAsDirectoryTree": "Als Verzeichnisbaum anzeigen"
+    },
+    "newFileDrawer": {
+        "drawerTitle": "Objekt hochladen",
+        "directory": "Verzeichnis",
+        "dropTheFileHereTitle": "Datei hier ablegen",
+        "dropTheFileHereDescription": "Max. 200GB",
+        "clickToSearchFileTitle": "Klicken Sie, um Dateien zu suchen oder ziehen Sie sie hierher",
+        "clickToSearchFileDescription": "Max. 200GB",
+        "uploading": "Wird hochgeladen",
+        "uploadingFailed": "Upload fehlgeschlagen",
+        "uploadingDone": "Erfolgreich hochgeladen",
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+    },
+    "FileContextMenu": {
+        "view": "Anzeigen",
+        "download": "Herunterladen bis {until}",
+        "downloadAvailableEnds": "endet",
+        "restoring": "Wiederherstellung läuft...",
+        "restore": "Wiederherstellen",
+        "share": "Teilen",
+        "addToFavorites": "Zu Favoriten hinzufügen",
+        "move": "Verschieben",
+        "copyPath": "Pfad kopieren",
+        "rename": "Umbenennen",
+        "delete": "Löschen",
+        "properties": "Eigenschaften"
+    },
+    "DirectoryContextMenu": {
+        "open": "Öffnen",
+        "share": "Teilen",
+        "addToFavorites": "Zu Favoriten hinzufügen",
+        "move": "Verschieben",
+        "copyPath": "Pfad kopieren",
+        "rename": "Umbenennen",
+        "delete": "Löschen",
+        "properties": "Eigenschaften"
+    },
+    "AWSStorageClass": {
+        "standardName": "Standard",
+        "standardDescription": "Die S3-Standardklasse bietet Objektspeicher mit hoher Haltbarkeit, Verfügbarkeit und Leistung für häufig genutzte Daten. Ideal für eine Vielzahl von Anwendungen, wie Cloud-Apps, dynamische Websites, Inhaltsverteilung, mobile und Spiele-Apps sowie Big Data-Analysen. Mit niedriger Latenz und hoher Durchsatzleistung bietet S3 Standard eine Verfügbarkeit von 99,99% mit einem SLA von 99,9%.",
+        "standardIAName": "Standard (selten verwendet)",
+        "standardIADescription": "Die S3-Standard-Infrequent Access (Standard-IA)-Klasse eignet sich für Daten, die selten verwendet werden, aber bei Bedarf schnell verfügbar sein müssen. Sie bietet die hohe Zuverlässigkeit und den Durchsatz von S3 Standard, jedoch mit niedrigeren Kosten pro GB für Speicher und Wiederherstellung. Ideal für Langzeitspeicherung, Backups und Disaster Recovery.",
+        "intelligentTieringName": "Intelligente Stufung",
+        "intelligentTieringDescription": "S3 Intelligent-Tiering ist die erste Cloud-Speicherklasse, die automatisch Kosten spart, indem sie Daten je nach Zugriffsfrequenz in die günstigste Zugriffsstufe verschiebt. Ohne Auswirkungen auf Leistung oder Wiederherstellung. Ideal für Daten mit unbekannten oder wechselnden Zugriffsmustern. Bietet Millisekunden-Latenz und hohe Durchsatzleistung.",
+        "oneZoneIAName": "One Zone (selten verwendet)",
+        "oneZoneIADescription": "S3 One Zone-Infrequent Access (One Zone-IA) speichert Daten in nur einer Verfügbarkeitszone (AZ), was 20% günstiger ist als S3 Standard-IA. Geeignet für selten verwendete Daten, die jedoch schnell verfügbar sein müssen, ohne die Verfügbarkeits- und Ausfallsicherheitsanforderungen von Standard-IA.",
+        "glacierIRName": "Glacier Sofortzugriff",
+        "glacierIRDescription": "Amazon S3 Glacier Instant Retrieval ist die günstigste Speicherklasse für langlebige Daten, die selten abgerufen werden, aber Millisekunden-Zugriff erfordern. Ideal für medizinische Bilder, Medieninhalte oder benutzergenerierte Dateien. Bietet dieselbe Performance wie S3 Standard.",
+        "glacierName": "Glacier Flexible Wiederherstellung",
+        "glacierDescription": "S3 Glacier Flexible Retrieval bietet günstigen Speicher für Daten, die ein- bis zweimal jährlich abgerufen werden. Eignet sich für Backups oder Disaster Recovery mit Wiederherstellungszeiten von Minuten bis Stunden, kostenlosen Massendownloads und hoher Haltbarkeit (elf Neunen).",
+        "deepArchiveName": "Glacier Deep Archive",
+        "deepArchiveDescription": "S3 Glacier Deep Archive ist die günstigste Amazon S3 Speicherklasse. Sie ist ideal für die Langzeitarchivierung von Daten, die einmal oder zweimal jährlich abgerufen werden. Perfekt für Aufbewahrungspflichten in regulierten Branchen wie Finanzen, Gesundheit und öffentlicher Sektor.",
+        "unknownName": "Unbekannt",
+        "unknownDescription": "Unbekannt"
     }
 }

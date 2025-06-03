@@ -1,57 +1,135 @@
 {
-    "Index": {
-        "title": "Startseite",
-        "loggedIn": "Angemeldet als {username}",
-        "loggedOut": "Du bist abgemeldet.",
-        "login": "Anmelden",
-        "logout": "Abmelden",
-        "secret": "Geheime Seite für angemeldete Benutzer"
+    "Utils": {
+        "loading": "Cargando",
+        "somethingIsWrong": "Algo salió mal"
     },
-    "LocaleLayout": {
-        "title": "next-intl mit Auth.js Beispiel"
-    },
-    "Loginx": {
-        "title": "Anmelden",
-        "username": "Benutzername",
-        "password": "Passwort",
-        "submit": "Anmelden",
-        "error": "{error, select, CredentialsSignin {Ungültiger Benutzername oder Passwort} other {Unbekannter Fehler}}"
-    },
-    "LocaleSwitcher": {
-        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
-    },
-    "Secret": {
-        "title": "Geheime Seite",
-        "description": "Diese Seite ist nur für angemeldete Benutzer sichtbar."
-    },
-
     "NavBar": {
         "title": "ecoDrive"
     },
-
     "Login": {
-        "title": "Iniciar Sesión",
-        "username": "Nombre de Usuario",
+        "title": "Inicio de sesión",
+        "username": "Nombre de usuario",
         "password": "Contraseña",
         "forgotPassword": "¿Olvidaste tu contraseña?",
-        "saveSession": "Recuérdame",
+        "saveSession": "Recordar inicio de sesión",
         "login": "Iniciar sesión",
-        "newAccount": "¿Nueva cuenta?",
-        "createAccount": "Registrarse",
-        "usernamePlaceholder": "Ingrese su nombre de usuario",
-        "passwordPlaceholder": "Ingrese su contraseña",
+        "newAccount": "¿Aún no tienes una cuenta?",
+        "createAccount": "Crear cuenta",
+        "usernamePlaceholder": "Ingresa tu nombre de usuario",
+        "passwordPlaceholder": "Ingresa tu contraseña",
         "emptyUsernameError": "El nombre de usuario no puede estar vacío",
-        "invalidUsernameError": "Nombre de usuario no válido",
-        "incorrectUsernamePasswordError": "Nombre de usuario y/o contraseña no válidos",
+        "invalidUsernameError": "Nombre de usuario inválido",
+        "incorrectUsernamePasswordError": "Nombre de usuario y/o contraseña incorrectos",
         "emptyPasswordError": "La contraseña no puede estar vacía",
         "tooShortPasswordError": "La contraseña debe tener al menos {minSizePassword} caracteres"
     },
-    "Providers": {
+    "Register": {
+        "title": "Registro",
+        "voucher": "Cupón",
+        "voucherPlaceholder": "ABC1D234",
+        "emptyVoucherError": "El cupón no puede estar vacío",
+        "invalidVoucherError": "Cupón inválido",
+        "name": "Nombre",
+        "namePlaceholder": "Ingresa tu nombre completo",
+        "emptyNameError": "El nombre no puede estar vacío",
+        "email": "Correo electrónico",
+        "emailPlaceholder": "Ingresa tu mejor correo electrónico",
+        "emptyEmailError": "El correo electrónico no puede estar vacío",
+        "takenEmailError": "Este correo ya está en uso",
+        "invalidEmailError": "Dirección de correo inválida",
+        "username": "Nombre de usuario",
+        "usernamePlaceholder": "Ingresa un nombre de usuario",
+        "emptyUsernameError": "El nombre de usuario no puede estar vacío",
+        "invalidUsernameError": "Nombre de usuario inválido",
+        "takenUsernameError": "Este nombre de usuario ya está en uso",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Ingresa tu contraseña",
+        "emptyPasswordError": "La contraseña no puede estar vacía",
+        "tooShortPasswordError": "La contraseña debe tener al menos {minSizePassword} caracteres",
+        "passwordConfirmation": "Confirmación de contraseña",
+        "passwordConfirmationPlaceholder": "Reingresa tu contraseña",
+        "emptyPasswordConfirmationError": "La confirmación de la contraseña no puede estar vacía",
+        "differentPasswordConfirmationError": "Las contraseñas no coinciden",
+        "hasAccount": "¿Ya tienes una cuenta?",
+        "login": "Iniciar sesión"
+    },
+    "Credentials": {
         "title": "Mis credenciales",
-        "description": "Proveedores de servicios en la nube"
+        "description": "Proveedor de servicios en la nube",
+        "update": "Actualizar",
+        "newCredential": "Nueva credencial"
     },
     "Buckets": {
-        "title": "Mis cubos",
-        "description": "Servicio de almacenamiento simple de Amazon (S3)"
+        "title": "Mis depósitos",
+        "description": "Amazon Simple Storage Service (S3)",
+        "backToCredentials": "Volver a las credenciales",
+        "update": "Actualizar",
+        "newBucket": "Nuevo depósito",
+        "doNotLoadBucketDetails": "No cargar detalles (más rápido)",
+        "loadBucketDetails": "Cargar detalles (más lento)"
+    },
+    "Objects": {
+        "backToBuckets": "Volver a los depósitos",
+        "update": "Actualizar",
+        "newObject": "Subir archivo",
+        "root": "Directorio raíz",
+        "allObjects": "Todos los objetos",
+        "seeAllObjects": "Ver todos los objetos",
+        "seeAsDirectoryTree": "Ver como árbol de directorios"
+    },
+    "newFileDrawer": {
+        "drawerTitle": "Subir archivo",
+        "directory": "Directorio",
+        "dropTheFileHereTitle": "Suelta el archivo aquí",
+        "dropTheFileHereDescription": "Máx. 200GB",
+        "clickToSearchFileTitle": "Haz clic para buscar archivos o arrástralos aquí",
+        "clickToSearchFileDescription": "Máx. 200GB",
+        "uploading": "Subiendo",
+        "uploadingFailed": "Error al subir",
+        "uploadingDone": "Subida completada",
+        "cancel": "Cancelar",
+        "save": "Guardar"
+    },
+    "FileContextMenu": {
+        "view": "Ver",
+        "download": "Descargar hasta {until}",
+        "downloadAvailableEnds": "finaliza el",
+        "restoring": "Restaurando...",
+        "restore": "Restaurar",
+        "share": "Compartir",
+        "addToFavorites": "Agregar a favoritos",
+        "move": "Mover",
+        "copyPath": "Copiar ruta",
+        "rename": "Renombrar",
+        "delete": "Eliminar",
+        "properties": "Propiedades"
+    },
+    "DirectoryContextMenu": {
+        "open": "Abrir",
+        "share": "Compartir",
+        "addToFavorites": "Agregar a favoritos",
+        "move": "Mover",
+        "copyPath": "Copiar ruta",
+        "rename": "Renombrar",
+        "delete": "Eliminar",
+        "properties": "Propiedades"
+    },
+    "AWSStorageClass": {
+        "standardName": "Estándar",
+        "standardDescription": "S3 Estándar proporciona almacenamiento de objetos con alta durabilidad, disponibilidad y rendimiento para datos que se acceden con frecuencia. Ideal para aplicaciones en la nube, sitios web dinámicos, entrega de contenido, aplicaciones móviles, juegos y análisis de big data.",
+        "standardIAName": "Estándar (Acceso infrecuente)",
+        "standardIADescription": "S3 Estándar-IA está destinado a datos a los que se accede con poca frecuencia pero que se necesitan de inmediato. Ofrece alta durabilidad y rendimiento a un menor costo por GB. Ideal para copias de seguridad y recuperación ante desastres.",
+        "intelligentTieringName": "Nivelación inteligente",
+        "intelligentTieringDescription": "S3 Intelligent-Tiering reduce automáticamente los costos de almacenamiento al mover datos entre niveles según el patrón de acceso, sin afectar el rendimiento.",
+        "oneZoneIAName": "Una zona (Acceso infrecuente)",
+        "oneZoneIADescription": "S3 One Zone-IA almacena datos en una sola zona de disponibilidad y es 20% más barato que Standard-IA. Ideal para contenido de bajo valor pero de acceso inmediato.",
+        "glacierIRName": "Glacier Recuperación instantánea",
+        "glacierIRDescription": "Glacier Instant Retrieval ofrece almacenamiento de bajo costo para datos de acceso infrecuente que requieren acceso inmediato. Ideal para imágenes médicas, medios y archivos de usuario.",
+        "glacierName": "Glacier Recuperación flexible",
+        "glacierDescription": "Glacier Flexible Retrieval es adecuado para datos que se acceden anualmente o con menor frecuencia, con tiempos de recuperación de minutos a horas y bajo costo.",
+        "deepArchiveName": "Glacier Archivo profundo",
+        "deepArchiveDescription": "Glacier Deep Archive es la clase de almacenamiento S3 más económica, diseñada para el almacenamiento a largo plazo de datos muy raramente accedidos, con fines regulatorios o legales.",
+        "unknownName": "Desconocido",
+        "unknownDescription": "Desconocido"
     }
 }

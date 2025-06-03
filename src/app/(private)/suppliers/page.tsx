@@ -9,7 +9,7 @@ import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus } from "react-icons/lu";
 
 export default function Buckets() {
-    const t = useTranslations("Providers");
+    const t = useTranslations("Credentials");
 
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
@@ -62,10 +62,10 @@ export default function Buckets() {
 
                     <Spacer />
                     <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
-                        <LuRefreshCw /> Atualizar
+                        <LuRefreshCw /> {t("update")}
                     </SubtleButton>
                     <SimpleButton onClick={clickedNewSupplier}>
-                        <LuPlus /> Nova Credencial
+                        <LuPlus /> {t("newCredential")}
                     </SimpleButton>
                 </HStack>
                 <ExplorerGrid isLoading={isLoading} loadingFailed={isLoadFailed} eWidth={"400px"}>
