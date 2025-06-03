@@ -65,7 +65,7 @@ export const parseDateYMD = (date: Date): string => {
     }
 };
 
-export const parseDateDistance = (date: Date | string): string => {
+export const parseDateDistance = (date: Date | string, locale: string): string => {
     const targetDate = new Date(date);
     const now = new Date();
     const diff = targetDate.getTime() - now.getTime(); // em ms
@@ -81,7 +81,7 @@ export const parseDateDistance = (date: Date | string): string => {
         ["second", 1000]
     ];
 
-    const rtf = new Intl.RelativeTimeFormat("pt-BR", { numeric: "auto" });
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
 
     for (const [unit, ms] of units) {
         if (absDiff >= ms || unit === "second") {

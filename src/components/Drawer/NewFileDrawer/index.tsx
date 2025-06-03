@@ -2,7 +2,7 @@
 
 import { memo, useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
-
+import { useTranslations } from "next-intl";
 import {
     VStack,
     HStack,
@@ -27,6 +27,7 @@ import { uploadSingleObject } from "endpoints";
 import dropFileBgImage from "assets/images/layouts/bg/drop-file-bgimage.svg";
 
 const NewFileDrawer = (props: NewFileDrawerProps) => {
+    const t = useTranslations("newFileDrawer");
     const isOpen = !!props.isOpen;
     const onClose = props.onClose ? props.onClose : () => {};
     const onOpen = props.onOpen ? props.onOpen : () => {};
@@ -46,11 +47,12 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
 
     const submitFiles = async () => {
         const pathPart = path === "Raiz" ? "" : path; // se o path for 'Raiz', não adiciona nada
+
         const fileName = inputFileNameRef.current?.value?.trim() || fileUpload.acceptedFiles[0].name;
         const file = fileUpload.acceptedFiles[0];
 
         // const toastId = toast.loading("Enviando arquivo...");
-        const toastId = toast.loading("Enviando arquivo", {
+        const toastId = toast.loading(t("uploading"), {
             position: "bottom-right",
             hideProgressBar: false,
             closeOnClick: true,
@@ -73,7 +75,7 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
 
             if (object?.name) {
                 toast.update(toastId, {
-                    render: "Upload concluído com sucesso!",
+                    render: t("uploadingDone"),
                     type: "success",
                     isLoading: false,
                     autoClose: 5000,
@@ -82,7 +84,7 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                 onUpload();
             } else {
                 toast.update(toastId, {
-                    render: "Não foi possível concluir o upload!",
+                    render: t("uploadingFailed"),
                     type: "error",
                     isLoading: false,
                     autoClose: 5000,
@@ -176,10 +178,10 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                         <VStack>
                             <Image src={dropFileBgImage.src} w={"200px"} alt="Solte os arquivos aqui" pb={"20px"} />
                             <Heading fontSize="3xl" color="white">
-                                Solte o arquivo aqui
+                                {t("dropTheFileHereTitle")}
                             </Heading>
                             <Text color="white" fontSize={"md"} fontWeight={"light"}>
-                                Max 200GB
+                                {t("dropTheFileHereDescription")}
                             </Text>
                         </VStack>
                     </Center>
@@ -190,13 +192,13 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                 isOpen={isOpen}
                 onClose={onClose}
                 onOpen={onOpen}
-                title={"Upload de Arquivos"}
+                title={t("drawerTitle")}
                 body={
                     <VStack gap={"10px"} p={"10px"} align={"left"}>
                         <AWSStorageClassSelect onChangeValue={onChangeStorageClassSelect} />
 
                         <Heading size={"sm"} letterSpacing="tight" pt={"10px"}>
-                            Diretório:{" "}
+                            {t("directory")}:{" "}
                             {path ? (
                                 <Highlight
                                     query={path}
@@ -217,8 +219,8 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                             <FileUpload.Dropzone>
                                 <Icon as={LuUpload} boxSize="5" color="fg.muted" />
                                 <FileUpload.DropzoneContent>
-                                    <Box>Clique para procurar ou Arraste o arquivo até aqui</Box>
-                                    <Box color="fg.muted">Tamanho máximo de 1TB</Box>
+                                    <Box>{t("clickToSearchFileTitle")}</Box>
+                                    <Box color="fg.muted">{t("clickToSearchFileDescription")}</Box>
                                 </FileUpload.DropzoneContent>
                             </FileUpload.Dropzone>
                             {/* <FileUpload.List /> */}
@@ -242,11 +244,11 @@ const NewFileDrawer = (props: NewFileDrawerProps) => {
                 footer={
                     <HStack gap={"10px"}>
                         <SimpleCancelButton onClick={onClose}>
-                            <Text>Cancelar</Text>
+                            <Text>{t("cancel")}</Text>
                         </SimpleCancelButton>
 
                         <SimpleButton onClick={submitFiles}>
-                            <Text>Salvar</Text>
+                            <Text>{t("save")}</Text>
                         </SimpleButton>
                     </HStack>
                 }

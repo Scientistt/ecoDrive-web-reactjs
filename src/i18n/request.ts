@@ -1,10 +1,10 @@
-import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
+import { cookies } from "next/headers";
+// import { NEXT_LOCALE_TOKEN_NAME } from "utils";
 
-export default getRequestConfig(async ({ requestLocale }) => {
-    const requested = await requestLocale;
-    const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
+export default getRequestConfig(async () => {
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
     const messages = (await import(`../../messages/${locale}.json`)).default;
     return {
         locale,

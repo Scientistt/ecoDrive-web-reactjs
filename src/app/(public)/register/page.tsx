@@ -16,6 +16,8 @@ import {
     InputGroup
 } from "@chakra-ui/react";
 
+import { useTranslations } from "next-intl";
+
 // import * as React from "react";
 import { useState, useRef, RefObject } from "react";
 
@@ -29,8 +31,11 @@ import { isEmailValid, isUsernameValid } from "utils";
 
 import { LuCheck } from "react-icons/lu";
 
-export default function Login() {
+export default function Register() {
     // const [haSubmittedOnce, setHaSubmittedOnce] = useState(false);
+
+    const t = useTranslations("Register");
+    const tNavBar = useTranslations("NavBar");
 
     const [isRegisterButtonActive, setIsRegisterButtonActive] = useState(true);
 
@@ -74,6 +79,8 @@ export default function Login() {
     const nameInput = useRef<HTMLInputElement>(null);
     const emailInput = useRef<HTMLInputElement>(null);
 
+    const MIN_SIZE_PASSWORD = 8;
+
     const validateVoucherValue = async (newValue: string) => {
         try {
             setIsRegisterVoucherLoading(true);
@@ -115,7 +122,7 @@ export default function Login() {
     const validateEmailValue = async (newValue: string) => {
         try {
             setIsRegisterEmailLoading(true);
-            console.log("Validating Email: ", newValue);
+
             const response = await validateRegisterEmail(newValue);
 
             if (response) {
@@ -150,7 +157,7 @@ export default function Login() {
     const validateUserNameValue = async (newValue: string) => {
         try {
             setIsRegisterUserNameLoading(true);
-            console.log("Validating UserName: ", newValue);
+
             const response = await validateRegisterUserName(newValue);
 
             if (response) {
@@ -174,8 +181,6 @@ export default function Login() {
         e.target.value.toLowerCase().replace(/\s/g, "");
         const newValue = e.target.value;
         setRegisterUserName(newValue);
-
-        console.log("Vamos validar UserName? ", newValue);
 
         if (registerUserNameTimeout) clearTimeout(registerUserNameTimeout);
 
@@ -257,8 +262,6 @@ export default function Login() {
                             "Não foi possível concluir o seu registro. Verifique os dados informados e tente novamente."
                     });
                 }
-
-                console.log("Response: ", response);
             }
 
             // const response = await register(loginUserName || "", loginPassword || "");
@@ -337,7 +340,7 @@ export default function Login() {
                     align="center"
                     w="100%"
                 >
-                    <EcoDriveLogo size="big" />
+                    <EcoDriveLogo size="big" name={tNavBar("title")} />
                 </HStack>
 
                 <Stack w="550px" h="auto" p="10">
@@ -349,7 +352,7 @@ export default function Login() {
                                 fontWeight={"bold"}
                                 fontSize={useBreakpointValue({ base: "40px", md: "50px" })}
                             >
-                                Registre-se
+                                {t("title")}
                             </Heading>
                         </Stack>
                         <Box borderWidth="0px">
@@ -357,7 +360,7 @@ export default function Login() {
                                 <Stack gap="5">
                                     <Field.Root required invalid={!isRegisterVoucherValid}>
                                         <Field.Label htmlFor="voucherInput" fontSize={"lg"} mt="4">
-                                            Voucher
+                                            {t("voucher")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
                                         <InputGroup
@@ -384,7 +387,7 @@ export default function Login() {
                                                 type="text"
                                                 fontSize={"md"}
                                                 borderBottomWidth="2px"
-                                                placeholder="Ex. ABC1D234"
+                                                placeholder={t("voucherPlaceholder")}
                                                 variant="flushed"
                                                 onChange={handleVoucherChange}
                                                 onKeyDown={onEnterfocusOnNextField(nameInput)}
@@ -394,11 +397,11 @@ export default function Login() {
                                         {!isRegisterVoucherValid ? (
                                             registerVoucher.trim() === "" ? (
                                                 <Field.ErrorText color="red" fontSize={"sm"}>
-                                                    O voucher é obrigatório
+                                                    {t("emptyVoucherError")}
                                                 </Field.ErrorText>
                                             ) : (
                                                 <Field.ErrorText color="red" fontSize={"sm"}>
-                                                    O voucher informado é inválido
+                                                    {t("invalidVoucherError")}
                                                 </Field.ErrorText>
                                             )
                                         ) : (
@@ -408,7 +411,7 @@ export default function Login() {
 
                                     <Field.Root required invalid={!isRegisterNameValid}>
                                         <Field.Label htmlFor="nameInput" fontSize={"lg"} mt="4">
-                                            Nome
+                                            {t("name")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
 
@@ -424,13 +427,13 @@ export default function Login() {
                                             onChange={handleNameChange}
                                             onKeyDown={onEnterfocusOnNextField(emailInput)}
                                             borderBottomWidth="2px"
-                                            placeholder="Digite o seu nome completo"
+                                            placeholder={t("namePlaceholder")}
                                             variant="flushed"
                                         />
 
                                         {!isRegisterNameValid ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O nome é obrigatório
+                                                {t("emptyNameError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <></>
@@ -439,7 +442,7 @@ export default function Login() {
 
                                     <Field.Root required invalid={!isRegisterEmailValid}>
                                         <Field.Label htmlFor="emailInput" fontSize={"lg"} mt="4">
-                                            Email
+                                            {t("email")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
                                         <InputGroup
@@ -467,7 +470,7 @@ export default function Login() {
                                                 type="email"
                                                 fontSize={"md"}
                                                 borderBottomWidth="2px"
-                                                placeholder="Digite o seu melhor endereço de email"
+                                                placeholder={t("emailPlaceholder")}
                                                 variant="flushed"
                                                 onChange={handleEmailChange}
                                                 onKeyDown={onEnterfocusOnNextField(userNameInput)}
@@ -478,22 +481,22 @@ export default function Login() {
                                             <></>
                                         ) : registerEmail?.trim() === "" ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O email é obrigatório
+                                                {t("emptyEmailError")}
                                             </Field.ErrorText>
                                         ) : isEmailValid(registerEmail) ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O email já está em uso
+                                                {t("takenEmailError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O email informado é inválido
+                                                {t("invalidEmailError")}
                                             </Field.ErrorText>
                                         )}
                                     </Field.Root>
 
                                     <Field.Root required invalid={!isRegisterUserNameValid}>
                                         <Field.Label htmlFor="loginInput" fontSize={"lg"} mt="4">
-                                            Usuário
+                                            {t("username")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
                                         <InputGroup
@@ -522,7 +525,7 @@ export default function Login() {
                                                 fontSize={"md"}
                                                 // onKeyDown={enterOnLoginInput}
                                                 borderBottomWidth="2px"
-                                                placeholder="Digite o seu nome de usuário"
+                                                placeholder={t("usernamePlaceholder")}
                                                 variant="flushed"
                                                 onChange={handleUserNameChange}
                                                 onKeyDown={onEnterfocusOnNextField(passwordInput)}
@@ -533,22 +536,22 @@ export default function Login() {
                                             <></>
                                         ) : registerUserName?.trim() === "" ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O nome de usuário é obrigatório
+                                                {t("emptyUsernameError")}
                                             </Field.ErrorText>
                                         ) : isRegisterUserNameAvailable ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O nome de usuário informado é inválido
+                                                {t("invalidUsernameError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                O nome de usuário já está em uso
+                                                {t("takenUsernameError")}
                                             </Field.ErrorText>
                                         )}
                                     </Field.Root>
 
                                     <Field.Root required invalid={!isRegisterPasswordValid}>
                                         <Field.Label htmlFor="passwordInput" fontSize={"lg"} mt="4">
-                                            Senha
+                                            {t("password")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
 
@@ -563,7 +566,7 @@ export default function Login() {
                                             type="password"
                                             // onKeyDown={enterOnPassInput}
                                             borderBottomWidth="2px"
-                                            placeholder="Digite a sua senha"
+                                            placeholder={t("passwordPlaceholder")}
                                             variant="flushed"
                                             onChange={handlePasswordChange}
                                             onKeyDown={onEnterfocusOnNextField(passwordDupInput)}
@@ -573,11 +576,11 @@ export default function Login() {
                                             <></>
                                         ) : registerPassword.trim() === "" ? (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                A senha é obrigatória
+                                                {t("emptyPasswordError")}
                                             </Field.ErrorText>
                                         ) : (
                                             <Field.ErrorText color="red" fontSize={"sm"}>
-                                                A senha deve conter pelo menos 8 dígitos
+                                                {t("tooShortPasswordError", { minSizePassword: MIN_SIZE_PASSWORD })}
                                             </Field.ErrorText>
                                         )}
                                     </Field.Root>
@@ -591,7 +594,7 @@ export default function Login() {
                                         }
                                     >
                                         <Field.Label htmlFor="passwordInput" fontSize={"lg"} mt="4">
-                                            Confirmação da Senha
+                                            {t("passwordConfirmation")}
                                             <Field.RequiredIndicator />
                                         </Field.Label>
 
@@ -606,7 +609,7 @@ export default function Login() {
                                             type="password"
                                             // onKeyDown={enterOnPassInput}
                                             borderBottomWidth="2px"
-                                            placeholder="Digite a sua senha novamente"
+                                            placeholder={t("passwordConfirmationPlaceholder")}
                                             variant="flushed"
                                             onChange={handlePasswordDupChange}
                                             onKeyDown={onEnterSubmit}
@@ -616,11 +619,11 @@ export default function Login() {
                                             isRegisterPasswordValid && !isRegisterPasswordDupValid ? (
                                                 registerPasswordDup.trim() === "" ? (
                                                     <Field.ErrorText color="red" fontSize={"sm"}>
-                                                        A confirmação da senha é obrigatório
+                                                        {t("emptyPasswordConfirmationError")}
                                                     </Field.ErrorText>
                                                 ) : (
                                                     <Field.ErrorText color="red" fontSize={"sm"}>
-                                                        As senhas devem ser iguais
+                                                        {t("differentPasswordConfirmationError")}
                                                     </Field.ErrorText>
                                                 )
                                             ) : (
@@ -661,14 +664,14 @@ export default function Login() {
                                     </Button>
                                     <HStack gap={1} justify="center">
                                         <Text color="muted" fontSize={"md"}>
-                                            Ja possui conta?{" "}
+                                            {t("hasAccount")}{" "}
                                             <Link
                                                 color={"green"}
                                                 onClick={clickLogin}
                                                 fontWeight={"medium"}
                                                 variant="plain"
                                             >
-                                                Log In
+                                                {t("login")}
                                             </Link>
                                         </Text>
                                     </HStack>

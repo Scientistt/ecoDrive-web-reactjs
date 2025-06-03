@@ -1,9 +1,6 @@
 import { useLocale } from "next-intl";
-// import { usePathname } from "i18n/navigation";
-
 import navigation from "next/navigation";
-
-import { listSupporteLocales } from "utils";
+import { listSupporteLocales, setLocale } from "utils";
 import { Locale } from "types";
 
 import { Portal, Select, createListCollection, Avatar, useSelectContext, VStack, Text, HStack } from "@chakra-ui/react";
@@ -31,8 +28,6 @@ const SelectValue = () => {
 };
 
 export default function LocaleSelect() {
-    // const pathname = usePathname();
-    const nextPathName = navigation.usePathname();
     const locale = useLocale();
     const router = navigation.useRouter();
 
@@ -43,20 +38,23 @@ export default function LocaleSelect() {
             defaultValue={[locale]}
             variant={"subtle"}
             bg="transparent"
-            positioning={{ placement: locale === "ar" ? "right-start" : "left-start", flip: false }}
+            positioning={{ placement: locale === "ar" || locale === "he" ? "right-start" : "left-start", flip: false }}
             onValueChange={(newLocale) => {
                 const selectedLocale = newLocale.items[0];
-                const newPathname = nextPathName.replace(`/${locale}`, `/${selectedLocale.key}`);
-                // const newPath = `/${selectedLocale.key}${pathname}`;
-
-                router.replace(newPathname);
-                // window.location.href = newPath;
+                setLocale(selectedLocale.key);
+                router.refresh();
             }}
         >
             <Select.HiddenSelect />
 
-            <Select.Control bg="transparent">
-                <Select.Trigger bg="transparent" p={0} pl="7px">
+            <Select.Control>
+                <Select.Trigger
+                    bg={"transparent"}
+                    _hover={{ bg: { base: "gray.100", _dark: "gray.900" } }}
+                    p={0}
+                    pl="7px"
+                    cursor={"pointer"}
+                >
                     <SelectValue />
                 </Select.Trigger>
             </Select.Control>
@@ -64,7 +62,7 @@ export default function LocaleSelect() {
                 <Select.Positioner p={0}>
                     <Select.Content p={0} maxHeight="none">
                         {locales.items.map((item) => (
-                            <Select.Item item={item} key={item.key} bg="transparent">
+                            <Select.Item item={item} key={item.key} cursor={"pointer"}>
                                 <VStack align={"left"} bg="transparent">
                                     <HStack gap="5px" align={"center"}>
                                         <Avatar.Root shape="square" size="xs" bg="transparent" p={0} m={0}>
@@ -86,16 +84,3 @@ export default function LocaleSelect() {
         </Select.Root>
     );
 }
-
-// export default function LocaleSelect() {
-//     const t = useTranslations("LocaleSwitcher");
-//     const locale = useLocale();
-//     const otherLocale = locale === "en" ? "es" : "en";
-//     const pathname = usePathname();
-
-//     return (
-//         <Link href={pathname} locale={otherLocale}>
-//             {t("switchLocale", { locale: otherLocale })}
-//         </Link>
-//     );
-// }

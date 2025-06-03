@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import { listBucketObjects, requestObjectRestore, getBucketObject } from "endpoints";
 import { toast } from "react-toastify";
-import { getViewableObjectProperties, isObjectReadyToBeDownloaded, parseDateDistance } from "utils";
+import {
+    getViewableObjectProperties,
+    isObjectReadyToBeDownloaded,
+    parseDateDistance,
+    getStorage,
+    NEXT_LOCALE_TOKEN_NAME
+} from "utils";
 import {
     LuDownload,
     LuShare2,
@@ -14,7 +20,7 @@ import {
     LuLoader,
     LuFolderOpen
 } from "react-icons/lu";
-
+import { useTranslations } from "next-intl";
 import {
     Body,
     BucketHeading,
@@ -36,7 +42,10 @@ import { BucketObject } from "types";
 
 export default function BucketObjects() {
     const router = useRouter();
-
+    const t = useTranslations("Objects");
+    const locale = getStorage(NEXT_LOCALE_TOKEN_NAME) || "pt";
+    const tFileContextMenu = useTranslations("FileContextMenu");
+    const tDirectoryContextMenu = useTranslations("DirectoryContextMenu");
     const { bucket } = useBucket();
     const { supplier } = useSupplier();
     const contextMenu = useContextMenu();
@@ -224,7 +233,7 @@ export default function BucketObjects() {
 
         if (viewableObject.visible)
             items.push({
-                title: "Visualizar",
+                title: tFileContextMenu("view"),
                 value: "view",
                 onClick: () => {
                     handleObjectDownloadRequest(obj);
@@ -234,7 +243,13 @@ export default function BucketObjects() {
             }); // view
 
         items.push({
-            title: `Download${downloadable && obj?.restore?.status === "RESTORED" ? ` (até ${parseDateDistance(obj?.restore?.available_until || "")})` : ""}`,
+            title: tFileContextMenu("download", {
+                until:
+                    downloadable && obj?.restore?.status === "RESTORED"
+                        ? ` (${tFileContextMenu("downloadAvailableEnds")} ${parseDateDistance(obj?.restore?.available_until || "", locale)})`
+                        : ""
+            }),
+            // titlex: `${tFileContextMenu('view')}${downloadable && obj?.restore?.status === "RESTORED" ? ` (até ${parseDateDistance(obj?.restore?.available_until || "")})` : ""}`,
             value: "download",
             onClick: () => {
                 handleObjectDownloadRequest(obj);
@@ -245,7 +260,8 @@ export default function BucketObjects() {
 
         if (!downloadable && obj?.restore?.status !== "RESTORED")
             items.push({
-                title: obj?.restore?.status === "RESTORING" ? "Restaurando..." : "Solicitar Restauração",
+                title:
+                    obj?.restore?.status === "RESTORING" ? tFileContextMenu("restoring") : tFileContextMenu("restore"),
                 value: "restore",
                 onClick: () => {
                     handleObjectRestoreRequest(obj);
@@ -255,7 +271,7 @@ export default function BucketObjects() {
             }); // restore
 
         items.push({
-            title: "Compartilhar",
+            title: tFileContextMenu("share"),
             value: "share",
             onClick: () => {
                 toast.loading(`Compartilhar ${obj.name}`, {
@@ -273,7 +289,7 @@ export default function BucketObjects() {
         }); //share
 
         items.push({
-            title: "Favoritar",
+            title: tFileContextMenu("addToFavorites"),
             value: "favorite",
             onClick: () => {
                 toast.loading(`Favoritar ${obj.name}`, {
@@ -295,7 +311,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Mover",
+            title: tFileContextMenu("move"),
             value: "move",
             onClick: () => {
                 toast.loading(`Mover ${obj.name}`, {
@@ -312,7 +328,7 @@ export default function BucketObjects() {
         }); // move
 
         items.push({
-            title: "Copiar Caminho",
+            title: tFileContextMenu("copyPath"),
             value: "copy_path",
             onClick: () => {
                 toast.loading(`Copiar ${obj.name}`, {
@@ -334,7 +350,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Renomear",
+            title: tFileContextMenu("rename"),
             value: "rename",
             onClick: () => {
                 toast.loading(`Renomear ${obj.name}`, {
@@ -352,7 +368,7 @@ export default function BucketObjects() {
         }); // rename
 
         items.push({
-            title: "Deletar",
+            title: tFileContextMenu("delete"),
             value: "delete",
             onClick: () => {
                 toast.loading(`Deletar ${obj.name}`, {
@@ -374,7 +390,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Propriedades",
+            title: tFileContextMenu("properties"),
             value: "properties",
             onClick: () => {
                 toast.loading(`Acessar propriedades ${obj.name}`, {
@@ -400,7 +416,7 @@ export default function BucketObjects() {
         const items = [];
 
         items.push({
-            title: "Abrir",
+            title: tDirectoryContextMenu("open"),
             value: "open",
             onClick: () => {
                 doubleClickDirectory(obj);
@@ -409,7 +425,7 @@ export default function BucketObjects() {
         }); // open
 
         items.push({
-            title: "Compartilhar",
+            title: tDirectoryContextMenu("share"),
             value: "share",
             onClick: () => {
                 toast.loading(`Compartilhar ${obj.name}`, {
@@ -427,7 +443,7 @@ export default function BucketObjects() {
         }); //share
 
         items.push({
-            title: "Favoritar",
+            title: tDirectoryContextMenu("addToFavorites"),
             value: "favorite",
             onClick: () => {
                 toast.loading(`Favoritar ${obj.name}`, {
@@ -449,7 +465,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Mover",
+            title: tDirectoryContextMenu("move"),
             value: "move",
             onClick: () => {
                 toast.loading(`Mover ${obj.name}`, {
@@ -466,7 +482,7 @@ export default function BucketObjects() {
         }); // move
 
         items.push({
-            title: "Copiar Caminho",
+            title: tDirectoryContextMenu("copyPath"),
             value: "copy_path",
             onClick: () => {
                 toast.loading(`Copiar ${obj.name}`, {
@@ -488,7 +504,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Renomear",
+            title: tDirectoryContextMenu("rename"),
             value: "rename",
             onClick: () => {
                 toast.loading(`Renomear ${obj.name}`, {
@@ -506,7 +522,7 @@ export default function BucketObjects() {
         }); // rename
 
         items.push({
-            title: "Deletar",
+            title: tDirectoryContextMenu("delete"),
             value: "delete",
             onClick: () => {
                 toast.loading(`Deletar ${obj.name}`, {
@@ -528,7 +544,7 @@ export default function BucketObjects() {
         });
 
         items.push({
-            title: "Propriedades",
+            title: tDirectoryContextMenu("properties"),
             value: "properties",
             onClick: () => {
                 toast.loading(`Acessar propriedades ${obj.name}`, {
@@ -555,7 +571,7 @@ export default function BucketObjects() {
             <Body>
                 <SubtleButton onClick={clickBackToBuckets}>
                     <LuArrowLeft />
-                    Lista de Buckets
+                    {t("backToBuckets")}
                 </SubtleButton>
                 <HStack>
                     <BucketHeading bucket={bucket} />
@@ -563,28 +579,28 @@ export default function BucketObjects() {
                 </HStack>
                 <HStack>
                     <Breadcrumb
-                        rootName={isShowingDirectories ? "Raíz" : "Todos os Aquivos"}
+                        rootName={isShowingDirectories ? t("root") : t("allObjects")}
                         path={currentPath}
                         onClickPath={clickBreadCrumb}
                     />
                     <Spacer />
 
                     {isShowingDirectories ? (
-                        <SimpleIconButton tooltip="Ver todos os documentos" onClick={seeFilesOnly}>
+                        <SimpleIconButton tooltip={t("seeAllObjects")} onClick={seeFilesOnly}>
                             <LuFile />
                         </SimpleIconButton>
                     ) : (
-                        <SimpleIconButton tooltip="Ver árvore de diretórios" onClick={seeDirectories}>
+                        <SimpleIconButton tooltip={t("seeAsDirectoryTree")} onClick={seeDirectories}>
                             <LuFolderTree />
                         </SimpleIconButton>
                     )}
 
                     <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
-                        <LuRefreshCw /> Atualizar
+                        <LuRefreshCw /> {t("update")}
                     </SubtleButton>
 
                     <SimpleButton onClick={clickedUpload}>
-                        <LuUpload /> Upload
+                        <LuUpload /> {t("newObject")}
                     </SimpleButton>
                 </HStack>
 

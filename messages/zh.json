@@ -1,58 +1,135 @@
 {
-    "Index": {
-        "title": "Início",
-        "loggedIn": "Logged in as {username}",
-        "loggedOut": "You are logged out.",
-        "login": "Login",
-        "logout": "Logout",
-        "secret": "Secret page for logged in users"
+    "Utils": {
+        "loading": "加载中",
+        "somethingIsWrong": "出了点问题"
     },
-    "LocaleLayout": {
-        "title": "next-intl with Auth.js example"
-    },
-    "Loginx": {
-        "title": "Login",
-        "username": "Username",
-        "password": "Password",
-        "submit": "Login",
-        "error": "{error, select, CredentialsSignin {Invalid username or password} other {Unknown error}}"
-    },
-    "LocaleSwitcher": {
-        "switchLocale": "Switch to {locale, select, de {German} en {English} es {Spanish} pt {Portuguese} other {Unknown}}"
-    },
-    "Secret": {
-        "title": "Secret page",
-        "description": "This page is only visible for logged in users."
-    },
-
     "NavBar": {
         "title": "生态驱动"
     },
-
     "Login": {
         "title": "登录",
         "username": "用户名",
         "password": "密码",
-        "forgotPassword": "忘记密码?",
+        "forgotPassword": "忘记密码？",
         "saveSession": "记住我",
         "login": "登录",
-        "newAccount": "新帐户?",
+        "newAccount": "新账户？",
         "createAccount": "注册",
-        "usernamePlaceholder": "输入您的用户名",
-        "passwordPlaceholder": "输入您的密码",
+        "usernamePlaceholder": "请输入用户名",
+        "passwordPlaceholder": "请输入密码",
         "emptyUsernameError": "用户名不能为空",
         "invalidUsernameError": "无效的用户名",
-        "incorrectUsernamePasswordError": "无效的用户名和/或密码",
+        "incorrectUsernamePasswordError": "用户名和/或密码无效",
         "emptyPasswordError": "密码不能为空",
-        "tooShortPasswordError": "密码必须至少包含 {minSizePassword} 个字符"
+        "tooShortPasswordError": "密码长度至少为 {minSizePassword} 个字符"
     },
-
-    "Providers": {
-        "title": "我的凭据",
-        "description": "云服务提供商"
+    "Register": {
+        "title": "注册",
+        "voucher": "优惠码",
+        "voucherPlaceholder": "ABC1D234",
+        "emptyVoucherError": "优惠码不能为空",
+        "invalidVoucherError": "无效的优惠码",
+        "name": "姓名",
+        "namePlaceholder": "请输入您的全名",
+        "emptyNameError": "姓名不能为空",
+        "email": "电子邮件",
+        "emailPlaceholder": "请输入您的电子邮箱",
+        "emptyEmailError": "电子邮件不能为空",
+        "takenEmailError": "电子邮件已被使用",
+        "invalidEmailError": "无效的电子邮件地址",
+        "username": "用户名",
+        "usernamePlaceholder": "请输入用户名",
+        "emptyUsernameError": "用户名不能为空",
+        "invalidUsernameError": "无效的用户名",
+        "takenUsernameError": "用户名已被使用",
+        "password": "密码",
+        "passwordPlaceholder": "请输入密码",
+        "emptyPasswordError": "密码不能为空",
+        "tooShortPasswordError": "密码长度至少为 {minSizePassword} 个字符",
+        "passwordConfirmation": "确认密码",
+        "passwordConfirmationPlaceholder": "请再次输入密码",
+        "emptyPasswordConfirmationError": "确认密码不能为空",
+        "differentPasswordConfirmationError": "两次输入的密码不一致",
+        "hasAccount": "已有账户？",
+        "login": "登录"
+    },
+    "Credentials": {
+        "title": "我的凭证",
+        "description": "云服务提供商",
+        "update": "更新",
+        "newCredential": "新增凭证"
     },
     "Buckets": {
-        "title": "我的桶",
-        "description": "亚马逊简单存储服务 (S3)"
+        "title": "我的存储桶",
+        "description": "亚马逊简单存储服务 (S3)",
+        "backToCredentials": "返回凭证",
+        "update": "更新",
+        "newBucket": "新建存储桶",
+        "doNotLoadBucketDetails": "不加载详情（更快）",
+        "loadBucketDetails": "加载详情（更慢）"
+    },
+    "Objects": {
+        "backToBuckets": "返回存储桶",
+        "update": "更新",
+        "newObject": "上传",
+        "root": "根目录",
+        "allObjects": "所有对象",
+        "seeAllObjects": "查看所有对象",
+        "seeAsDirectoryTree": "以目录树查看"
+    },
+    "newFileDrawer": {
+        "drawerTitle": "对象上传",
+        "directory": "目录",
+        "dropTheFileHereTitle": "将文件拖放到这里",
+        "dropTheFileHereDescription": "最大 200GB",
+        "clickToSearchFileTitle": "点击搜索文件或拖放到这里",
+        "clickToSearchFileDescription": "最大 200GB",
+        "uploading": "上传中",
+        "uploadingFailed": "上传失败",
+        "uploadingDone": "上传成功",
+        "cancel": "取消",
+        "save": "保存"
+    },
+    "FileContextMenu": {
+        "view": "查看",
+        "download": "下载 {until}",
+        "downloadAvailableEnds": "结束",
+        "restoring": "恢复中...",
+        "restore": "恢复",
+        "share": "分享",
+        "addToFavorites": "添加到收藏",
+        "move": "移动",
+        "copyPath": "复制路径",
+        "rename": "重命名",
+        "delete": "删除",
+        "properties": "属性"
+    },
+    "DirectoryContextMenu": {
+        "open": "打开",
+        "share": "分享",
+        "addToFavorites": "添加到收藏",
+        "move": "移动",
+        "copyPath": "复制路径",
+        "rename": "重命名",
+        "delete": "删除",
+        "properties": "属性"
+    },
+    "AWSStorageClass": {
+        "standardName": "标准",
+        "standardDescription": "S3 标准类提供高耐久性、可用性和性能的对象存储，适合频繁访问的数据。适用于云应用、动态网站、内容分发、移动及游戏应用和大数据分析。低延迟高吞吐，设计目标是 99.99% 可用性及 99.9% SLA。",
+        "standardIAName": "标准（不频繁访问）",
+        "standardIADescription": "S3 标准-不频繁访问（Standard-IA）适合较少访问但需要快速访问的数据，保持高恢复速度和低延迟。适合长期存储、备份及灾难恢复文件。",
+        "intelligentTieringName": "智能分层",
+        "intelligentTieringDescription": "S3 智能分层是首个根据访问频率自动将数据转移至成本效益最高层的存储类别，适合访问模式不确定的数据，无性能影响，提供毫秒级延迟及高吞吐。",
+        "oneZoneIAName": "单区（不频繁访问）",
+        "oneZoneIADescription": "S3 单区-不频繁访问（One Zone-IA）适合较少访问但需要快速访问的数据，数据只存储在单个可用区，成本比标准-IA低20%。适合不需要多区可用性和冗余的客户。",
+        "glacierIRName": "Glacier 即时检索",
+        "glacierIRDescription": "Amazon S3 Glacier 即时检索是为长期保存、极少访问但需要毫秒级访问的数据设计的最低成本存储类，适合医疗影像、新闻媒体资产等。",
+        "glacierName": "Glacier 灵活检索",
+        "glacierDescription": "S3 Glacier 灵活检索提供低成本存储，适合每年访问1-2次的归档数据，支持异步恢复，恢复时间从几分钟到数小时不等，适合备份和灾难恢复，数据耐久度高达 99.999999999%。",
+        "deepArchiveName": "Glacier 深度归档",
+        "deepArchiveDescription": "S3 Glacier 深度归档是最经济的存储类，支持长期数字保存（7-10年以上），适合金融、医疗、公共部门的合规需求，数据分布于多个地理区域，恢复时间约72小时。",
+        "unknownName": "未知",
+        "unknownDescription": "未知"
     }
 }
