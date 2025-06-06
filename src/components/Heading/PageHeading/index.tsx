@@ -13,7 +13,6 @@ const PageHeading = (props: PageHeadingProps) => {
                 w="100%"
                 direction="column"
                 pt="10px"
-                pb="20px"
                 gap={2}
                 align={{ base: "flex-start", sm: "center", md: "flex-start" }}
             >

@@ -26,7 +26,17 @@ export function NavbarProvider({ children }: { children: ReactNode }) {
 
     return (
         <>
-            <Flex h="50px" w="full" align="center" justify="space-between" px={4}>
+            <Flex
+                h="50px"
+                w="full"
+                align="center"
+                justify="space-between"
+                px={4}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+            >
                 <EcoDriveLogo size="sm" name={t("title")} onClick={clickMainLogo} cursor={"pointer"} />
                 <HStack gap={1}>
                     <LocaleSelect />

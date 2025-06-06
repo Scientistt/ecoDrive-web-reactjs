@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, Loading } from "components";
 import { toast } from "react-toastify";
-import { HStack, VStack, Spacer, Box, Highlight } from "@chakra-ui/react";
+import { HStack, VStack, Stack, Spacer, Box, Highlight, useBreakpointValue } from "@chakra-ui/react";
 // import { useLongPressFactory } from "hooks";
 import {
     LuRefreshCw,
@@ -33,6 +33,8 @@ export default function Suppliers() {
     const router = useRouter();
 
     const contextMenu = useContextMenu();
+
+    const isMobile = useBreakpointValue({ base: true, md: false });
 
     const [page, setPage] = useState(1);
     const [pageSize] = useState(PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE);
@@ -75,7 +77,7 @@ export default function Suppliers() {
             const newElements = objs?.elements ?? [];
 
             setSuppliers((prev) => [...prev, ...newElements]);
-            console.log(`loaded page ${pageToLoad}`);
+
             setSuppliersTotalCount(total);
             setHasMore(pageToLoad * pageSize < total);
         } catch {
@@ -105,9 +107,16 @@ export default function Suppliers() {
     }, [page]);
 
     const clickedRefresh = () => {
+        console.log("Here??");
         setHasMore(false);
-        setPage(1);
         setSuppliers([]);
+        if (page !== 1) {
+            setPage(1);
+        } else {
+            loadSuppliersList(page);
+        }
+
+        // setHasMore(true);
     };
 
     const clickedNewSupplier = async () => {
@@ -297,7 +306,7 @@ export default function Suppliers() {
     };
 
     const handleSupplierContextMenu = (e: React.MouseEvent, sup: Supplier) => {
-        e.stopPropagation();
+        e?.stopPropagation();
         const items = [];
 
         items.push({
@@ -398,17 +407,21 @@ export default function Suppliers() {
         <>
             <Body>
                 <VStack pb={"10px"} onContextMenu={handleBGContextMenu}>
-                    <HStack w={"100%"}>
+                    <Stack w={"100%"} direction={{ base: "column", md: "row" }}>
                         <PageHeading header={t("title")} description={t("description")} />
                         <Spacer />
-                        <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
-                            <LuRefreshCw /> {t("update")}
-                        </SubtleButton>
-                        <SimpleButton onClick={clickedNewSupplier}>
-                            <LuPlus /> {t("newCredential")}
-                        </SimpleButton>
-                    </HStack>
-                    <HStack align={"center"} w={"100%"} mt={"-20px"}>
+                        <HStack gap={0} align={"center"}>
+                            <Spacer />
+                            <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
+                                <LuRefreshCw /> {t("update")}
+                            </SubtleButton>
+                            <SimpleButton onClick={clickedNewSupplier}>
+                                <LuPlus /> {t("newCredential")}
+                            </SimpleButton>
+                            <Spacer />
+                        </HStack>
+                    </Stack>
+                    <HStack align={"center"} w={"100%"}>
                         <HStack fontStyle={"italic"}>
                             {suppliers.length === suppliersTotalCount ? (
                                 <Highlight query={suppliersTotalCount.toString()} styles={{ fontWeight: "semibold" }}>
@@ -433,6 +446,9 @@ export default function Suppliers() {
                     loadingFailed={isLoadFailed}
                     eWidth={"400px"}
                     onContextMenu={handleBGContextMenu}
+                    onClick={(e) => {
+                        if (isMobile) handleBGContextMenu(e);
+                    }}
                 >
                     {suppliers.map((obj: Supplier, index) => {
                         return (
@@ -442,6 +458,7 @@ export default function Suppliers() {
                                 // })}
                                 supplier={obj}
                                 key={`supplierCard#${index}`}
+                                // {...contextMenu.longPressHandlers}
                                 tabIndex={index + 1}
                                 _focus={{ outline: "none" }}
                                 onFocus={() => {
@@ -452,7 +469,10 @@ export default function Suppliers() {
                                 onContextMenu={(e) => {
                                     handleSupplierContextMenu(e, obj);
                                 }}
-                                onClick={() => clickSupplier(obj)}
+                                onClick={(e) => {
+                                    if (isMobile) handleSupplierContextMenu(e, obj);
+                                    else clickSupplier(obj);
+                                }}
                                 onDoubleClick={() => doubleClickSupplier(obj)}
                             />
                         );
