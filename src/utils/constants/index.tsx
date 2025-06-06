@@ -16,3 +16,7 @@ export const PUBLIC_ROUTES = [
 ] as const;
 
 export const NEXT_LOCALE_TOKEN_NAME = "NEXT_LOCALE";
+
+export const PAGINATION_DEFAULT_ELEMENTS_PER_PAGE = 10;
+
+export const PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE = 8;

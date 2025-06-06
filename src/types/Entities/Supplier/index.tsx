@@ -9,6 +9,14 @@ export interface Supplier {
     icon?: StaticImageData;
 }
 
+export interface AccountSupplier {
+    key: string;
+    name: string;
+    description?: string;
+    logo_light: StaticImageData;
+    logo_dark: StaticImageData;
+}
+
 export interface SupplierContextType {
     supplier: Supplier;
     setSupplier: (supplier: Supplier) => void;

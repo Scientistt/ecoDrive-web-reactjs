@@ -1,17 +1,21 @@
 "use client";
 
 import { memo } from "react";
-import { Card, HStack, VStack, Image, Text, Spacer } from "@chakra-ui/react";
+import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
 import { SupplierCardProps } from "types";
-import { aws, LoadingIcons, oracle } from "assets";
 import { useColorMode } from "contexts";
-// import { useRouter } from "next/navigation";
+import { getAccountSupplier, getIdAbbreviation } from "utils";
+import { useTranslations } from "next-intl";
 
 const SupplierCard = (props: SupplierCardProps) => {
     // const [isLoading, setIsLoading] = useState(false);
+    const t = useTranslations("AccountSupplier");
+    const tCredential = useTranslations("Credentials");
 
     const supplier = props.supplier || {};
+    const isLoading = !!props.isLoading;
     const isSelected = !!props.isSelected;
+    const accountSupplier = getAccountSupplier(supplier.account_supplier, t as unknown as typeof useTranslations);
 
     const { colorMode } = useColorMode();
 
@@ -26,6 +30,12 @@ const SupplierCard = (props: SupplierCardProps) => {
             bg={isSelected ? { base: "green.100", _dark: "green.900" } : {}}
             {...props}
         >
+            <HStack>
+                {/* {isSelected && <Text fontSize={"small"}>#{supplier.id}</Text>} */}
+                <Text fontSize={"small"}>#{getIdAbbreviation(supplier.id)}</Text>
+                <Spacer />
+                <Text fontSize={"small"}>{accountSupplier.name}</Text>
+            </HStack>
             <HStack gap={"10px"}>
                 <VStack gap="0" w="120px">
                     <Image
@@ -33,17 +43,7 @@ const SupplierCard = (props: SupplierCardProps) => {
                         w="90%"
                         h="90%"
                         // src={getBucketIcon(bucketInfo?.icon).src}
-                        src={
-                            supplier.account_supplier === "aws"
-                                ? colorMode === "light"
-                                    ? aws.logo_light.src
-                                    : aws.logo_dark.src
-                                : supplier.account_supplier === "oracle"
-                                  ? colorMode === "light"
-                                      ? oracle.logo_light.src
-                                      : oracle.logo_dark.src
-                                  : LoadingIcons.failed.src
-                        }
+                        src={colorMode === "light" ? accountSupplier.logo_light.src : accountSupplier.logo_dark.src}
                         alt="Caffe Latte"
                     />
                     {/* <IdBadge myId={supplier.id} /> */}
@@ -52,39 +52,6 @@ const SupplierCard = (props: SupplierCardProps) => {
                     <Text lineClamp={1} w="100%" fontWeight="bold" maxHeight="24px" overflow="hidden">
                         {supplier.name}
                     </Text>
-
-                    {/* {isLoading ? (
-                        <>
-                            <HStack>
-                                <Spinner size="sm" />
-                                <Text
-                                    lineClamp={1}
-                                    w="100%"
-                                    textAlign="left"
-                                    fontSize="sm"
-                                    fontWeight="light"
-                                    maxHeight="24px"
-                                    overflow="hidden"
-                                >
-                                    Carregando...
-                                </Text>
-                            </HStack>
-                        </>
-                    ) : (
-                        <>
-                            <Text
-                                lineClamp={1}
-                                w="100%"
-                                textAlign="left"
-                                fontSize="sm"
-                                fontWeight="light"
-                                maxHeight="24px"
-                                overflow="hidden"
-                            >
-                                {supplier.slug}
-                            </Text>
-                        </>
-                    )} */}
 
                     <Text
                         lineClamp={1}
@@ -98,15 +65,24 @@ const SupplierCard = (props: SupplierCardProps) => {
                         {supplier.slug}
                     </Text>
 
-                    <Text lineClamp={2} textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
+                    <Text
+                        lineClamp={isLoading ? 1 : 2}
+                        textAlign="left"
+                        fontSize="sm"
+                        fontWeight="light"
+                        overflow="hidden"
+                    >
                         {supplier.description}
                     </Text>
 
-                    {/* <Spinner size="sm" mt="10px" /> */}
-
-                    {/* <Text lineClamp={2} mt="10px" textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
-                        {!isLoading && !isLoadindFailed ? bucket.description : ""}
-                    </Text> */}
+                    {isLoading && (
+                        <HStack align={"center"}>
+                            <Spinner />
+                            <Text textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
+                                {tCredential("loadingCredential")}
+                            </Text>
+                        </HStack>
+                    )}
                 </VStack>
             </HStack>
             <Spacer />

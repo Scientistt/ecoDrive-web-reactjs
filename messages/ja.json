@@ -53,7 +53,6 @@
         "hasAccount": "既にアカウントをお持ちですか？",
         "login": "ログイン"
     },
-
     "Credentials": {
         "title": "マイ認証情報",
         "description": "クラウド サービス プロバイダー",
@@ -62,7 +61,8 @@
         "loadingCredentials": "資格情報を読み込み中",
         "loadedCredentials": "すべての認証情報をロードしました",
         "ShowingXSuppliersOfYTotal": "合計 {total} 個の資格情報を {showing} 個表示しています",
-        "ShowingAllSuppliers": "すべての {total} 認証情報を表示しています"
+        "ShowingAllSuppliers": "すべての {total} 認証情報を表示しています",
+        "loadingCredential": "読み込み中"
     },
     "CredentialBGContextMenu": {
         "viewAs": "表示",
@@ -81,7 +81,13 @@
         "reload": "リロード",
         "about": "について"
     },
-
+    "CredentialContextMenu": {
+        "access": "アクセス",
+        "delete": "削除",
+        "addToFavorites": "お気に入りに追加",
+        "share": "共有",
+        "properties": "プロパティ"
+    },
     "Buckets": {
         "title": "マイバケット",
         "description": "Amazon Simple Storage Service (S3)",

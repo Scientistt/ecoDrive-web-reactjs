@@ -61,7 +61,8 @@
         "loadingCredentials": "Loading Credentials",
         "loadedCredentials": "Loaded all Credentials",
         "ShowingXSuppliersOfYTotal": "Showing {showing} credentials of {total} total",
-        "ShowingAllSuppliers": "Showing all {total} credentials"
+        "ShowingAllSuppliers": "Showing all {total} credentials",
+        "loadingCredential": "Loading"
     },
     "CredentialBGContextMenu": {
         "viewAs": "View",
@@ -79,6 +80,13 @@
         "sortByCreationDate": "Cration Date",
         "reload": "Reload",
         "about": "About"
+    },
+    "CredentialContextMenu": {
+        "access": "Access",
+        "delete": "Delete",
+        "addToFavorites": "Add to Favorites",
+        "share": "Share",
+        "properties": "Properties"
     },
     "Buckets": {
         "title": "My buckets",
@@ -152,5 +160,19 @@
         "deepArchiveDescription": "S3 Glacier Deep Archive is Amazon S3's most affordable storage class, supporting long-term digital retention and preservation for data that can be accessed once or twice a year. It is ideal for customers who maintain datasets for 7-10 years or more to meet regulatory compliance requirements, especially in highly regulated industries such as financial services, healthcare, and public sectors. All objects stored in S3 Glacier Deep Archive are replicated and stored in at least three geographically distributed Availability Zones, protected by 99.999999999% resilience, and can be restored within 72 hours.",
         "unknownName": "Unknown",
         "unknownDescription": "Unknown"
+    },
+    "AccountSupplier": {
+        "awsName": "Amazon Web Services",
+        "awsDescription": "--",
+        "oracleName": "Oracle Cloud",
+        "oracleDescription": "--",
+        "googlecloudName": "Google Cloud",
+        "googlecloudDescription": "--",
+        "cloudflareName": "CloudFlare",
+        "cloudflareDescription": "--",
+        "digitaloceanName": "DigitalOcean",
+        "digitaloceanDescription": "--",
+        "unknownName": "Desconhecido",
+        "unknownDescription": "--"
     }
 }

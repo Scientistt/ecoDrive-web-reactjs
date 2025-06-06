@@ -3,25 +3,39 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { listSuppliers } from "endpoints";
 import { Supplier } from "types";
+import { PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE } from "utils/constants";
 import { useContextMenu } from "contexts";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, Loading } from "components";
 import { toast } from "react-toastify";
 import { HStack, VStack, Spacer, Box, Highlight } from "@chakra-ui/react";
-import { LuRefreshCw, LuPlus, LuFolderOpen, LuArrowUpDown, LuTable, LuCheck, LuList, LuInfo } from "react-icons/lu";
+// import { useLongPressFactory } from "hooks";
+import {
+    LuRefreshCw,
+    LuPlus,
+    LuFolderOpen,
+    LuArrowUpDown,
+    LuTable,
+    LuCheck,
+    LuWrench,
+    LuList,
+    LuInfo,
+    LuShare2,
+    LuHeart
+} from "react-icons/lu";
 
-const PAGE_SIZE = 2;
-
-export default function Buckets() {
+export default function Suppliers() {
     const t = useTranslations("Credentials");
-    const tFileContextMenu = useTranslations("CredentialBGContextMenu");
+    const tCredentialBGContextMenu = useTranslations("CredentialBGContextMenu");
+    const tCredentialContextMenu = useTranslations("CredentialContextMenu");
 
     const router = useRouter();
 
     const contextMenu = useContextMenu();
 
     const [page, setPage] = useState(1);
+    const [pageSize] = useState(PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE);
     const [sortBy, setSortBy] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
     const [isLoading, setIsLoading] = useState(false);
@@ -31,15 +45,16 @@ export default function Buckets() {
     const [suppliers, setSuppliers] = useState<Supplier[]>([]);
     const [suppliersTotalCount, setSuppliersTotalCount] = useState(0);
     const [selectedSupplierId, setSelectedSupplierId] = useState<bigint>(0n);
+    const [selectedSupplierIdClicked, setSelectedSupplierIdClicked] = useState<bigint>(0n);
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+    // const getLongPressHandlers = useLongPressFactory(700);
 
     const loadSuppliersList = useCallback(async (pageToLoad: number) => {
         if (isLoading || !hasMore) {
             return;
         }
-
-        console.log(`loading page ${pageToLoad}`);
 
         setIsLoading(true);
         setIsLoadFailed(false);
@@ -47,7 +62,7 @@ export default function Buckets() {
         try {
             const filter = {};
             const pagination = {
-                limit: PAGE_SIZE,
+                limit: pageSize,
                 page: pageToLoad,
                 sort: {
                     by: sortBy,
@@ -62,7 +77,7 @@ export default function Buckets() {
             setSuppliers((prev) => [...prev, ...newElements]);
             console.log(`loaded page ${pageToLoad}`);
             setSuppliersTotalCount(total);
-            setHasMore(pageToLoad * PAGE_SIZE < total);
+            setHasMore(pageToLoad * pageSize < total);
         } catch {
             setIsLoadFailed(true);
         } finally {
@@ -113,6 +128,7 @@ export default function Buckets() {
     };
 
     const doubleClickSupplier = async (supplier: Supplier) => {
+        setSelectedSupplierIdClicked(supplier.id);
         router.push(`/suppliers/${supplier.slug}/buckets`);
     };
 
@@ -120,13 +136,13 @@ export default function Buckets() {
         const items = [];
 
         items.push({
-            title: tFileContextMenu("viewAs"),
+            title: tCredentialBGContextMenu("viewAs"),
             value: "view",
             icon: <LuTable />,
             onClick: () => {},
             items: [
                 {
-                    title: tFileContextMenu("viewAsCard"),
+                    title: tCredentialBGContextMenu("viewAsCard"),
                     value: "viewAsCard",
                     onClick: () => {
                         toast.loading(`Alterar tipo de visualização para CARD ainda não disponível`, {
@@ -143,7 +159,7 @@ export default function Buckets() {
                     icon: <LuTable />
                 },
                 {
-                    title: tFileContextMenu("viewAsList"),
+                    title: tCredentialBGContextMenu("viewAsList"),
                     value: "viewAsList",
                     onClick: () => {
                         toast.loading(`Alterar tipo de visualização para LISTA ainda não disponível`, {
@@ -163,7 +179,7 @@ export default function Buckets() {
         }); // open
 
         items.push({
-            title: tFileContextMenu("newCredential"),
+            title: tCredentialBGContextMenu("newCredential"),
             value: "open",
             onClick: () => {
                 clickedNewSupplier();
@@ -172,7 +188,7 @@ export default function Buckets() {
         }); // open
 
         items.push({
-            title: tFileContextMenu("reload"),
+            title: tCredentialBGContextMenu("reload"),
             value: "share",
             onClick: () => {
                 clickedRefresh();
@@ -181,7 +197,7 @@ export default function Buckets() {
         }); //reload
 
         items.push({
-            title: tFileContextMenu("sortBy"),
+            title: tCredentialBGContextMenu("sortBy"),
             value: "sort",
             onClick: () => {
                 clickedRefresh();
@@ -189,7 +205,7 @@ export default function Buckets() {
             icon: <LuArrowUpDown />,
             items: [
                 {
-                    title: tFileContextMenu("sortById"),
+                    title: tCredentialBGContextMenu("sortById"),
                     value: "sortById",
                     onClick: () => {
                         setSortBy("id");
@@ -198,7 +214,7 @@ export default function Buckets() {
                     icon: sortBy === "id" ? <LuCheck /> : <></>
                 },
                 {
-                    title: tFileContextMenu("sortByDate"),
+                    title: tCredentialBGContextMenu("sortByDate"),
                     value: "sortByDate",
                     onClick: () => {
                         setSortBy("created_at");
@@ -207,7 +223,7 @@ export default function Buckets() {
                     icon: sortBy === "created_at" ? <LuCheck /> : <></>
                 },
                 {
-                    title: tFileContextMenu("sortByName"),
+                    title: tCredentialBGContextMenu("sortByName"),
                     value: "sortByName",
                     onClick: () => {
                         setSortBy("name");
@@ -216,7 +232,7 @@ export default function Buckets() {
                     icon: sortBy === "name" ? <LuCheck /> : <></>
                 },
                 {
-                    title: tFileContextMenu("sortByDescription"),
+                    title: tCredentialBGContextMenu("sortByDescription"),
                     value: "sortByDescription",
                     onClick: () => {
                         setSortBy("description");
@@ -225,7 +241,7 @@ export default function Buckets() {
                     icon: sortBy === "description" ? <LuCheck /> : <></>
                 },
                 {
-                    title: tFileContextMenu("sortBySupplier"),
+                    title: tCredentialBGContextMenu("sortBySupplier"),
                     value: "sortBySupplier",
                     onClick: () => {
                         setSortBy("account_supplier");
@@ -237,7 +253,7 @@ export default function Buckets() {
                     divider: true
                 },
                 {
-                    title: tFileContextMenu("sortByAsc"),
+                    title: tCredentialBGContextMenu("sortByAsc"),
                     value: "sortByAsc",
                     onClick: () => {
                         setSortOrder("asc");
@@ -246,7 +262,7 @@ export default function Buckets() {
                     icon: sortOrder === "asc" ? <LuCheck /> : <></>
                 },
                 {
-                    title: tFileContextMenu("sortByDesc"),
+                    title: tCredentialBGContextMenu("sortByDesc"),
                     value: "sortByDesc",
                     onClick: () => {
                         setSortOrder("desc");
@@ -258,7 +274,7 @@ export default function Buckets() {
         }); //sort
 
         items.push({
-            title: tFileContextMenu("about"),
+            title: tCredentialBGContextMenu("about"),
             value: "about",
             onClick: () => {
                 toast.loading(`Página SOBRE ainda não disponível`, {
@@ -285,150 +301,93 @@ export default function Buckets() {
         const items = [];
 
         items.push({
-            title: "Open",
-            value: "open",
+            title: tCredentialContextMenu("access"),
+            value: "access",
             onClick: () => {
-                clickedNewSupplier();
+                doubleClickSupplier(sup);
             },
             icon: <LuFolderOpen />
         }); // open
 
-        // items.push({
-        //     title: tDirectoryContextMenu("share"),
-        //     value: "share",
-        //     onClick: () => {
-        //         toast.loading(`Compartilhar ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     icon: <LuShare2 />
-        // }); //share
+        items.push({
+            title: tCredentialContextMenu("share"),
+            value: "share",
+            onClick: () => {
+                toast.loading(`Compartilhar ${sup.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuShare2 />
+        }); //share
 
-        // items.push({
-        //     title: tDirectoryContextMenu("addToFavorites"),
-        //     value: "favorite",
-        //     onClick: () => {
-        //         toast.loading(`Favoritar ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     icon: <LuHeart />
-        // }); // favorite
+        items.push({
+            title: tCredentialContextMenu("addToFavorites"),
+            value: "favorite",
+            onClick: () => {
+                toast.loading(`Favoritar ${sup.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuHeart />
+        }); // favorite
 
-        // items.push({
-        //     divider: true
-        // });
+        items.push({
+            divider: true
+        });
 
-        // items.push({
-        //     title: tDirectoryContextMenu("move"),
-        //     value: "move",
-        //     onClick: () => {
-        //         toast.loading(`Mover ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     }
-        // }); // move
+        items.push({
+            title: tCredentialContextMenu("delete"),
+            value: "delete",
+            onClick: () => {
+                toast.loading(`Deletar ${sup.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            danger: true
+        }); // delete
 
-        // items.push({
-        //     title: tDirectoryContextMenu("copyPath"),
-        //     value: "copy_path",
-        //     onClick: () => {
-        //         toast.loading(`Copiar ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     command: "Ctrl+C"
-        // }); // copy
+        items.push({
+            divider: true
+        });
 
-        // items.push({
-        //     divider: true
-        // });
-
-        // items.push({
-        //     title: tDirectoryContextMenu("rename"),
-        //     value: "rename",
-        //     onClick: () => {
-        //         toast.loading(`Renomear ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     icon: <LuTextCursorInput />
-        // }); // rename
-
-        // items.push({
-        //     title: tDirectoryContextMenu("delete"),
-        //     value: "delete",
-        //     onClick: () => {
-        //         toast.loading(`Deletar ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     danger: true
-        // }); // delete
-
-        // items.push({
-        //     divider: true
-        // });
-
-        // items.push({
-        //     title: tDirectoryContextMenu("properties"),
-        //     value: "properties",
-        //     onClick: () => {
-        //         toast.loading(`Acessar propriedades ${obj.name}`, {
-        //             position: "bottom-right",
-        //             closeOnClick: true,
-        //             type: "error",
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             isLoading: false,
-        //             autoClose: 5000,
-        //             theme: "colored"
-        //         });
-        //     },
-        //     icon: <LuWrench />
-        // }); // properties
+        items.push({
+            title: tCredentialContextMenu("properties"),
+            value: "properties",
+            onClick: () => {
+                toast.loading(`Acessar propriedades ${sup.name}`, {
+                    position: "bottom-right",
+                    closeOnClick: true,
+                    type: "error",
+                    pauseOnHover: true,
+                    draggable: true,
+                    isLoading: false,
+                    autoClose: 5000,
+                    theme: "colored"
+                });
+            },
+            icon: <LuWrench />
+        }); // properties
 
         contextMenu.setEntity?.(sup);
         contextMenu.setMenu?.({ items });
@@ -478,6 +437,9 @@ export default function Buckets() {
                     {suppliers.map((obj: Supplier, index) => {
                         return (
                             <SupplierCard
+                                // {...getLongPressHandlers((e) => {
+                                //     handleSupplierContextMenu(e as React.MouseEvent, obj);
+                                // })}
                                 supplier={obj}
                                 key={`supplierCard#${index}`}
                                 tabIndex={index + 1}
@@ -486,6 +448,7 @@ export default function Buckets() {
                                     setSelectedSupplierId(obj.id);
                                 }}
                                 isSelected={selectedSupplierId === obj.id}
+                                isLoading={selectedSupplierIdClicked === obj.id}
                                 onContextMenu={(e) => {
                                     handleSupplierContextMenu(e, obj);
                                 }}
