@@ -1,33 +1,30 @@
 "use client";
 
-import { memo, useState } from "react";
-import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
+import { memo } from "react";
+import { Card, HStack, VStack, Image, Text, Spacer } from "@chakra-ui/react";
 import { SupplierCardProps } from "types";
-import { aws, LoadingIcons } from "assets";
+import { aws, LoadingIcons, oracle } from "assets";
 import { useColorMode } from "contexts";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const SupplierCard = (props: SupplierCardProps) => {
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
 
     const supplier = props.supplier || {};
+    const isSelected = !!props.isSelected;
 
     const { colorMode } = useColorMode();
-    const router = useRouter();
-
-    const clickSupplier = () => {
-        setIsLoading(true);
-        router.push(`/suppliers/${supplier.slug}/buckets`);
-    };
 
     return (
         <Card.Root
             p="10px"
             minW="400px"
             width="100%"
-            onClick={clickSupplier}
             cursor="pointer"
             _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
+            border={isSelected ? "1px dashed green" : "1px dashed rgba(255, 255, 255, 0)"}
+            bg={isSelected ? { base: "green.100", _dark: "green.900" } : {}}
+            {...props}
         >
             <HStack gap={"10px"}>
                 <VStack gap="0" w="120px">
@@ -41,7 +38,11 @@ const SupplierCard = (props: SupplierCardProps) => {
                                 ? colorMode === "light"
                                     ? aws.logo_light.src
                                     : aws.logo_dark.src
-                                : LoadingIcons.failed.src
+                                : supplier.account_supplier === "oracle"
+                                  ? colorMode === "light"
+                                      ? oracle.logo_light.src
+                                      : oracle.logo_dark.src
+                                  : LoadingIcons.failed.src
                         }
                         alt="Caffe Latte"
                     />
@@ -52,7 +53,7 @@ const SupplierCard = (props: SupplierCardProps) => {
                         {supplier.name}
                     </Text>
 
-                    {isLoading ? (
+                    {/* {isLoading ? (
                         <>
                             <HStack>
                                 <Spinner size="sm" />
@@ -83,7 +84,19 @@ const SupplierCard = (props: SupplierCardProps) => {
                                 {supplier.slug}
                             </Text>
                         </>
-                    )}
+                    )} */}
+
+                    <Text
+                        lineClamp={1}
+                        w="100%"
+                        textAlign="left"
+                        fontSize="sm"
+                        fontWeight="light"
+                        maxHeight="24px"
+                        overflow="hidden"
+                    >
+                        {supplier.slug}
+                    </Text>
 
                     <Text lineClamp={2} textAlign="left" fontSize="sm" fontWeight="light" overflow="hidden">
                         {supplier.description}

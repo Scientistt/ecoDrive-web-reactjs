@@ -10,6 +10,7 @@ interface ContextMenuItem extends MenuItemProps {
     disabled?: boolean;
     icon?: ReactNode;
     command?: ReactNode;
+    items?: Array<ContextMenuItem | ContextMenuDivider>;
 }
 interface ContextMenuDivider {
     divider: boolean;

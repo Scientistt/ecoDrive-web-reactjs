@@ -13,6 +13,11 @@ export interface NavBarProps extends FlexProps {
 }
 export interface LoadingProps extends StackProps {
     message?: string;
+
+    messageLoading?: string;
+    isLoading?: boolean;
+    messageLoaded?: string;
+    hasLoaded?: boolean;
 }
 export interface DrawerProps extends UseDrawerProps {
     isOpen: boolean;

@@ -57,7 +57,28 @@
         "title": "My Credentials",
         "description": "Cloud Service Providers",
         "update": "Update",
-        "newCredential": "New Credential"
+        "newCredential": "New Credential",
+        "loadingCredentials": "Loading Credentials",
+        "loadedCredentials": "Loaded all Credentials",
+        "ShowingXSuppliersOfYTotal": "Showing {showing} credentials of {total} total",
+        "ShowingAllSuppliers": "Showing all {total} credentials"
+    },
+    "CredentialBGContextMenu": {
+        "viewAs": "View",
+        "viewAsList": "List",
+        "viewAsCard": "Cards",
+        "newCredential": "New Credential",
+        "sortBy": "Sort by",
+        "sortByAsc": "Ascending",
+        "sortByDesc": "Descending",
+        "sortById": "Identifier",
+        "sortByDate": "Creation Date",
+        "sortByName": "Name",
+        "sortByDescription": "Description",
+        "sortBySupplier": "Supplier",
+        "sortByCreationDate": "Cration Date",
+        "reload": "Reload",
+        "about": "About"
     },
     "Buckets": {
         "title": "My buckets",

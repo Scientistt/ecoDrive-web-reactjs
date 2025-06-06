@@ -19,6 +19,8 @@ import {
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-icons/lu";
 
+const PAGE_SIZE = 2;
+
 export default function Buckets() {
     const { supplier } = useSupplier();
     const router = useRouter();
@@ -32,6 +34,8 @@ export default function Buckets() {
 
     const [buckets, setBuckets] = useState({ elements: [], totalElements: 0 });
 
+    const [currentPage] = useState(1);
+
     const loadBucketList = async () => {
         setIsLoading(true);
         setIsLoadFailed(false);
@@ -41,8 +45,8 @@ export default function Buckets() {
                 details: false
             };
             const pagination = {
-                limit: 30,
-                page: 1
+                limit: PAGE_SIZE,
+                page: currentPage
             };
 
             const objs = await listBuckets(supplier, filter, pagination);

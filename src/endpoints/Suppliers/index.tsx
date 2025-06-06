@@ -6,7 +6,7 @@ export const listSuppliers = async (filter = {}, pagination = { limit: 10, page:
         url: `/suppliers`,
         data: { filter: filter, pagination: pagination }
     });
-    return response?.body?.supplier || { elements: [] };
+    return response?.body?.supplier || { elements: [], totalElements: 0 };
 };
 
 export const getSupplier = async (supplierSlug = "my-sup") => {

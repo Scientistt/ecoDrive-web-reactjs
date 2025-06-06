@@ -17,4 +17,5 @@ export interface BucketObjectProps extends StackProps {
 
 export interface SupplierCardProps extends StackProps {
     supplier: Supplier;
+    isSelected?: boolean;
 }

@@ -20,8 +20,6 @@ const BucketCard = (props: BucketCardProps) => {
 
     const [bucket, setBucket] = useState<Bucket>(bucketFromProps);
 
-    console.log("My-bucket bucketFromProps: ", bucketFromProps);
-
     const { colorMode } = useColorMode();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -32,8 +30,6 @@ const BucketCard = (props: BucketCardProps) => {
     const router = useRouter();
 
     const loadBucketInfo = async () => {
-        console.log("NEED TO LOAD DETAILS? ", loadDetails);
-        console.log("Current Bucket? ", bucket);
         if (!loadDetails) {
             return;
         }
@@ -44,10 +40,6 @@ const BucketCard = (props: BucketCardProps) => {
         try {
             if (bucket.name !== null) {
                 const bucketInfos = await getBucket(supplier, bucket.name);
-                console.log("MyBucket now is: ", {
-                    ...bucketInfos,
-                    ...getBucketTagFields(bucketInfos)
-                });
                 setBucket({
                     ...bucketInfos,
                     ...getBucketTagFields(bucketInfos)

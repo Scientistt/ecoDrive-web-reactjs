@@ -15,8 +15,6 @@ const FileCard = (props: BucketObjectProps) => {
 
     const fileStorage = getAWSStorageClass(file.tier, t as unknown as typeof useTranslations);
 
-    console.log("file: ", fileStorage);
-
     return (
         <>
             <VStack

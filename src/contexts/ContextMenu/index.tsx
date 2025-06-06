@@ -37,7 +37,6 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
                     const rect = menuRef.current.getBoundingClientRect();
                     const pos = calculatePosition(clientX, clientY, rect.width, rect.height);
                     setPosition(pos);
-                    console.log("PQ uai");
                     setDisplayContextMenu(true);
                 }
             });
