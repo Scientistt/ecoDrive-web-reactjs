@@ -1,13 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { listSuppliers } from "endpoints";
 import { Supplier } from "types";
 import { PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE } from "utils/constants";
 import { useContextMenu } from "contexts";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Body, PageHeading, ExplorerGrid, SupplierCard, SimpleButton, SubtleButton, Loading } from "components";
+import {
+    Body,
+    PageHeading,
+    ExplorerGrid,
+    SupplierCard,
+    SimpleButton,
+    SubtleButton,
+    Loading,
+    SupplierDrawer
+} from "components";
 import { toast } from "react-toastify";
 import { HStack, VStack, Stack, Spacer, Box, Highlight, useBreakpointValue } from "@chakra-ui/react";
 // import { useLongPressFactory } from "hooks";
@@ -25,7 +34,7 @@ import {
     LuHeart
 } from "react-icons/lu";
 
-export default function Suppliers() {
+function Suppliers() {
     const t = useTranslations("Credentials");
     const tCredentialBGContextMenu = useTranslations("CredentialBGContextMenu");
     const tCredentialContextMenu = useTranslations("CredentialContextMenu");
@@ -36,8 +45,11 @@ export default function Suppliers() {
 
     const isMobile = useBreakpointValue({ base: true, md: false });
 
+    const [isSupplierDrawerOpen, setIsSupplierDrawerOpen] = useState(false);
+
     const [page, setPage] = useState(1);
     const [pageSize] = useState(PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE);
+    // const [pageSize] = useState(1);
     const [sortBy, setSortBy] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
     const [isLoading, setIsLoading] = useState(false);
@@ -46,94 +58,66 @@ export default function Suppliers() {
 
     const [suppliers, setSuppliers] = useState<Supplier[]>([]);
     const [suppliersTotalCount, setSuppliersTotalCount] = useState(0);
-    const [selectedSupplierId, setSelectedSupplierId] = useState<bigint>(0n);
+    const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
     const [selectedSupplierIdClicked, setSelectedSupplierIdClicked] = useState<bigint>(0n);
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
 
     // const getLongPressHandlers = useLongPressFactory(700);
 
-    const loadSuppliersList = useCallback(async (pageToLoad: number) => {
-        if (isLoading || !hasMore) {
-            return;
-        }
-
-        setIsLoading(true);
-        setIsLoadFailed(false);
-
-        try {
-            const filter = {};
-            const pagination = {
-                limit: pageSize,
-                page: pageToLoad,
-                sort: {
-                    by: sortBy,
-                    order: sortOrder
-                }
-            };
-
-            const objs = await listSuppliers(filter, pagination);
-            const total = objs?.totalElements ?? 0;
-            const newElements = objs?.elements ?? [];
-
-            setSuppliers((prev) => [...prev, ...newElements]);
-
-            setSuppliersTotalCount(total);
-            setHasMore(pageToLoad * pageSize < total);
-        } catch {
-            setIsLoadFailed(true);
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const [entry] = entries;
-            if (entry.isIntersecting && hasMore && !isLoading) {
-                setPage((prev) => prev + 1);
+    const loadSuppliersList = useCallback(
+        async (pageToLoad: number) => {
+            if (isLoading || !hasMore) {
+                return;
             }
-        });
 
-        if (sentinelRef.current) {
-            observer.observe(sentinelRef.current);
-        }
+            console.log("Chamou mesmo page => ", page);
 
-        return () => observer.disconnect();
-    }, [hasMore, isLoading]);
+            setIsLoading(true);
+            setIsLoadFailed(false);
 
-    useEffect(() => {
-        loadSuppliersList(page);
-    }, [page]);
+            try {
+                const filter = {};
+                const pagination = {
+                    limit: pageSize,
+                    page: pageToLoad,
+                    sort: {
+                        by: sortBy,
+                        order: sortOrder
+                    }
+                };
+
+                const objs = await listSuppliers(filter, pagination);
+                const total = objs?.totalElements ?? 0;
+                const newElements = objs?.elements ?? [];
+
+                setSuppliers((prev) => [...prev, ...newElements]);
+
+                setSuppliersTotalCount(total);
+                setHasMore(pageToLoad * pageSize < total);
+            } catch {
+                setIsLoadFailed(true);
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [page]
+    );
 
     const clickedRefresh = () => {
-        console.log("Here??");
+        console.log("Refresh??");
         setHasMore(false);
         setSuppliers([]);
-        if (page !== 1) {
-            setPage(1);
+
+        if (page === 1) {
+            loadSuppliersList(1);
         } else {
-            loadSuppliersList(page);
+            setPage(1);
         }
-
-        // setHasMore(true);
-    };
-
-    const clickedNewSupplier = async () => {
-        toast.loading(`Criação de Credenciais ainda não disponível`, {
-            position: "bottom-right",
-            closeOnClick: true,
-            type: "error",
-            pauseOnHover: true,
-            draggable: true,
-            isLoading: false,
-            autoClose: 5000,
-            theme: "colored"
-        });
     };
 
     const clickSupplier = async (supplier: Supplier) => {
-        setSelectedSupplierId(supplier.id);
+        setSelectedSupplier(supplier);
     };
 
     const doubleClickSupplier = async (supplier: Supplier) => {
@@ -384,16 +368,7 @@ export default function Suppliers() {
             title: tCredentialContextMenu("properties"),
             value: "properties",
             onClick: () => {
-                toast.loading(`Acessar propriedades ${sup.name}`, {
-                    position: "bottom-right",
-                    closeOnClick: true,
-                    type: "error",
-                    pauseOnHover: true,
-                    draggable: true,
-                    isLoading: false,
-                    autoClose: 5000,
-                    theme: "colored"
-                });
+                clickedUpdateSupplier(sup);
             },
             icon: <LuWrench />
         }); // properties
@@ -403,14 +378,55 @@ export default function Suppliers() {
         contextMenu.clickHandler?.(e);
     };
 
+    const clickedNewSupplier = async () => {
+        setSelectedSupplier(null);
+        setIsSupplierDrawerOpen(true);
+    };
+
+    const clickedUpdateSupplier = async (sup: Supplier) => {
+        setSelectedSupplier(sup);
+        setIsSupplierDrawerOpen(true);
+    };
+
+    const clickedCloseNewSupplier = async () => {
+        setIsSupplierDrawerOpen(false);
+    };
+
+    useEffect(() => {
+        console.log(`Page Change (${page}) => `, suppliers);
+        loadSuppliersList(page);
+    }, [page]);
+
+    useEffect(() => {
+        console.log("useEffect 2");
+        const observer = new IntersectionObserver((entries) => {
+            const [entry] = entries;
+            if (entry.isIntersecting && hasMore && !isLoading) {
+                console.log("Eu sou o problema");
+                setPage((prev) => prev + 1);
+            }
+        });
+
+        if (sentinelRef.current) {
+            observer.observe(sentinelRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [hasMore, isLoading]);
+
     return (
         <>
-            <Body>
-                <VStack pb={"10px"} onContextMenu={handleBGContextMenu}>
+            <Body
+                onContextMenu={handleBGContextMenu}
+                onClick={(e) => {
+                    if (isMobile) handleBGContextMenu(e);
+                }}
+            >
+                <VStack pb={"10px"}>
                     <Stack w={"100%"} direction={{ base: "column", md: "row" }}>
                         <PageHeading header={t("title")} description={t("description")} />
                         <Spacer />
-                        <HStack gap={0} align={"center"}>
+                        <HStack align={"center"}>
                             <Spacer />
                             <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
                                 <LuRefreshCw /> {t("update")}
@@ -441,15 +457,7 @@ export default function Suppliers() {
                         </HStack>
                     </HStack>
                 </VStack>
-                <ExplorerGrid
-                    isLoading={false}
-                    loadingFailed={isLoadFailed}
-                    eWidth={"400px"}
-                    onContextMenu={handleBGContextMenu}
-                    onClick={(e) => {
-                        if (isMobile) handleBGContextMenu(e);
-                    }}
-                >
+                <ExplorerGrid isLoading={false} loadingFailed={isLoadFailed} eWidth={"400px"}>
                     {suppliers.map((obj: Supplier, index) => {
                         return (
                             <SupplierCard
@@ -462,9 +470,9 @@ export default function Suppliers() {
                                 tabIndex={index + 1}
                                 _focus={{ outline: "none" }}
                                 onFocus={() => {
-                                    setSelectedSupplierId(obj.id);
+                                    setSelectedSupplier(obj);
                                 }}
-                                isSelected={selectedSupplierId === obj.id}
+                                isSelected={selectedSupplier?.id === obj.id}
                                 isLoading={selectedSupplierIdClicked === obj.id}
                                 onContextMenu={(e) => {
                                     handleSupplierContextMenu(e, obj);
@@ -479,7 +487,7 @@ export default function Suppliers() {
                     })}
                 </ExplorerGrid>
 
-                <Box ref={sentinelRef} height="40px" mt="10px" onContextMenu={handleBGContextMenu}>
+                <Box ref={sentinelRef} height="40px" mt="10px">
                     <Loading
                         messageLoading={t("loadingCredentials")}
                         isLoading={isLoading}
@@ -487,7 +495,16 @@ export default function Suppliers() {
                         hasLoaded={!hasMore}
                     />
                 </Box>
+
+                <SupplierDrawer
+                    supplier={selectedSupplier || undefined}
+                    isOpen={isSupplierDrawerOpen}
+                    onClose={clickedCloseNewSupplier}
+                    onOpen={() => {}}
+                />
             </Body>
         </>
     );
 }
+
+export default memo(Suppliers);

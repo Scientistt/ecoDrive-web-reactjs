@@ -4,7 +4,10 @@
         "somethingIsWrong": "Something went wrong"
     },
     "NavBar": {
-        "title": "ecoDrive"
+        "title": "ecoDrive",
+        "myProfile": "My profile",
+        "credentials": "Credentials",
+        "logout": "Logout"
     },
     "Login": {
         "title": "Log In",
@@ -87,6 +90,20 @@
         "addToFavorites": "Add to Favorites",
         "share": "Share",
         "properties": "Properties"
+    },
+    "CredentialDrawer": {
+        "newCredential": "New Credential",
+        "updateCredential": "Update Credential",
+        "supplier": "Supplier",
+        "name": "Name",
+        "namePlaceholder": "Enter the credential name",
+        "emptyNameError": "Name cannot be empty",
+        "slug": "Slug",
+        "slugPlaceholder": "Enter the Credential Slug",
+        "emptySlugError": "Slug cannot be empty",
+        "invalidSlugError": "Slug can only countain lowercase letters, numbers and hifens",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter your description"
     },
     "Buckets": {
         "title": "My buckets",

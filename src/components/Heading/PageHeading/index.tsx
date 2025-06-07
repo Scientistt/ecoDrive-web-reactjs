@@ -4,9 +4,6 @@ import { Heading, Text, Flex } from "@chakra-ui/react";
 import type { PageHeadingProps } from "types";
 
 const PageHeading = (props: PageHeadingProps) => {
-    //   const { Brand, moduleName } = useDashboardManager()
-    // const moduleName = "Meu Módulo";
-
     return (
         <>
             <Flex
@@ -16,11 +13,11 @@ const PageHeading = (props: PageHeadingProps) => {
                 gap={2}
                 align={{ base: "flex-start", sm: "center", md: "flex-start" }}
             >
-                <Heading fontSize={"4xl"} fontWeight={"bold"} colorPalette={"green"} colorScheme={"green"}>
+                <Heading fontSize={"4xl"} fontWeight={"bold"}>
                     {props.header}
                 </Heading>
 
-                <Text ml={"2px"} fontSize={"lg"} colorPalette={"green"}>
+                <Text ml={"2px"} fontSize={"lg"}>
                     {props.description}
                 </Text>
             </Flex>

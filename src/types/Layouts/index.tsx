@@ -39,3 +39,7 @@ export interface NewFileDrawerProps extends DrawerProps {
 export interface NewBucketDrawerProps extends DrawerProps {
     oi?: string;
 }
+
+export interface SupplierDrawerProps extends DrawerProps {
+    supplier?: Supplier;
+}

@@ -4,7 +4,10 @@
         "somethingIsWrong": "問題が発生しました"
     },
     "NavBar": {
-        "title": "エコドライブ"
+        "title": "エコドライブ",
+        "myProfile": "私のプロフィール",
+        "credentials": "資格",
+        "logout": "ログアウト"
     },
     "Login": {
         "title": "ログイン",
@@ -87,6 +90,20 @@
         "addToFavorites": "お気に入りに追加",
         "share": "共有",
         "properties": "プロパティ"
+    },
+    "CredentialDrawer": {
+        "newCredential": "新しい資格情報",
+        "updateCredential": "資格情報の更新",
+        "supplier": "サプライヤー",
+        "name": "名前",
+        "namePlaceholder": "認証情報の名前を入力してください",
+        "emptyNameError": "名前を空にすることはできません",
+        "slug": "ナメクジ",
+        "slugPlaceholder": "資格情報のスラグを入力してください",
+        "emptySlugError": "スラグを空にすることはできません",
+        "invalidSlugError": "ナメクジは小文字、数字、ハイフェンのみを数えることができます",
+        "description": "説明",
+        "descriptionPlaceholder": "説明を入力してください"
     },
     "Buckets": {
         "title": "マイバケット",

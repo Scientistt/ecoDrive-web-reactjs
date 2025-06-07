@@ -43,7 +43,7 @@ const SupplierCard = (props: SupplierCardProps) => {
                         w="90%"
                         h="90%"
                         // src={getBucketIcon(bucketInfo?.icon).src}
-                        src={colorMode === "light" ? accountSupplier.logo_light.src : accountSupplier.logo_dark.src}
+                        src={colorMode === "light" ? accountSupplier.logo_light?.src : accountSupplier.logo_dark?.src}
                         alt="Caffe Latte"
                     />
                     {/* <IdBadge myId={supplier.id} /> */}
