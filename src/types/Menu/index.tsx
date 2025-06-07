@@ -10,6 +10,7 @@ interface ContextMenuItem extends MenuItemProps {
     disabled?: boolean;
     icon?: ReactNode;
     command?: ReactNode;
+    items?: Array<ContextMenuItem | ContextMenuDivider>;
 }
 interface ContextMenuDivider {
     divider: boolean;
@@ -39,6 +40,12 @@ export interface ContextMenuContextType<T> {
 
     clickHandler?: (e: React.MouseEvent) => void;
     setClickHandler?: (handler: (e: React.MouseEvent) => void) => void;
+
+    longPressHandlers?: {
+        onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void;
+        onTouchEnd: () => void;
+        onTouchCancel: () => void;
+    };
     // setClickHandler?: (e: React.MouseEvent) => void;
 }
 

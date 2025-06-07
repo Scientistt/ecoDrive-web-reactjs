@@ -13,6 +13,11 @@ export interface NavBarProps extends FlexProps {
 }
 export interface LoadingProps extends StackProps {
     message?: string;
+
+    messageLoading?: string;
+    isLoading?: boolean;
+    messageLoaded?: string;
+    hasLoaded?: boolean;
 }
 export interface DrawerProps extends UseDrawerProps {
     isOpen: boolean;
@@ -33,4 +38,8 @@ export interface NewFileDrawerProps extends DrawerProps {
 }
 export interface NewBucketDrawerProps extends DrawerProps {
     oi?: string;
+}
+
+export interface SupplierDrawerProps extends DrawerProps {
+    supplier?: Supplier;
 }

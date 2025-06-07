@@ -4,6 +4,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useState, useEffect, useRef } from "react";
 import { ContextMenuContextType, ContextMenuType } from "types";
 import { ContextMenu } from "components";
+import { useLongPress } from "hooks";
 
 export const ContextMenuContext = createContext<ContextMenuContextType<unknown>>({
     menu: null,
@@ -23,26 +24,47 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
 
     const [displayContextMenu, setDisplayContextMenu] = useState(true);
 
-    const clickHandler = (e: React.MouseEvent) => {
-        if (e) {
+    const clickHandler = (e: React.MouseEvent | React.TouchEvent) => {
+        if ("preventDefault" in e && typeof e.preventDefault === "function") {
             e.preventDefault();
-            if (contextMenu.open) contextMenu.onClose();
-            const { clientX, clientY } = e;
-
-            setDisplayContextMenu(false);
-            contextMenu.onOpen(); // ToDo: review this logic
-
-            requestAnimationFrame(() => {
-                if (menuRef.current) {
-                    const rect = menuRef.current.getBoundingClientRect();
-                    const pos = calculatePosition(clientX, clientY, rect.width, rect.height);
-                    setPosition(pos);
-                    console.log("PQ uai");
-                    setDisplayContextMenu(true);
-                }
-            });
         }
+        if (contextMenu.open) contextMenu.onClose();
+
+        const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+        const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+
+        setDisplayContextMenu(false);
+        contextMenu.onOpen();
+
+        requestAnimationFrame(() => {
+            if (menuRef.current) {
+                const rect = menuRef.current.getBoundingClientRect();
+                const pos = calculatePosition(clientX, clientY, rect.width, rect.height);
+                setPosition(pos);
+                setDisplayContextMenu(true);
+            }
+        });
+
+        // if (e) {
+        //     e.preventDefault();
+        //     if (contextMenu.open) contextMenu.onClose();
+        //     const { clientX, clientY } = e;
+
+        //     setDisplayContextMenu(false);
+        //     contextMenu.onOpen(); // ToDo: review this logic
+
+        //     requestAnimationFrame(() => {
+        //         if (menuRef.current) {
+        //             const rect = menuRef.current.getBoundingClientRect();
+        //             const pos = calculatePosition(clientX, clientY, rect.width, rect.height);
+        //             setPosition(pos);
+        //             setDisplayContextMenu(true);
+        //         }
+        //     });
+        // }
     };
+
+    const longPressHandlers = useLongPress(clickHandler, 700);
 
     useEffect(() => {
         const handleClickOutside = () => {
@@ -79,7 +101,7 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <ContextMenuContext.Provider value={{ menu, setMenu, entity, setEntity, clickHandler }}>
+        <ContextMenuContext.Provider value={{ menu, setMenu, entity, setEntity, clickHandler, longPressHandlers }}>
             {children}
             <ContextMenu
                 open={contextMenu.open}

@@ -4,7 +4,10 @@
         "somethingIsWrong": "問題が発生しました"
     },
     "NavBar": {
-        "title": "エコドライブ"
+        "title": "エコドライブ",
+        "myProfile": "私のプロフィール",
+        "credentials": "資格",
+        "logout": "ログアウト"
     },
     "Login": {
         "title": "ログイン",
@@ -55,9 +58,52 @@
     },
     "Credentials": {
         "title": "マイ認証情報",
-        "description": "クラウドサービスプロバイダー",
+        "description": "クラウド サービス プロバイダー",
         "update": "更新",
-        "newCredential": "新しい認証情報"
+        "newCredential": "新しい認証情報",
+        "loadingCredentials": "資格情報を読み込み中",
+        "loadedCredentials": "すべての認証情報をロードしました",
+        "ShowingXSuppliersOfYTotal": "合計 {total} 個の資格情報を {showing} 個表示しています",
+        "ShowingAllSuppliers": "すべての {total} 認証情報を表示しています",
+        "loadingCredential": "読み込み中"
+    },
+    "CredentialBGContextMenu": {
+        "viewAs": "表示",
+        "viewAsList": "リスト",
+        "viewAsCard": "カード",
+        "newCredential": "新しい認証情報",
+        "sortBy": "並べ替え順",
+        "sortByAsc": "昇順",
+        "sortByDesc": "降順",
+        "sortById": "識別子",
+        "sortByDate": "作成日",
+        "sortByName": "名前",
+        "sortByDescription": "説明",
+        "sortBySupplier": "サプライヤー",
+        "sortByCreationDate": "クレーション日",
+        "reload": "リロード",
+        "about": "について"
+    },
+    "CredentialContextMenu": {
+        "access": "アクセス",
+        "delete": "削除",
+        "addToFavorites": "お気に入りに追加",
+        "share": "共有",
+        "properties": "プロパティ"
+    },
+    "CredentialDrawer": {
+        "newCredential": "新しい資格情報",
+        "updateCredential": "資格情報の更新",
+        "supplier": "サプライヤー",
+        "name": "名前",
+        "namePlaceholder": "認証情報の名前を入力してください",
+        "emptyNameError": "名前を空にすることはできません",
+        "slug": "ナメクジ",
+        "slugPlaceholder": "資格情報のスラグを入力してください",
+        "emptySlugError": "スラグを空にすることはできません",
+        "invalidSlugError": "ナメクジは小文字、数字、ハイフェンのみを数えることができます",
+        "description": "説明",
+        "descriptionPlaceholder": "説明を入力してください"
     },
     "Buckets": {
         "title": "マイバケット",

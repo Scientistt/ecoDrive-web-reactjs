@@ -21,6 +21,7 @@ const ContextMenu = (props: ContextMenuProps) => {
                 <Portal>
                     <Menu.Root open>
                         <Menu.Content
+                            minW={"1000px"}
                             // display={!display ? "none" : `block`}
                             ref={menuRef}
                             onContextMenu={(e) => e.preventDefault()}

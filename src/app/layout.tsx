@@ -15,23 +15,18 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    // ⬇️ Lê o cookie diretamente
     const cookieStore = await cookies();
     const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
 
-    // Segurança: garante que o locale está entre os suportados
     if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
-        // Padrão
         throw new Error(`Locale inválido: ${locale}`);
     }
 
-    // Direção do texto
     const dir = locale === "ar" || locale === "he" ? "rtl" : "ltr";
-    console.log("QQ???", locale);
     const messages = await getMessages({ locale });
 
     return (
-        <html lang={locale} dir={dir} suppressHydrationWarning>
+        <html lang={locale} dir={dir} suppressHydrationWarning={true}>
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <Provider>
