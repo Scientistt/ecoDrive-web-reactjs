@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { listBuckets } from "endpoints";
 import { Bucket } from "types";
 import { useSupplier } from "contexts";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
     Body,
@@ -12,22 +13,28 @@ import {
     BucketCard,
     SimpleButton,
     SubtleButton,
-    toaster,
-    SimpleIconButton
+    SimpleIconButton,
+    NewBucketDrawer
 } from "components";
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-icons/lu";
 
+const PAGE_SIZE = 2;
+
 export default function Buckets() {
     const { supplier } = useSupplier();
     const router = useRouter();
-
+    const t = useTranslations("Buckets");
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
+
+    const [isNewBucketDrawerOpen, setIsNewBucketDrawerOpen] = useState(false);
 
     const [isToLoadEachBucketDetail, setIsToLoadEachBucketDetail] = useState(false);
 
     const [buckets, setBuckets] = useState({ elements: [], totalElements: 0 });
+
+    const [currentPage] = useState(1);
 
     const loadBucketList = async () => {
         setIsLoading(true);
@@ -38,8 +45,8 @@ export default function Buckets() {
                 details: false
             };
             const pagination = {
-                limit: 30,
-                page: 1
+                limit: PAGE_SIZE,
+                page: currentPage
             };
 
             const objs = await listBuckets(supplier, filter, pagination);
@@ -75,11 +82,11 @@ export default function Buckets() {
     };
 
     const clickedNewBucket = async () => {
-        toaster.create({
-            type: "info",
-            title: "Funcionalidade não disponível",
-            description: "Estamos trabalhando para que, em breve, esta opção esteja disponível"
-        });
+        setIsNewBucketDrawerOpen(true);
+    };
+
+    const clickedCloseNewBucket = async () => {
+        setIsNewBucketDrawerOpen(false);
     };
 
     return (
@@ -87,31 +94,28 @@ export default function Buckets() {
             <Body>
                 <SubtleButton onClick={clickBackToSuppliers}>
                     <LuArrowLeft />
-                    Lista de Credenciais
+                    {t("backToCredentials")}
                 </SubtleButton>
                 <HStack>
-                    <PageHeading header="Meus Buckets" description="Amazon Simple Storage Service (S3)" />
+                    <PageHeading header={t("title")} description={t("description")} />
 
                     <Spacer />
 
                     {isToLoadEachBucketDetail ? (
-                        <SimpleIconButton
-                            tooltip="Não carregar detalhes (Mais rápido)"
-                            onClick={doNotLoadBucketDetails}
-                        >
+                        <SimpleIconButton tooltip={t("doNotLoadBucketDetails")} onClick={doNotLoadBucketDetails}>
                             <LuSparkle />
                         </SimpleIconButton>
                     ) : (
-                        <SimpleIconButton tooltip="Carregar detalhes (Mais lento)" onClick={loadBucketDetails}>
+                        <SimpleIconButton tooltip={t("loadBucketDetails")} onClick={loadBucketDetails}>
                             <LuSparkles />
                         </SimpleIconButton>
                     )}
 
                     <SubtleButton onClick={clickedRefresh} disabled={isLoading}>
-                        <LuRefreshCw /> Atualizar
+                        <LuRefreshCw /> {t("update")}
                     </SubtleButton>
                     <SimpleButton onClick={clickedNewBucket}>
-                        <LuPlus /> Novo Bucket
+                        <LuPlus /> {t("newBucket")}
                     </SimpleButton>
                 </HStack>
 
@@ -126,6 +130,8 @@ export default function Buckets() {
                         );
                     })}
                 </ExplorerGrid>
+
+                <NewBucketDrawer isOpen={isNewBucketDrawerOpen} onClose={clickedCloseNewBucket} onOpen={() => {}} />
             </Body>
         </>
     );

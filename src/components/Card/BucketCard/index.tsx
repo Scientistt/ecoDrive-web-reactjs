@@ -15,12 +15,10 @@ const BucketCard = (props: BucketCardProps) => {
 
     const bucketFromProps = { ...props.bucket, ...getBucketTagFields(props.bucket) };
 
-    const bucketName = "meu-bucket";
+    // const bucketName = "meu-bucket";
     const loadDetails = !!props.loadDetails;
 
     const [bucket, setBucket] = useState<Bucket>(bucketFromProps);
-
-    console.log("My-bucket: ", bucket);
 
     const { colorMode } = useColorMode();
 
@@ -40,8 +38,8 @@ const BucketCard = (props: BucketCardProps) => {
         setIsLoadindFailed(false);
 
         try {
-            if (bucketName !== null) {
-                const bucketInfos = await getBucket(supplier, bucketName);
+            if (bucket.name !== null) {
+                const bucketInfos = await getBucket(supplier, bucket.name);
                 setBucket({
                     ...bucketInfos,
                     ...getBucketTagFields(bucketInfos)
@@ -94,11 +92,7 @@ const BucketCard = (props: BucketCardProps) => {
                 </VStack>
                 <VStack gap="0" w="100%" align="left">
                     <Text lineClamp={1} w="100%" fontWeight="bold" maxHeight="24px" overflow="hidden">
-                        {!isLoading && !isLoadindFailed
-                            ? bucket.tag_name
-                                ? bucket.tag_name
-                                : bucket.name
-                            : bucketName}
+                        {!isLoading && !isLoadindFailed ? (bucket.tag_name ? bucket.tag_name : bucket.name) : `...`}
                     </Text>
 
                     {isLoading ? (
@@ -129,7 +123,7 @@ const BucketCard = (props: BucketCardProps) => {
                                 maxHeight="24px"
                                 overflow="hidden"
                             >
-                                {!isLoading && !isLoadindFailed ? bucket.name : bucketName}
+                                {!isLoading && !isLoadindFailed ? bucket.name : `...`}
                             </Text>
                         </>
                     )}

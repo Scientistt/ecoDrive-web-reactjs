@@ -1,8 +1,13 @@
+"use client";
+
 import { memo } from "react";
 import { Menu, Portal, Avatar, defineStyle, Text } from "@chakra-ui/react";
 import { UserNavbarMenuProps } from "types";
 import { useAuthContext } from "contexts";
-import { LuLogOut, LuUser } from "react-icons/lu";
+import { useRouter } from "next/navigation";
+import { LuLogOut, LuUser, LuServer } from "react-icons/lu";
+
+import { useTranslations } from "next-intl";
 
 const ringCss = defineStyle({
     outlineWidth: "2px",
@@ -14,6 +19,9 @@ const ringCss = defineStyle({
 const UserNavbarMenu = (props: UserNavbarMenuProps) => {
     const user = props.user;
     const { logout } = useAuthContext();
+    const router = useRouter();
+
+    const t = useTranslations("NavBar");
 
     if (user)
         return (
@@ -37,7 +45,22 @@ const UserNavbarMenu = (props: UserNavbarMenuProps) => {
                             <Menu.ItemGroup>
                                 <Menu.Item value="account" cursor="pointer">
                                     <LuUser />
-                                    <Text fontSize={"md"}>Meu Perfil</Text>
+                                    <Text fontSize={"md"}>{t("myProfile")}</Text>
+                                </Menu.Item>
+                            </Menu.ItemGroup>
+
+                            <Menu.Separator />
+
+                            <Menu.ItemGroup>
+                                <Menu.Item
+                                    value="suppliers"
+                                    cursor="pointer"
+                                    onClick={() => {
+                                        router.push("/suppliers");
+                                    }}
+                                >
+                                    <LuServer />
+                                    <Text fontSize={"md"}>{t("credentials")}</Text>
                                 </Menu.Item>
                             </Menu.ItemGroup>
 
@@ -46,7 +69,7 @@ const UserNavbarMenu = (props: UserNavbarMenuProps) => {
                             <Menu.ItemGroup>
                                 <Menu.Item value="logout" onClick={logout} cursor="pointer">
                                     <LuLogOut />
-                                    <Text fontSize={"md"}>Sair</Text>
+                                    <Text fontSize={"md"}>{t("logout")}</Text>
                                 </Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.Content>

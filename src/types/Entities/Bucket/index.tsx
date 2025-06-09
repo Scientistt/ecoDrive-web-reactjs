@@ -17,7 +17,7 @@ export interface BucketContextType {
 export interface BucketObject {
     kind: string;
     bucket: string;
-    key?: string;
+    key: string;
     name: string;
     ext?: string;
     full_name?: string;

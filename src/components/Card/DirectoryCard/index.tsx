@@ -8,6 +8,8 @@ import { FileDirectoryIcons } from "assets";
 
 const DirectoryCard = (props: BucketObjectProps) => {
     const directory = parseDirectoryPath(props.bucketObject);
+    const isSelected = !!props?.isSelected;
+
     return (
         <>
             <VStack
@@ -19,7 +21,9 @@ const DirectoryCard = (props: BucketObjectProps) => {
                 textAlign="center"
                 borderRadius="md"
                 align="center"
-                _hover={{ bg: { base: "white", _dark: "black" } }}
+                border={isSelected ? "1px dashed green" : "1px dashed rgba(255, 255, 255, 0)"}
+                bg={isSelected ? { base: "green.100", _dark: "green.900" } : {}}
+                _hover={{ bg: { base: "green.200", _dark: "green.800" } }}
             >
                 <VStack gap="0" w="80%">
                     <Image
@@ -37,8 +41,7 @@ const DirectoryCard = (props: BucketObjectProps) => {
                 <Text
                     mt="5px"
                     color="light"
-                    fontSize="xs"
-                    lineHeight="13px"
+                    fontSize="small"
                     fontWeight="normal"
                     lineClamp={2}
                     overflow="hidden"

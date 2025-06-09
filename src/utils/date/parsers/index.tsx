@@ -21,7 +21,6 @@ const getTimeZoneAbbreviation = (date: Date, timeZone: string): string => {
 
 export const formatDateFullText = (date: Date): string => {
     try {
-        console.log("Q? ", date);
         if (!date) return "--";
 
         const dt = new Date(date);
@@ -64,4 +63,32 @@ export const parseDateYMD = (date: Date): string => {
     } catch {
         return "--";
     }
+};
+
+export const parseDateDistance = (date: Date | string, locale: string): string => {
+    const targetDate = new Date(date);
+    const now = new Date();
+    const diff = targetDate.getTime() - now.getTime(); // em ms
+    const absDiff = Math.abs(diff);
+
+    const units: [Intl.RelativeTimeFormatUnit, number][] = [
+        ["year", 1000 * 60 * 60 * 24 * 365],
+        ["month", 1000 * 60 * 60 * 24 * 30],
+        ["week", 1000 * 60 * 60 * 24 * 7],
+        ["day", 1000 * 60 * 60 * 24],
+        ["hour", 1000 * 60 * 60],
+        ["minute", 1000 * 60],
+        ["second", 1000]
+    ];
+
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+
+    for (const [unit, ms] of units) {
+        if (absDiff >= ms || unit === "second") {
+            const value = Math.round(diff / ms); // negativo: passado | positivo: futuro
+            return rtf.format(value, unit);
+        }
+    }
+
+    return "agora mesmo";
 };

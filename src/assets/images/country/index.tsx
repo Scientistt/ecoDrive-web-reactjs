@@ -22,6 +22,12 @@ import spain from "assets/images/country/flag/spain.png";
 import sweden from "assets/images/country/flag/sweden.png";
 import switzerland from "assets/images/country/flag/switzerland.png";
 import united_states from "assets/images/country/flag/us.png";
+import russia from "assets/images/country/flag/russia.png";
+import vatican from "assets/images/country/flag/vatican.png";
+import greece from "assets/images/country/flag/greece.png";
+import israel from "assets/images/country/flag/israel.png";
+import vietnam from "assets/images/country/flag/vietnam.png";
+import esperanto from "assets/images/country/flag/esperanto.png";
 
 import blank from "assets/images/country/flag/blank.png";
 
@@ -48,6 +54,12 @@ export const countryFlags: Record<string, StaticImageData> = {
     sweden: sweden,
     switzerland: switzerland,
     united_states: united_states,
+    vatican: vatican,
+    russia: russia,
+    greece: greece,
+    israel: israel,
+    vietnam: vietnam,
+    esperanto: esperanto,
 
     blank: blank
 };
