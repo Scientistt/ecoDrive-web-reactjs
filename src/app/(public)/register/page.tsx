@@ -171,8 +171,8 @@ export default function Login() {
         setIsRegisterUserNameValid(true);
         setIsRegisterUserNameValidated(false);
         setIsRegisterUserNameAvailable(false);
-        e.target.value.toLowerCase().replace(/\s/g, "");
-        const newValue = e.target.value;
+        //e.target.value.toLowerCase().replace(/\s/g, "");
+        const newValue = e.target.value.toLowerCase().replace(/\s/g, "");
         setRegisterUserName(newValue);
 
         console.log("Vamos validar UserName? ", newValue);
@@ -241,9 +241,11 @@ export default function Login() {
                 if (response?.header.http === 201) {
                     setIsRegisterButtonActive(false);
                     toaster.create({
+                        removeDelay: 4000,
                         type: "success",
                         title: "Conta criada com sucesso",
-                        description: "Vamos direcioná-lo para a página de login"
+                        description:
+                            "Vamos direcioná-lo para a página de login. Enviamos um e-mail de boas-vindas para você."
                     });
                     router.push("/login");
 
@@ -524,6 +526,7 @@ export default function Login() {
                                                 borderBottomWidth="2px"
                                                 placeholder="Digite o seu nome de usuário"
                                                 variant="flushed"
+                                                value={registerUserName}
                                                 onChange={handleUserNameChange}
                                                 onKeyDown={onEnterfocusOnNextField(passwordInput)}
                                             />
@@ -543,6 +546,13 @@ export default function Login() {
                                             <Field.ErrorText color="red" fontSize={"sm"}>
                                                 O nome de usuário já está em uso
                                             </Field.ErrorText>
+                                        )}
+                                        {isRegisterUserNameValidated && isRegisterUserNameAvailable ? (
+                                            <Field.HelperText color="green" fontSize={"sm"}>
+                                                O nome de usuário está disponível{" "}
+                                            </Field.HelperText>
+                                        ) : (
+                                            <></>
                                         )}
                                     </Field.Root>
 
