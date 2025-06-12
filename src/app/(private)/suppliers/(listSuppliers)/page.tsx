@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, memo } from "react";
-import { listSuppliers } from "endpoints";
+import { listSuppliers, deleteSupplier } from "endpoints";
 import { Supplier } from "types";
 import { PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE } from "utils/constants";
 import { useContextMenu } from "contexts";
@@ -13,12 +13,14 @@ import {
     ExplorerGrid,
     SupplierCard,
     SimpleButton,
+    SimpleCancelButton,
     SubtleButton,
     Loading,
-    SupplierDrawer
+    SupplierDrawer,
+    Dialog
 } from "components";
 import { toast } from "react-toastify";
-import { HStack, VStack, Stack, Spacer, Box, Highlight, useBreakpointValue } from "@chakra-ui/react";
+import { HStack, VStack, Stack, Spacer, Box, Highlight, useBreakpointValue, Text } from "@chakra-ui/react";
 // import { useLongPressFactory } from "hooks";
 import {
     LuRefreshCw,
@@ -38,6 +40,7 @@ function Suppliers() {
     const t = useTranslations("Credentials");
     const tCredentialBGContextMenu = useTranslations("CredentialBGContextMenu");
     const tCredentialContextMenu = useTranslations("CredentialContextMenu");
+    const tCredentialDeleteDialog = useTranslations("CredentialDeleteDialog");
 
     const router = useRouter();
 
@@ -45,7 +48,10 @@ function Suppliers() {
 
     const isMobile = useBreakpointValue({ base: true, md: false });
 
+    const [isDeletingSupplier, setIsDeletingSupplier] = useState(false);
+
     const [isSupplierDrawerOpen, setIsSupplierDrawerOpen] = useState(false);
+    const [isDeleteSupplierConfirmationDialogOpen, setIsDeleteSupplierConfirmationDialogOpen] = useState(false);
 
     const [page, setPage] = useState(1);
     const [pageSize] = useState(PAGINATION_DEFAULT_SUPPLIERS_PER_PAGE);
@@ -346,16 +352,7 @@ function Suppliers() {
             title: tCredentialContextMenu("delete"),
             value: "delete",
             onClick: () => {
-                toast.loading(`Deletar ${sup.name}`, {
-                    position: "bottom-right",
-                    closeOnClick: true,
-                    type: "error",
-                    pauseOnHover: true,
-                    draggable: true,
-                    isLoading: false,
-                    autoClose: 5000,
-                    theme: "colored"
-                });
+                clickedDeleteSupplier(sup);
             },
             danger: true
         }); // delete
@@ -383,6 +380,49 @@ function Suppliers() {
         setIsSupplierDrawerOpen(true);
     };
 
+    const clickedDeleteSupplier = async (sup: Supplier) => {
+        setSelectedSupplier(sup);
+        setIsDeleteSupplierConfirmationDialogOpen(true);
+    };
+
+    const clickedCloseDeleteSupplier = async () => {
+        setSelectedSupplier(null);
+        setIsDeleteSupplierConfirmationDialogOpen(false);
+    };
+
+    const clickedConfirmDeleteSupplier = async () => {
+        try {
+            setIsDeletingSupplier(true);
+            await deleteSupplier(selectedSupplier?.id.toString());
+            clickedRefresh();
+            toast.error(tCredentialDeleteDialog("creadentialCreatedSuccess"), {
+                position: "bottom-right",
+                closeOnClick: true,
+                type: "error",
+                pauseOnHover: true,
+                draggable: true,
+                isLoading: false,
+                autoClose: 5000,
+                theme: "colored"
+            });
+        } catch {
+            toast.error(tCredentialDeleteDialog("creadentialCreatedError"), {
+                position: "bottom-right",
+                closeOnClick: true,
+                type: "error",
+                pauseOnHover: true,
+                draggable: true,
+                isLoading: false,
+                autoClose: 5000,
+                theme: "colored"
+            });
+        } finally {
+            setSelectedSupplier(null);
+            setIsDeleteSupplierConfirmationDialogOpen(false);
+            setIsDeletingSupplier(false);
+        }
+    };
+
     const clickedUpdateSupplier = async (sup: Supplier) => {
         setSelectedSupplier(sup);
         setIsSupplierDrawerOpen(true);
@@ -390,6 +430,7 @@ function Suppliers() {
 
     const clickedCloseNewSupplier = async () => {
         setIsSupplierDrawerOpen(false);
+        clickedRefresh();
     };
 
     useEffect(() => {
@@ -502,6 +543,34 @@ function Suppliers() {
                     onClose={clickedCloseNewSupplier}
                     onOpen={() => {}}
                 />
+
+                <Dialog
+                    onOpen={() => {}}
+                    isOpen={isDeleteSupplierConfirmationDialogOpen}
+                    onClose={clickedCloseDeleteSupplier}
+                    title={tCredentialDeleteDialog("title")}
+                    body={
+                        <>
+                            <Text>{tCredentialDeleteDialog("description")}</Text>
+                            <Text>{tCredentialDeleteDialog("actionCantBeUndone")}</Text>
+                        </>
+                    }
+                    footer={
+                        <>
+                            <SimpleCancelButton onClick={clickedCloseDeleteSupplier}>
+                                {tCredentialDeleteDialog("cancel")}
+                            </SimpleCancelButton>
+
+                            <SimpleButton
+                                onClick={clickedConfirmDeleteSupplier}
+                                textColor="red"
+                                disabled={isDeletingSupplier}
+                            >
+                                {tCredentialDeleteDialog("delete")}
+                            </SimpleButton>
+                        </>
+                    }
+                ></Dialog>
             </Body>
         </>
     );

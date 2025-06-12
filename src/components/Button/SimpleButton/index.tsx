@@ -1,9 +1,10 @@
 import { memo } from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 import { SimpleButtonProps } from "types";
 
 const SimpleButton = (props: SimpleButtonProps) => {
     const color = props.textColor ? props.textColor : "green";
+    const isLoading = !!props.isLoading;
     return (
         <>
             <Button
@@ -14,7 +15,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
                 _hover={{ bg: { base: `${color}.600`, _dark: `${color}.800` } }}
                 {...props}
             >
-                {props.children}
+                {isLoading ? <Spinner /> : props.children}
             </Button>
         </>
     );

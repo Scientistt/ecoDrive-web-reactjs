@@ -9,6 +9,15 @@ export interface Supplier {
     icon?: StaticImageData;
 }
 
+export interface CreationSupplier {
+    slug: string;
+    name: string;
+    description?: string;
+    account_supplier: string;
+    account_key: string;
+    account_secret: string;
+}
+
 export interface AccountSupplier {
     key: string;
     name: string;

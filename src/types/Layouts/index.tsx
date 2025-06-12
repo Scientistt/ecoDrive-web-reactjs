@@ -1,4 +1,4 @@
-import { type GridProps, FlexProps, type StackProps, type UseDrawerProps } from "@chakra-ui/react";
+import { type GridProps, FlexProps, type StackProps, type UseDrawerProps, type UseDialogProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Bucket, Supplier } from "types";
 
@@ -27,6 +27,18 @@ export interface DrawerProps extends UseDrawerProps {
     body?: ReactNode;
     footer?: ReactNode;
     title?: string;
+    subtitle?: string;
+}
+
+export interface DialogProps extends UseDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onOpen: () => void;
+
+    body?: ReactNode;
+    footer?: ReactNode;
+    title?: string;
+    subtitle?: string;
 }
 
 export interface NewFileDrawerProps extends DrawerProps {

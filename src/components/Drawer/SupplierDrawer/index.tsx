@@ -1,14 +1,18 @@
-import { memo, useEffect } from "react";
-import { VStack } from "@chakra-ui/react";
-import { Box, Button } from "@chakra-ui/react";
+"use client";
 
+import { memo, useEffect, useState } from "react";
+import { Spinner, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
-import { SupplierDrawerProps } from "types";
-import { Drawer, FormInput, FormTextarea, AccountSupplierSelect } from "components";
-
-import { useForm /*Controller */ } from "react-hook-form";
+import { AccountSupplier, SupplierDrawerProps } from "types";
+import { Drawer, FormInput, FormTextarea, AccountSupplierSelect, SimpleButton } from "components";
+import { createSupplier, validateSupplierSlug } from "endpoints";
+import { getAccountSupplier } from "utils";
+import { toast } from "react-toastify";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LuCheck, LuX } from "react-icons/lu";
 
 // const accountSupplierOptions = [
 //     { value: "supplier_1", label: "Fornecedor 1" },
@@ -31,8 +35,15 @@ const NewBucketDrawer = (props: SupplierDrawerProps) => {
     const onOpen = props.onOpen ? props.onOpen : () => {};
 
     const t = useTranslations("CredentialDrawer");
+    const tAccountSupplier = useTranslations("AccountSupplier");
 
     const supplier = props.supplier;
+
+    const [isCreationLoading, setIsCreationLoading] = useState(false);
+    const [SlugValidationTimeout, setSlugValidationTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [isSlugCheckLoading, setIsSlugCheckLoading] = useState(false);
+    const [isSlugValidated, setIsSlugValidated] = useState(false);
+    const [isSlugValid, setIsSlugValid] = useState(false);
 
     const schema = z.object({
         name: z.string().min(1, t("emptyNameError")),
@@ -40,41 +51,150 @@ const NewBucketDrawer = (props: SupplierDrawerProps) => {
             .string()
             .min(1, t("emptySlugError"))
             .regex(/^[a-z0-9-]+$/, t("invalidSlugError")),
-        description: z.string().optional()
-        // account_supplier: z.string().min(1, "Selecione um fornecedor").optional()
+        description: z.string().optional(),
+        account_secret: z.string().min(1, t("emptyAwsUserSecretError")),
+        account_key: z.string().min(1, t("emptyAwsUserKeyError")),
+        account_supplier: z
+            .object({
+                key: z.string(),
+                name: z.string()
+            })
+            .refine((value) => value.key === "aws", {
+                message: t("unsupportedSupplierError") // mensagem de erro personalizada
+                // path: ["key"] // aponta o erro diretamente para o campo "key"
+            })
     });
 
+    const submitForm = async () => {
+        handleSubmit(onSubmit)();
+    };
+
     type FormData = z.infer<typeof schema>;
+
+    const defautlValues = {
+        name: "",
+        slug: "",
+        description: "",
+        account_key: "",
+        account_secret: "",
+        account_supplier: supplier
+            ? getAccountSupplier(supplier.account_supplier, tAccountSupplier as unknown as typeof useTranslations)
+            : getAccountSupplier("aws", tAccountSupplier as unknown as typeof useTranslations)
+    };
 
     const {
         register,
         handleSubmit,
         watch,
+        control,
         setValue,
+        getValues,
+        clearErrors,
+        reset,
+        setError,
+        trigger,
         formState: { errors, touchedFields }
     } = useForm<FormData>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            name: "",
-            slug: "",
-            description: ""
-            // account_supplier: ""
-        }
+        defaultValues: defautlValues
     });
 
     const name = watch("name");
     const slugTouched = touchedFields.slug;
 
+    const onChangeSlug = async () => {
+        setIsSlugValidated(false);
+
+        const slug = getValues().slug;
+        // const slugstate = getFieldState("slug");
+
+        if (slug !== "" && slug !== supplier?.slug) {
+            const slugState = await trigger("slug");
+            console.log("X: ", slugState);
+            if (slugState) {
+                console.log("AQui????????????????????????????????????????");
+                if (SlugValidationTimeout) clearTimeout(SlugValidationTimeout);
+
+                const timeout = setTimeout(async () => {
+                    try {
+                        clearErrors("slug");
+                        setIsSlugCheckLoading(true);
+                        const slugState = await trigger("slug");
+                        console.log("X: ", slugState);
+                        if (slugState) {
+                            const slugValid = await validateSupplierSlug(supplier?.id?.toString() ?? "0", slug);
+                            setIsSlugValid(slugValid);
+                        }
+                    } catch {
+                        setError("slug", {
+                            type: "manual",
+                            message: t("takenSlugError") // ou uma string direta
+                        });
+                        setIsSlugValid(false);
+                    } finally {
+                        setIsSlugCheckLoading(false);
+                        setIsSlugValidated(true);
+                    }
+                }, 1000);
+
+                setSlugValidationTimeout(timeout);
+            }
+        }
+    };
+
+    const onChangeSupplier = (e: AccountSupplier) => {
+        clearErrors("account_supplier");
+        if (e.key !== "aws")
+            setError("account_supplier", {
+                type: "manual",
+                message: t("unsupportedSupplierError") // ou uma string direta
+            });
+    };
+
     useEffect(() => {
-        console.log("Linkou? ", slugTouched);
         if (!slugTouched) {
             setValue("slug", generateSlug(name));
+            onChangeSlug();
         }
     }, [name, slugTouched, setValue]);
 
-    function onSubmit(data: FormData) {
+    async function onSubmit(data: FormData) {
+        setIsCreationLoading(true);
+
         // Aqui você pode enviar para sua API, exemplo:
-        console.log("Dados enviados:", data);
+
+        const dt = { ...data, account_supplier: data.account_supplier.key };
+
+        try {
+            await createSupplier(dt);
+
+            toast.success(t("creadentialCreatedSuccess"), {
+                position: "bottom-right",
+                closeOnClick: true,
+                type: "success",
+                pauseOnHover: true,
+                draggable: true,
+                isLoading: false,
+                autoClose: 5000,
+                theme: "colored"
+            });
+            reset(defautlValues);
+            onClose();
+        } catch (error) {
+            console.log("error: ", error);
+            toast.success(t("creadentialCreatedError"), {
+                position: "bottom-right",
+                closeOnClick: true,
+                type: "success",
+                pauseOnHover: true,
+                draggable: true,
+                isLoading: false,
+                autoClose: 5000,
+                theme: "colored"
+            });
+        } finally {
+            setIsCreationLoading(false);
+        }
     }
 
     return (
@@ -83,12 +203,55 @@ const NewBucketDrawer = (props: SupplierDrawerProps) => {
             onClose={onClose}
             onOpen={onOpen}
             title={supplier ? t("updateCredential") : t("newCredential")}
+            subtitle={supplier ? t("updateCredentialSubtitle") : t("newCredentialSubtitle")}
             body={
                 <>
                     <Box>
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <VStack gap={4} align="stretch">
-                                <AccountSupplierSelect required label={t("supplier")} />
+                                <Controller
+                                    control={control}
+                                    name="account_supplier"
+                                    render={({ field, fieldState }) => {
+                                        // return <AccountSupplierSelect required label={t("supplier")} {...field} />;
+                                        return (
+                                            <AccountSupplierSelect
+                                                required
+                                                label={t("supplier")}
+                                                value={field.value as unknown as AccountSupplier}
+                                                onChangeValue={(e) => {
+                                                    onChangeSupplier(e);
+                                                    field.onChange(e);
+                                                }}
+                                                onBlurValue={field.onBlur}
+                                                invalid={!!errors.account_supplier}
+                                                errorMessage={fieldState.error?.message}
+                                            />
+                                        );
+                                    }}
+                                />
+
+                                <FormInput
+                                    label={t("awsUserKey")}
+                                    type="password"
+                                    disableAutocomplete={true}
+                                    placeholder={t("awsUserKeyPlaceholder")}
+                                    validation={{ ...register("account_key") }}
+                                    invalid={!!errors.account_key}
+                                    required
+                                    errorMessage={errors.account_key && errors.account_key.message}
+                                />
+
+                                <FormInput
+                                    label={t("awsUserSecret")}
+                                    type="password"
+                                    disableAutocomplete={true}
+                                    placeholder={t("awsUserSecretPlaceholder")}
+                                    validation={{ ...register("account_secret") }}
+                                    invalid={!!errors.account_secret}
+                                    required
+                                    errorMessage={errors.account_secret && errors.account_secret.message}
+                                />
 
                                 <FormInput
                                     label={t("name")}
@@ -108,6 +271,20 @@ const NewBucketDrawer = (props: SupplierDrawerProps) => {
                                     validation={{ ...register("slug") }}
                                     invalid={!!errors.slug}
                                     errorMessage={errors.slug && errors.slug.message}
+                                    onChange={onChangeSlug}
+                                    endElement={
+                                        isSlugCheckLoading ? (
+                                            <Spinner />
+                                        ) : isSlugValidated ? (
+                                            isSlugValid ? (
+                                                <LuCheck color="green" size={"20px"} />
+                                            ) : (
+                                                <LuX color="red" size={"20px"} />
+                                            )
+                                        ) : (
+                                            <></>
+                                        )
+                                    }
                                 />
 
                                 <FormTextarea
@@ -141,13 +318,23 @@ const NewBucketDrawer = (props: SupplierDrawerProps) => {
                                     </FormErrorMessage>
                                 </Field> */}
 
-                                <Button colorScheme="blue" type="submit">
+                                {/* <Button colorScheme="blue" type="submit">
                                     Enviar
-                                </Button>
+                                </Button> */}
                             </VStack>
                         </form>
                     </Box>
                 </>
+            }
+            footer={
+                <HStack gap={"10px"}>
+                    <SimpleButton
+                        onClick={submitForm}
+                        disabled={!isSlugValidated || isCreationLoading || isSlugCheckLoading}
+                    >
+                        <Text>{supplier ? t("save") : t("create")}</Text>
+                    </SimpleButton>
+                </HStack>
             }
         />
     );

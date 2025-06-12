@@ -19,7 +19,7 @@ import {
 import { HStack, Spacer } from "@chakra-ui/react";
 import { LuRefreshCw, LuPlus, LuArrowLeft, LuSparkle, LuSparkles } from "react-icons/lu";
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 99;
 
 export default function Buckets() {
     const { supplier } = useSupplier();

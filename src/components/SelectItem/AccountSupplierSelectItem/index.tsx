@@ -15,7 +15,6 @@ import { VStack, Text, HStack, Image } from "@chakra-ui/react";
 import { useColorMode } from "contexts";
 
 const AccountSupplierSelectItem = (props: AccountSupplierItemProps) => {
-    console.log("props.accountSupplier: ", props.accountSupplier);
     const { name, key, logo_dark, logo_light } = props.accountSupplier;
     const { colorMode } = useColorMode();
     return (

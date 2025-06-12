@@ -12,6 +12,7 @@ export default getRequestConfig(async () => {
 
     return {
         locale,
+        // messages: messages
         messages: deepmerge(messagesEn, messages)
     };
 });

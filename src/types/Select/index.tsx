@@ -11,8 +11,12 @@ export interface AWSStorageClassSelectItemProps extends SelectItemProps {
 
 export interface AccountSupplierProps {
     onChangeValue?: (item: AccountSupplier) => void;
+    onBlurValue?: () => void;
+    value?: AccountSupplier;
     required?: boolean;
     label?: string;
+    errorMessage?: string;
+    invalid?: boolean;
 }
 
 export interface AccountSupplierItemProps extends SelectItemProps {

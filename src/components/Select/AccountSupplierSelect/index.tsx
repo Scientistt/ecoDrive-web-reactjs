@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState, FormEvent } from "react";
 // import { Card, HStack, VStack, Image, Text, Spacer, Spinner } from "@chakra-ui/react";
 // import { BucketCardProps, Bucket } from "types";
 // import { getBucket } from "endpoints";
@@ -14,7 +14,7 @@ import { AccountSupplierProps, AccountSupplier } from "types";
 import { AccountSupplierSelectItem } from "components";
 import { useTranslations } from "next-intl";
 import { Select, createListCollection, useSelectContext, Field, Box } from "@chakra-ui/react";
-
+import { useColorMode } from "contexts";
 // const tiers = createListCollection({
 //     items: listAWSStorageClasses(false, t),
 //     itemToString: (item) => item.name,
@@ -34,9 +34,14 @@ const SelectValue = () => {
 
 const AccountSupplierSelect = (props: AccountSupplierProps) => {
     const t = useTranslations("AccountSupplier");
-
+    const { colorMode } = useColorMode();
+    const invalid = !!props.invalid;
     const required = !!props.required;
     const label = props.label;
+    const defaultValue = props.value?.key ?? "aws";
+    const errorMessage = props.errorMessage;
+
+    const [isFocused, setIsFocused] = useState(false);
 
     const accountSuppliers = createListCollection({
         items: listAccountSuppliers(false, t as unknown as typeof useTranslations),
@@ -44,25 +49,31 @@ const AccountSupplierSelect = (props: AccountSupplierProps) => {
         itemToValue: (item) => item.key
     });
 
+    // props.onChangeValue?.(accountSuppliers.items.find((tier) => tier.key === defaultValue) as AccountSupplier);
+
+    const onChangeValue = (e: FormEvent<HTMLDivElement>) => {
+        const value = (e.target as HTMLSelectElement).value;
+        props.onChangeValue?.(accountSuppliers.items.find((tier) => tier.key === value) as AccountSupplier);
+    };
+
     return (
         <>
-            <Field.Root required={required} gap={0}>
+            <Field.Root required={required} gap={0} invalid={invalid}>
                 <Select.Root
                     collection={accountSuppliers}
                     // size="md"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => {
+                        setIsFocused(false);
+                        props.onBlurValue?.();
+                    }}
                     width="100%"
                     variant="outline"
                     colorPalette={"primary"}
-                    defaultValue={["aws"]}
+                    defaultValue={[defaultValue]}
                     positioning={{ sameWidth: true }}
-                    onChange={(e) => {
-                        const value = (e.target as HTMLSelectElement).value;
-                        props.onChangeValue?.(
-                            accountSuppliers.items.find((tier) => tier.key === value) as AccountSupplier
-                        );
-                        //setstorageClass(accountSuppliers.items.find((tier) => tier.key === value) as AWSStorageClass);
-                    }}
-                    {...props}
+                    onChange={onChangeValue}
+                    // {...props}
                 >
                     <Select.HiddenSelect />
 
@@ -88,8 +99,39 @@ const AccountSupplierSelect = (props: AccountSupplierProps) => {
                         </Select.Content>
                     </Select.Positioner>
                 </Select.Root>
-                {/* <Text fontSize={"sm"} >{storageClass.description}</Text> */}
-                <Box borderColor={"blue.800"} colorPalette={"primary"} borderTop={"2px solid "} w={"100%"}></Box>
+
+                {colorMode === "light" ? (
+                    <Box
+                        borderColor={"blue.800"}
+                        colorPalette={"primary"}
+                        borderTop={
+                            invalid
+                                ? { base: "2px solid #ef4444" }
+                                : !isFocused
+                                  ? { base: "2px solid #e4e4e7" }
+                                  : { base: "3px solid #a1a1aa" }
+                        }
+                        w={"100%"}
+                        mb={"5px"}
+                    ></Box>
+                ) : (
+                    <Box
+                        borderColor={"blue.800"}
+                        colorPalette={"primary"}
+                        borderTop={
+                            invalid
+                                ? { base: "2px solid #f87171" }
+                                : !isFocused
+                                  ? { base: "2px solid #27272a" }
+                                  : { base: "3px solid #a1a1aa" }
+                        }
+                        w={"100%"}
+                        mb={"5px"}
+                    ></Box>
+                )}
+
+                <Field.ErrorText>{errorMessage}</Field.ErrorText>
+                {/* <Box borderColor={"blue.800"} colorPalette={"primary"} borderTop={"2px solid #e4e4e7"} w={"100%"}></Box> */}
             </Field.Root>
         </>
     );

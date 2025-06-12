@@ -91,19 +91,42 @@
         "share": "Share",
         "properties": "Properties"
     },
+    "CredentialDeleteDialog": {
+        "title": "Are you sure?",
+        "description": "algo aqui",
+        "actionCantBeUndone": "This action cannot be undone!",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "creadentialCreatedSuccess": "Credential deleted successfully",
+        "creadentialCreatedError": "Failed to delete credential"
+    },
     "CredentialDrawer": {
         "newCredential": "New Credential",
+        "newCredentialSubtitle": "Create your new Credential",
         "updateCredential": "Update Credential",
+        "updateCredentialSubtitle": "Updating your credential",
         "supplier": "Supplier",
+        "unsupportedSupplierError": "This supplier is not supported (yet)",
         "name": "Name",
         "namePlaceholder": "Enter the credential name",
         "emptyNameError": "Name cannot be empty",
         "slug": "Slug",
         "slugPlaceholder": "Enter the Credential Slug",
         "emptySlugError": "Slug cannot be empty",
+        "takenSlugError": "Slug already in use",
         "invalidSlugError": "Slug can only countain lowercase letters, numbers and hifens",
         "description": "Description",
-        "descriptionPlaceholder": "Enter your description"
+        "descriptionPlaceholder": "Enter your description",
+        "awsUserKey": "User Key",
+        "awsUserKeyPlaceholder": "**********",
+        "awsUserSecret": "User Secret",
+        "awsUserSecretPlaceholder": "**********",
+        "emptyAwsUserSecretError": "User Secret cannot be empty",
+        "emptyAwsUserKeyError": "User Key cannot be empty",
+        "create": "Create",
+        "save": "Save",
+        "creadentialCreatedSuccess": "Credential created Successfully",
+        "creadentialCreatedError": "Failed to create credential"
     },
     "Buckets": {
         "title": "My buckets",

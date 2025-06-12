@@ -26,8 +26,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     const messages = await getMessages({ locale });
 
     return (
-        <html lang={locale} dir={dir} suppressHydrationWarning={true}>
-            <body>
+        <html lang={locale} dir={dir} suppressHydrationWarning>
+            <body suppressHydrationWarning>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <Provider>
                         <ToastContainer />

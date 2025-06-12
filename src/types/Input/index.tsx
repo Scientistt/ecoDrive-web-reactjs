@@ -1,5 +1,5 @@
 import { type FieldRootProps } from "@chakra-ui/react";
-import { type HTMLInputTypeAttribute } from "react";
+import { ReactNode, type HTMLInputTypeAttribute } from "react";
 
 export interface FormInputProps extends FieldRootProps {
     type?: HTMLInputTypeAttribute | undefined;
@@ -7,4 +7,6 @@ export interface FormInputProps extends FieldRootProps {
     errorMessage?: string;
     label?: string;
     validation?: object;
+    disableAutocomplete?: boolean;
+    endElement?: ReactNode;
 }
